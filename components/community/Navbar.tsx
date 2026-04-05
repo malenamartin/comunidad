@@ -13,6 +13,7 @@ const NAV_TABS = [
   { label: 'Betas',      href: '/comunidad/betas' },
   { label: 'Eventos',    href: '/comunidad/eventos' },
   { label: 'Miembros',   href: '/comunidad/miembros' },
+  { label: 'Ranking',    href: '/comunidad/ranking' },
 ];
 
 export function Navbar() {
@@ -100,6 +101,9 @@ export function Navbar() {
           >
             EXCLUSIVO
           </span>
+          <Link href="/comunidad/admin" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none', padding: '4px 10px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px' }}>
+            Admin
+          </Link>
           <UserButton
             afterSignOutUrl="/comunidad"
             appearance={{
