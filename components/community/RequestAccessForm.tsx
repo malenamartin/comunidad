@@ -4,7 +4,11 @@ import { useState } from 'react';
 
 type Mode = 'invite' | 'request';
 
-export function RequestAccessForm() {
+interface Props {
+  theme?: 'dark' | 'light';
+}
+
+export function RequestAccessForm({ theme = 'dark' }: Props) {
   const [mode, setMode] = useState<Mode>('invite');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -48,7 +52,6 @@ export function RequestAccessForm() {
       } else {
         setSuccess(true);
         if (mode === 'invite') {
-          // Redirect to app after role assignment
           setTimeout(() => { window.location.href = '/comunidad'; }, 1500);
         }
       }
@@ -59,25 +62,47 @@ export function RequestAccessForm() {
     }
   }
 
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    background: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.12)',
-    borderRadius: '8px',
-    padding: '10px 14px',
-    fontSize: '14px',
-    color: '#FFFFFF',
-    outline: 'none',
-  };
+  const isLight = theme === 'light';
 
-  const labelStyle: React.CSSProperties = {
-    display: 'block',
-    fontSize: '12px',
-    fontWeight: 500,
-    color: 'rgba(255,255,255,0.5)',
-    marginBottom: '6px',
-    letterSpacing: '0.03em',
-  };
+  const inputStyle: React.CSSProperties = isLight
+    ? {
+        width: '100%',
+        background: '#F9F9F9',
+        border: '1px solid rgba(0,0,0,0.12)',
+        borderRadius: '8px',
+        padding: '10px 14px',
+        fontSize: '14px',
+        color: '#0A0A0A',
+        outline: 'none',
+      }
+    : {
+        width: '100%',
+        background: 'rgba(255,255,255,0.05)',
+        border: '1px solid rgba(255,255,255,0.12)',
+        borderRadius: '8px',
+        padding: '10px 14px',
+        fontSize: '14px',
+        color: '#FFFFFF',
+        outline: 'none',
+      };
+
+  const labelStyle: React.CSSProperties = isLight
+    ? {
+        display: 'block',
+        fontSize: '12px',
+        fontWeight: 500,
+        color: '#666',
+        marginBottom: '6px',
+        letterSpacing: '0.03em',
+      }
+    : {
+        display: 'block',
+        fontSize: '12px',
+        fontWeight: 500,
+        color: 'rgba(255,255,255,0.5)',
+        marginBottom: '6px',
+        letterSpacing: '0.03em',
+      };
 
   if (success) {
     return (
@@ -85,16 +110,16 @@ export function RequestAccessForm() {
         style={{
           textAlign: 'center',
           padding: '32px',
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: isLight ? '#F5F5F5' : 'rgba(255,255,255,0.03)',
+          border: isLight ? '1px solid rgba(0,0,0,0.08)' : '1px solid rgba(255,255,255,0.08)',
           borderRadius: '16px',
         }}
       >
         <div style={{ fontSize: '32px', marginBottom: '12px' }}>✓</div>
-        <p style={{ fontSize: '16px', fontWeight: 600, color: '#FFFFFF', marginBottom: '8px' }}>
+        <p style={{ fontSize: '16px', fontWeight: 600, color: isLight ? '#0A0A0A' : '#FFFFFF', marginBottom: '8px' }}>
           {mode === 'invite' ? '¡Bienvenido a la comunidad!' : '¡Solicitud recibida!'}
         </p>
-        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>
+        <p style={{ fontSize: '14px', color: isLight ? '#666' : 'rgba(255,255,255,0.5)' }}>
           {mode === 'invite'
             ? 'Redirigiendo al feed...'
             : 'El equipo Fardo revisará tu solicitud y te contactará pronto.'}
@@ -106,19 +131,20 @@ export function RequestAccessForm() {
   return (
     <div
       style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: isLight ? '#FFFFFF' : 'rgba(255,255,255,0.03)',
+        border: isLight ? '1px solid rgba(0,0,0,0.08)' : '1px solid rgba(255,255,255,0.08)',
         borderRadius: '16px',
         padding: '28px',
         maxWidth: '480px',
         width: '100%',
+        boxShadow: isLight ? '0 4px 24px rgba(0,0,0,0.08)' : 'none',
       }}
     >
       {/* Mode toggle */}
       <div
         style={{
           display: 'flex',
-          background: 'rgba(255,255,255,0.05)',
+          background: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)',
           borderRadius: '8px',
           padding: '3px',
           marginBottom: '24px',
@@ -136,8 +162,13 @@ export function RequestAccessForm() {
               cursor: 'pointer',
               fontSize: '13px',
               fontWeight: 500,
-              background: mode === m ? 'rgba(255,255,255,0.1)' : 'transparent',
-              color: mode === m ? '#FFFFFF' : 'rgba(255,255,255,0.4)',
+              background: mode === m
+                ? (isLight ? '#FFFFFF' : 'rgba(255,255,255,0.1)')
+                : 'transparent',
+              color: mode === m
+                ? (isLight ? '#0A0A0A' : '#FFFFFF')
+                : (isLight ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)'),
+              boxShadow: mode === m && isLight ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
               transition: 'all 0.15s',
             }}
           >
@@ -195,7 +226,7 @@ export function RequestAccessForm() {
         )}
 
         {error && (
-          <p style={{ fontSize: '13px', color: '#E07050', background: 'rgba(220,80,50,0.1)', borderRadius: '6px', padding: '8px 12px' }}>
+          <p style={{ fontSize: '13px', color: '#D44A30', background: isLight ? 'rgba(212,74,48,0.08)' : 'rgba(220,80,50,0.1)', borderRadius: '6px', padding: '8px 12px' }}>
             {error}
           </p>
         )}
@@ -211,7 +242,9 @@ export function RequestAccessForm() {
             fontSize: '14px',
             fontWeight: 600,
             color: '#FFFFFF',
-            background: loading ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #D44A30, #C27A28)',
+            background: loading
+              ? (isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.1)')
+              : 'linear-gradient(135deg, #D44A30, #C27A28)',
             transition: 'opacity 0.15s',
           }}
         >
