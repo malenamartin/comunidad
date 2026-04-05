@@ -36,12 +36,12 @@ const BENEFITS = [
 
 // Scattered image tiles
 const TILES = [
-  { top: '6%',  left: '17%',  w: 160, h: 120, rotateZ: -2, rotateY:  6, img: '/tiles/tile-1.svg'  },
-  { top: '2%',  left: '31%',  w: 110, h: 135, rotateZ:  1, rotateY: -8, img: '/tiles/tile-2.svg'  },
-  { top: '8%',  left: '44%',  w: 130, h: 100, rotateZ: -3, rotateY:  5, img: '/tiles/tile-3.svg'  },
-  { top: '3%',  left: '57%',  w: 170, h: 115, rotateZ:  2, rotateY: -6, img: '/tiles/tile-4.svg'  },
-  { top: '10%', left: '72%',  w: 120, h: 130, rotateZ: -1, rotateY:  7, img: '/tiles/tile-5.svg'  },
-  { top: '4%',  left: '83%',  w: 100, h: 110, rotateZ:  3, rotateY: -5, img: '/tiles/tile-6.svg'  },
+  { top: '14%', left: '17%',  w: 160, h: 120, rotateZ: -2, rotateY:  6, img: '/tiles/tile-1.svg'  },
+  { top: '10%', left: '31%',  w: 110, h: 135, rotateZ:  1, rotateY: -8, img: '/tiles/tile-2.svg'  },
+  { top: '16%', left: '44%',  w: 130, h: 100, rotateZ: -3, rotateY:  5, img: '/tiles/tile-3.svg'  },
+  { top: '11%', left: '57%',  w: 170, h: 115, rotateZ:  2, rotateY: -6, img: '/tiles/tile-4.svg'  },
+  { top: '18%', left: '72%',  w: 120, h: 130, rotateZ: -1, rotateY:  7, img: '/tiles/tile-5.svg'  },
+  { top: '12%', left: '83%',  w: 100, h: 110, rotateZ:  3, rotateY: -5, img: '/tiles/tile-6.svg'  },
   { top: '22%', left: '5%',   w: 120, h: 155, rotateZ: -4, rotateY:  8, img: '/tiles/tile-7.svg'  },
   { top: '48%', left: '2%',   w: 100, h: 120, rotateZ:  2, rotateY:  6, img: '/tiles/tile-8.svg'  },
   { top: '68%', left: '10%',  w: 140, h: 105, rotateZ: -2, rotateY:  7, img: '/tiles/tile-9.svg'  },
