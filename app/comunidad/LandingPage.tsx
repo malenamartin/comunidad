@@ -128,7 +128,7 @@ export function LandingPage() {
             >
               Comunidad
             </p>
-            <FardoLogo color="#0A0A0A" height={80} />
+            <FardoLogo variant="dark" height={80} />
           </div>
 
           <div
@@ -258,7 +258,7 @@ export function LandingPage() {
 
       {/* Footer */}
       <footer style={{ background: '#FFFFFF', borderTop: '1px solid rgba(0,0,0,0.06)', padding: '24px 24px 28px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-        <FardoLogo color="#CCCCCC" height={24} />
+        <FardoLogo variant="gray" height={24} />
         <p style={{ color: '#AAA', fontSize: '13px', margin: 0 }}>
           Comunidad exclusiva para líderes de marketing en LatAm.
         </p>

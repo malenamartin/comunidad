@@ -46,7 +46,7 @@ export function Navbar() {
       >
         {/* Logo */}
         <Link href="/comunidad" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <FardoLogo color="#FFFFFF" height={28} />
+          <FardoLogo variant="light" height={28} />
         </Link>
 
         {/* Desktop tabs */}
