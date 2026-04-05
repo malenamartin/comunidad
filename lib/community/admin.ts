@@ -58,7 +58,7 @@ export async function resolveRequest(requestId: number, action: 'approve' | 'rej
 
 export async function getInviteCodes() {
   return sql`
-    SELECT ic.id, ic.code, ic.max_uses, ic.used_count, ic.expires_at,
+    SELECT ic.id, ic.code, ic.max_uses, ic.current_uses, ic.expires_at,
            ic.is_active, ic.created_at,
            cm.name AS created_by_name
     FROM invite_codes ic
