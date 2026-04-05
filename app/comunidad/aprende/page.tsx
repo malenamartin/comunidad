@@ -52,7 +52,15 @@ export default function AprendePage() {
   return (
     <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '32px 24px' }}>
       <div style={{ marginBottom: '28px' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: 700, letterSpacing: '-0.02em', color: '#FFFFFF', marginBottom: '4px' }}>
+        <h1
+          style={{
+            fontSize: '24px',
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            color: '#FFFFFF',
+            marginBottom: '4px',
+          }}
+        >
           Aprende
         </h1>
         <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
@@ -60,7 +68,6 @@ export default function AprendePage() {
         </p>
       </div>
 
-      {/* Filters */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
         <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none' }}>
           {CATEGORIES.map((c) => (
@@ -78,11 +85,18 @@ export default function AprendePage() {
         </div>
       </div>
 
-      {/* Grid */}
       {isLoading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
           {[...Array(6)].map((_, i) => (
-            <div key={i} style={{ borderRadius: '12px', overflow: 'hidden', background: 'rgba(255,255,255,0.03)', border: '0.5px solid rgba(255,255,255,0.06)' }}>
+            <div
+              key={i}
+              style={{
+                borderRadius: '12px',
+                overflow: 'hidden',
+                background: 'rgba(255,255,255,0.03)',
+                border: '0.5px solid rgba(255,255,255,0.06)',
+              }}
+            >
               <div style={{ aspectRatio: '16/9', background: 'rgba(255,255,255,0.05)' }} />
               <div style={{ padding: '14px 16px', height: '60px' }} />
             </div>

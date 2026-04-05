@@ -97,11 +97,18 @@ export default function PerfilPage() {
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '32px 24px' }}>
-      <h1 style={{ fontSize: '24px', fontWeight: 700, letterSpacing: '-0.02em', color: '#FFFFFF', marginBottom: '28px' }}>
+      <h1
+        style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          letterSpacing: '-0.02em',
+          color: '#FFFFFF',
+          marginBottom: '28px',
+        }}
+      >
         Mi perfil
       </h1>
 
-      {/* Avatar + stats */}
       {member && (
         <div
           style={{
@@ -118,9 +125,21 @@ export default function PerfilPage() {
           <MemberAvatar name={member.name} size={52} />
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-              <span style={{ fontSize: '16px', fontWeight: 600, color: '#FFFFFF' }}>{member.name}</span>
+              <span style={{ fontSize: '16px', fontWeight: 600, color: '#FFFFFF' }}>
+                {member.name}
+              </span>
               {member.is_founder && (
-                <span style={{ fontSize: '10px', fontWeight: 700, color: '#D44A30', background: 'rgba(212,74,48,0.12)', border: '1px solid rgba(212,74,48,0.25)', borderRadius: '3px', padding: '1px 5px' }}>
+                <span
+                  style={{
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    color: '#D44A30',
+                    background: 'rgba(212,74,48,0.12)',
+                    border: '1px solid rgba(212,74,48,0.25)',
+                    borderRadius: '3px',
+                    padding: '1px 5px',
+                  }}
+                >
                   FUNDADOR
                 </span>
               )}
@@ -139,7 +158,6 @@ export default function PerfilPage() {
         </div>
       )}
 
-      {/* Form */}
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
           <label style={labelStyle}>Nombre completo *</label>
@@ -153,18 +171,36 @@ export default function PerfilPage() {
           </div>
           <div>
             <label style={labelStyle}>Cargo</label>
-            <input name="job_title" value={form.job_title} onChange={handleChange} placeholder="CMO" style={inputStyle} />
+            <input
+              name="job_title"
+              value={form.job_title}
+              onChange={handleChange}
+              placeholder="CMO"
+              style={inputStyle}
+            />
           </div>
         </div>
 
         <div>
           <label style={labelStyle}>País</label>
-          <input name="country" value={form.country} onChange={handleChange} placeholder="Argentina" style={inputStyle} />
+          <input
+            name="country"
+            value={form.country}
+            onChange={handleChange}
+            placeholder="Argentina"
+            style={inputStyle}
+          />
         </div>
 
         <div>
           <label style={labelStyle}>LinkedIn URL</label>
-          <input name="linkedin_url" value={form.linkedin_url} onChange={handleChange} placeholder="linkedin.com/in/tu-perfil" style={inputStyle} />
+          <input
+            name="linkedin_url"
+            value={form.linkedin_url}
+            onChange={handleChange}
+            placeholder="linkedin.com/in/tu-perfil"
+            style={inputStyle}
+          />
         </div>
 
         <div>
@@ -180,13 +216,29 @@ export default function PerfilPage() {
         </div>
 
         {error && (
-          <p style={{ fontSize: '13px', color: '#E07050', background: 'rgba(220,80,50,0.1)', borderRadius: '6px', padding: '8px 12px' }}>
+          <p
+            style={{
+              fontSize: '13px',
+              color: '#E07050',
+              background: 'rgba(220,80,50,0.1)',
+              borderRadius: '6px',
+              padding: '8px 12px',
+            }}
+          >
             {error}
           </p>
         )}
 
         {saved && (
-          <p style={{ fontSize: '13px', color: '#90C050', background: 'rgba(120,180,60,0.1)', borderRadius: '6px', padding: '8px 12px' }}>
+          <p
+            style={{
+              fontSize: '13px',
+              color: '#90C050',
+              background: 'rgba(120,180,60,0.1)',
+              borderRadius: '6px',
+              padding: '8px 12px',
+            }}
+          >
             Perfil actualizado correctamente.
           </p>
         )}
@@ -202,7 +254,9 @@ export default function PerfilPage() {
             fontSize: '14px',
             fontWeight: 600,
             color: '#FFFFFF',
-            background: saving ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #D44A30, #C27A28)',
+            background: saving
+              ? 'rgba(255,255,255,0.1)'
+              : 'linear-gradient(135deg, #D44A30, #C27A28)',
           }}
         >
           {saving ? 'Guardando...' : 'Guardar cambios'}

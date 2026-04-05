@@ -5,33 +5,38 @@ const BENEFITS = [
   {
     icon: BarChart2,
     title: 'Benchmarks exclusivos',
-    description: 'Datos reales de Citation Rate, SOV y LLMO Score por industria y período. Comparate con las mejores marcas de LatAm.',
+    description:
+      'Datos reales de Citation Rate, SOV y LLMO Score por industria y período. Comparate con las mejores marcas de LatAm.',
   },
   {
     icon: BookOpen,
     title: 'Academia privada',
-    description: 'Videos de AEO, GEO y LLMO pensados para CMOs y Brand Directors. Sin teoría vacía, puro impacto.',
+    description:
+      'Videos de AEO, GEO y LLMO pensados para CMOs y Brand Directors. Sin teoría vacía, puro impacto.',
   },
   {
     icon: Zap,
     title: 'Acceso anticipado a betas',
-    description: 'Probá antes que nadie las nuevas features de Fardo. Tu feedback moldea el producto.',
+    description:
+      'Probá antes que nadie las nuevas features de Fardo. Tu feedback moldea el producto.',
   },
   {
     icon: Calendar,
     title: 'Eventos y masterclasses',
-    description: 'Precios especiales para miembros y acceso a grabaciones. Presenciales, virtuales e híbridos en toda LatAm.',
+    description:
+      'Precios especiales para miembros y acceso a grabaciones. Presenciales, virtuales e híbridos en toda LatAm.',
   },
   {
     icon: Users,
     title: 'Directorio de pares',
-    description: 'Conectate con CMOs y Marketing Managers que están construyendo marcas visibles en la IA.',
+    description:
+      'Conectate con CMOs y Marketing Managers que están construyendo marcas visibles en la IA.',
   },
 ];
 
-export default function ComunidadLandingPage() {
+export function LandingPage() {
   return (
-    <div style={{ background: '#0A0A0A', minHeight: '100vh', color: '#FFFFFF' }}>
+    <div style={{ color: '#FFFFFF' }}>
       {/* Header */}
       <header
         style={{
@@ -48,11 +53,7 @@ export default function ComunidadLandingPage() {
         </span>
         <a
           href="/sign-in"
-          style={{
-            fontSize: '13px',
-            color: 'rgba(255,255,255,0.5)',
-            textDecoration: 'none',
-          }}
+          style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}
         >
           Ya soy miembro →
         </a>
@@ -60,14 +61,8 @@ export default function ComunidadLandingPage() {
 
       {/* Hero */}
       <section
-        style={{
-          position: 'relative',
-          padding: '80px 24px 100px',
-          textAlign: 'center',
-          overflow: 'hidden',
-        }}
+        style={{ position: 'relative', padding: '80px 24px 100px', textAlign: 'center', overflow: 'hidden' }}
       >
-        {/* Background gradient */}
         <div
           style={{
             position: 'absolute',
@@ -80,13 +75,11 @@ export default function ComunidadLandingPage() {
             pointerEvents: 'none',
           }}
         />
-
         <div style={{ position: 'relative', maxWidth: '720px', margin: '0 auto' }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
               background: 'rgba(212,74,48,0.1)',
               border: '1px solid rgba(212,74,48,0.25)',
               borderRadius: '100px',
@@ -120,7 +113,6 @@ export default function ComunidadLandingPage() {
               fontSize: 'clamp(16px, 2vw, 20px)',
               color: 'rgba(255,255,255,0.55)',
               lineHeight: 1.6,
-              marginBottom: '48px',
               maxWidth: '560px',
               margin: '0 auto 48px',
             }}
@@ -129,7 +121,6 @@ export default function ComunidadLandingPage() {
             están redefiniendo cómo las marcas aparecen en ChatGPT, Perplexity y Google AI.
           </p>
 
-          {/* Form */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <RequestAccessForm />
           </div>

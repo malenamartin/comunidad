@@ -6,18 +6,18 @@ import { PostCard } from '@/components/community/PostCard';
 import type { Post, PostType } from '@/lib/community/types';
 
 const POST_TYPES: { value: PostType | ''; label: string }[] = [
-  { value: '',          label: 'Todo' },
+  { value: '', label: 'Todo' },
   { value: 'benchmark', label: 'Benchmarks' },
-  { value: 'beta',      label: 'Betas' },
+  { value: 'beta', label: 'Betas' },
   { value: 'educacion', label: 'Educación' },
-  { value: 'evento',    label: 'Eventos' },
+  { value: 'evento', label: 'Eventos' },
   { value: 'discusion', label: 'Discusiones' },
-  { value: 'anuncio',   label: 'Anuncios' },
+  { value: 'anuncio', label: 'Anuncios' },
 ];
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-export default function FeedPage() {
+export function FeedPage() {
   const [type, setType] = useState<PostType | ''>('');
 
   const url = type ? `/api/community/posts?type=${type}` : '/api/community/posts';
@@ -25,9 +25,16 @@ export default function FeedPage() {
 
   return (
     <div style={{ maxWidth: '780px', margin: '0 auto', padding: '32px 24px' }}>
-      {/* Page header */}
       <div style={{ marginBottom: '28px' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: 700, letterSpacing: '-0.02em', color: '#FFFFFF', marginBottom: '4px' }}>
+        <h1
+          style={{
+            fontSize: '24px',
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+            color: '#FFFFFF',
+            marginBottom: '4px',
+          }}
+        >
           Feed
         </h1>
         <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
@@ -69,7 +76,7 @@ export default function FeedPage() {
         ))}
       </div>
 
-      {/* Posts list */}
+      {/* Posts */}
       {isLoading ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {[...Array(4)].map((_, i) => (
@@ -80,19 +87,12 @@ export default function FeedPage() {
                 background: 'rgba(255,255,255,0.03)',
                 border: '0.5px solid rgba(255,255,255,0.06)',
                 borderRadius: '12px',
-                animation: 'pulse 1.5s ease-in-out infinite',
               }}
             />
           ))}
         </div>
       ) : !data?.posts?.length ? (
-        <div
-          style={{
-            textAlign: 'center',
-            padding: '60px 24px',
-            color: 'rgba(255,255,255,0.3)',
-          }}
-        >
+        <div style={{ textAlign: 'center', padding: '60px 24px', color: 'rgba(255,255,255,0.3)' }}>
           <p style={{ fontSize: '15px' }}>Todavía no hay posts en esta categoría.</p>
         </div>
       ) : (
