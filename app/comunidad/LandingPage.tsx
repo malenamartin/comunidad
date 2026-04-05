@@ -1,6 +1,7 @@
 'use client';
 
 import { RequestAccessForm } from '@/components/community/RequestAccessForm';
+import { FardoLogo } from '@/components/community/FardoLogo';
 import { BarChart2, BookOpen, Zap, Calendar, Users } from 'lucide-react';
 
 const PILLS = ['AEO', 'GEO', 'LLMO', 'Benchmarks', 'Estrategia', 'AI', 'Marcas', 'LatAm'];
@@ -114,20 +115,21 @@ export function LandingPage() {
 
         {/* Center content */}
         <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 24px', maxWidth: '800px' }}>
-          <h1
-            style={{
-              fontSize: 'clamp(52px, 8vw, 96px)',
-              fontWeight: 900,
-              letterSpacing: '-0.04em',
-              lineHeight: 0.95,
-              color: '#0A0A0A',
-              marginBottom: '16px',
-            }}
-          >
-            Comunidad
-            <br />
-            <span style={{ color: '#D44A30' }}>fardo</span>
-          </h1>
+          <div style={{ marginBottom: '16px' }}>
+            <p
+              style={{
+                fontSize: 'clamp(28px, 4vw, 48px)',
+                fontWeight: 900,
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+                color: '#0A0A0A',
+                marginBottom: '4px',
+              }}
+            >
+              Comunidad
+            </p>
+            <FardoLogo color="#0A0A0A" height={80} />
+          </div>
 
           <div
             style={{
@@ -255,8 +257,11 @@ export function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer style={{ background: '#FFFFFF', borderTop: '1px solid rgba(0,0,0,0.06)', padding: '24px', textAlign: 'center', color: '#AAA', fontSize: '13px' }}>
-        © 2026 Fardo. Comunidad exclusiva para líderes de marketing en LatAm.
+      <footer style={{ background: '#FFFFFF', borderTop: '1px solid rgba(0,0,0,0.06)', padding: '24px 24px 28px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+        <FardoLogo color="#CCCCCC" height={24} />
+        <p style={{ color: '#AAA', fontSize: '13px', margin: 0 }}>
+          Comunidad exclusiva para líderes de marketing en LatAm.
+        </p>
       </footer>
     </div>
   );

@@ -12,12 +12,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // ClerkProvider requires a publishable key. When not configured (e.g. during
-  // static build without env vars), render without it so the build doesn't fail.
   const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   const content = (
     <html lang="es">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

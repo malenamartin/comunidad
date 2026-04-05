@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { UserButton } from '@clerk/nextjs';
 import { cn } from '@/lib/utils';
+import { FardoLogo } from '@/components/community/FardoLogo';
 
 const NAV_TABS = [
   { label: 'Feed',        href: '/comunidad' },
@@ -44,17 +45,8 @@ export function Navbar() {
         }}
       >
         {/* Logo */}
-        <Link href="/comunidad" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-          <span
-            style={{
-              fontSize: '22px',
-              fontWeight: 700,
-              letterSpacing: '-0.03em',
-              color: '#FFFFFF',
-            }}
-          >
-            far<span style={{ color: '#D44A30' }}>do</span>
-          </span>
+        <Link href="/comunidad" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+          <FardoLogo color="#FFFFFF" height={28} />
         </Link>
 
         {/* Desktop tabs */}
