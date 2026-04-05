@@ -34,26 +34,22 @@ const BENEFITS = [
   },
 ];
 
-// Scattered image tiles — foto collage
-// img: ruta en /public/tiles/ — si no existe muestra gradiente de placeholder
+// Scattered image tiles
 const TILES = [
-  { top: '6%',  left: '17%',  w: 160, h: 120, rotateZ: -2,  rotateY:  6, img: null, bg: 'linear-gradient(135deg,#D44A30,#7B1F0A)' },
-  { top: '2%',  left: '31%',  w: 110, h: 135, rotateZ:  1,  rotateY: -8, img: null, bg: 'linear-gradient(160deg,#4A90D4,#0A1F3A)' },
-  { top: '8%',  left: '44%',  w: 130, h: 100, rotateZ: -3,  rotateY:  5, img: null, bg: 'linear-gradient(135deg,#0A0A0A,#333)' },
-  { top: '3%',  left: '57%',  w: 170, h: 115, rotateZ:  2,  rotateY: -6, img: null, bg: 'linear-gradient(120deg,#C8A040,#7A5010)' },
-  { top: '10%', left: '72%',  w: 120, h: 130, rotateZ: -1,  rotateY:  7, img: null, bg: 'linear-gradient(155deg,#222,#444)' },
-  { top: '4%',  left: '83%',  w: 100, h: 110, rotateZ:  3,  rotateY: -5, img: null, bg: 'linear-gradient(135deg,#90C050,#2A5010)' },
-  // Left side
-  { top: '22%', left: '5%',   w: 120, h: 155, rotateZ: -4,  rotateY:  8, img: null, bg: 'linear-gradient(160deg,#8090E0,#1A2060)' },
-  { top: '48%', left: '2%',   w: 100, h: 120, rotateZ:  2,  rotateY:  6, img: null, bg: 'linear-gradient(135deg,#D44A30,#FF8060)' },
-  { top: '68%', left: '10%',  w: 140, h: 105, rotateZ: -2,  rotateY:  7, img: null, bg: 'linear-gradient(140deg,#C8A040,#F0D080)' },
-  // Right side
-  { top: '20%', left: '85%',  w: 135, h: 160, rotateZ:  3,  rotateY: -8, img: null, bg: 'linear-gradient(135deg,#0A0A0A,#222)' },
-  { top: '48%', left: '88%',  w: 115, h: 135, rotateZ: -3,  rotateY: -7, img: null, bg: 'linear-gradient(150deg,#D44A30,#801A00)' },
-  { top: '70%', left: '80%',  w: 155, h: 110, rotateZ:  1,  rotateY: -6, img: null, bg: 'linear-gradient(135deg,#4A90D4,#C8A040)' },
-  // Bottom
-  { top: '72%', left: '28%',  w: 110, h: 105, rotateZ: -2,  rotateY:  5, img: null, bg: 'linear-gradient(135deg,#90C050,#4A90D4)' },
-  { top: '75%', left: '57%',  w: 130, h: 100, rotateZ:  3,  rotateY: -7, img: null, bg: 'linear-gradient(135deg,#8090E0,#D44A30)' },
+  { top: '6%',  left: '17%',  w: 160, h: 120, rotateZ: -2, rotateY:  6, img: '/tiles/tile-1.svg'  },
+  { top: '2%',  left: '31%',  w: 110, h: 135, rotateZ:  1, rotateY: -8, img: '/tiles/tile-2.svg'  },
+  { top: '8%',  left: '44%',  w: 130, h: 100, rotateZ: -3, rotateY:  5, img: '/tiles/tile-3.svg'  },
+  { top: '3%',  left: '57%',  w: 170, h: 115, rotateZ:  2, rotateY: -6, img: '/tiles/tile-4.svg'  },
+  { top: '10%', left: '72%',  w: 120, h: 130, rotateZ: -1, rotateY:  7, img: '/tiles/tile-5.svg'  },
+  { top: '4%',  left: '83%',  w: 100, h: 110, rotateZ:  3, rotateY: -5, img: '/tiles/tile-6.svg'  },
+  { top: '22%', left: '5%',   w: 120, h: 155, rotateZ: -4, rotateY:  8, img: '/tiles/tile-7.svg'  },
+  { top: '48%', left: '2%',   w: 100, h: 120, rotateZ:  2, rotateY:  6, img: '/tiles/tile-8.svg'  },
+  { top: '68%', left: '10%',  w: 140, h: 105, rotateZ: -2, rotateY:  7, img: '/tiles/tile-9.svg'  },
+  { top: '20%', left: '85%',  w: 135, h: 160, rotateZ:  3, rotateY: -8, img: '/tiles/tile-10.svg' },
+  { top: '48%', left: '88%',  w: 115, h: 135, rotateZ: -3, rotateY: -7, img: '/tiles/tile-11.svg' },
+  { top: '70%', left: '80%',  w: 155, h: 110, rotateZ:  1, rotateY: -6, img: '/tiles/tile-12.svg' },
+  { top: '72%', left: '28%',  w: 110, h: 105, rotateZ: -2, rotateY:  5, img: '/tiles/tile-13.svg' },
+  { top: '75%', left: '57%',  w: 130, h: 100, rotateZ:  3, rotateY: -7, img: '/tiles/tile-14.svg' },
 ];
 
 export function LandingPage() {
@@ -79,17 +75,14 @@ export function LandingPage() {
                 transformStyle: 'preserve-3d',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10)',
                 overflow: 'hidden',
-                background: tile.img ? undefined : tile.bg,
               }}
             >
-              {tile.img && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={tile.img}
-                  alt=""
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                />
-              )}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={tile.img}
+                alt=""
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
               {/* Shine overlay for 3D feel */}
               <div
                 style={{
@@ -154,7 +147,9 @@ export function LandingPage() {
             >
               Comunidad
             </p>
-            <FardoLogo variant="dark" height={80} />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <FardoLogo variant="dark" height={80} />
+            </div>
           </div>
 
           <div
