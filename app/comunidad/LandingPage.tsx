@@ -34,25 +34,26 @@ const BENEFITS = [
   },
 ];
 
-// Scattered image tiles — gradient boxes simulating a photo collage
+// Scattered image tiles — foto collage
+// img: ruta en /public/tiles/ — si no existe muestra gradiente de placeholder
 const TILES = [
-  { top: '6%',  left: '17%',  w: 160, h: 120, rotate: -2,  bg: 'linear-gradient(135deg,#D44A30,#7B1F0A)' },
-  { top: '2%',  left: '31%',  w: 110, h: 135, rotate:  1,  bg: 'linear-gradient(160deg,#4A90D4,#0A1F3A)' },
-  { top: '8%',  left: '44%',  w: 130, h: 100, rotate: -3,  bg: 'linear-gradient(135deg,#0A0A0A,#333)' },
-  { top: '3%',  left: '57%',  w: 170, h: 115, rotate:  2,  bg: 'linear-gradient(120deg,#C8A040,#7A5010)' },
-  { top: '10%', left: '72%',  w: 120, h: 130, rotate: -1,  bg: 'linear-gradient(155deg,#222,#444)' },
-  { top: '4%',  left: '83%',  w: 100, h: 110, rotate:  3,  bg: 'linear-gradient(135deg,#90C050,#2A5010)' },
+  { top: '6%',  left: '17%',  w: 160, h: 120, rotateZ: -2,  rotateY:  6, img: null, bg: 'linear-gradient(135deg,#D44A30,#7B1F0A)' },
+  { top: '2%',  left: '31%',  w: 110, h: 135, rotateZ:  1,  rotateY: -8, img: null, bg: 'linear-gradient(160deg,#4A90D4,#0A1F3A)' },
+  { top: '8%',  left: '44%',  w: 130, h: 100, rotateZ: -3,  rotateY:  5, img: null, bg: 'linear-gradient(135deg,#0A0A0A,#333)' },
+  { top: '3%',  left: '57%',  w: 170, h: 115, rotateZ:  2,  rotateY: -6, img: null, bg: 'linear-gradient(120deg,#C8A040,#7A5010)' },
+  { top: '10%', left: '72%',  w: 120, h: 130, rotateZ: -1,  rotateY:  7, img: null, bg: 'linear-gradient(155deg,#222,#444)' },
+  { top: '4%',  left: '83%',  w: 100, h: 110, rotateZ:  3,  rotateY: -5, img: null, bg: 'linear-gradient(135deg,#90C050,#2A5010)' },
   // Left side
-  { top: '22%', left: '5%',   w: 120, h: 155, rotate: -4,  bg: 'linear-gradient(160deg,#8090E0,#1A2060)' },
-  { top: '48%', left: '2%',   w: 100, h: 120, rotate:  2,  bg: 'linear-gradient(135deg,#D44A30,#FF8060)' },
-  { top: '68%', left: '10%',  w: 140, h: 105, rotate: -2,  bg: 'linear-gradient(140deg,#C8A040,#F0D080)' },
+  { top: '22%', left: '5%',   w: 120, h: 155, rotateZ: -4,  rotateY:  8, img: null, bg: 'linear-gradient(160deg,#8090E0,#1A2060)' },
+  { top: '48%', left: '2%',   w: 100, h: 120, rotateZ:  2,  rotateY:  6, img: null, bg: 'linear-gradient(135deg,#D44A30,#FF8060)' },
+  { top: '68%', left: '10%',  w: 140, h: 105, rotateZ: -2,  rotateY:  7, img: null, bg: 'linear-gradient(140deg,#C8A040,#F0D080)' },
   // Right side
-  { top: '20%', left: '85%',  w: 135, h: 160, rotate:  3,  bg: 'linear-gradient(135deg,#0A0A0A,#222)' },
-  { top: '48%', left: '88%',  w: 115, h: 135, rotate: -3,  bg: 'linear-gradient(150deg,#D44A30,#801A00)' },
-  { top: '70%', left: '80%',  w: 155, h: 110, rotate:  1,  bg: 'linear-gradient(135deg,#4A90D4,#C8A040)' },
+  { top: '20%', left: '85%',  w: 135, h: 160, rotateZ:  3,  rotateY: -8, img: null, bg: 'linear-gradient(135deg,#0A0A0A,#222)' },
+  { top: '48%', left: '88%',  w: 115, h: 135, rotateZ: -3,  rotateY: -7, img: null, bg: 'linear-gradient(150deg,#D44A30,#801A00)' },
+  { top: '70%', left: '80%',  w: 155, h: 110, rotateZ:  1,  rotateY: -6, img: null, bg: 'linear-gradient(135deg,#4A90D4,#C8A040)' },
   // Bottom
-  { top: '72%', left: '28%',  w: 110, h: 105, rotate: -2,  bg: 'linear-gradient(135deg,#90C050,#4A90D4)' },
-  { top: '75%', left: '57%',  w: 130, h: 100, rotate:  3,  bg: 'linear-gradient(135deg,#8090E0,#D44A30)' },
+  { top: '72%', left: '28%',  w: 110, h: 105, rotateZ: -2,  rotateY:  5, img: null, bg: 'linear-gradient(135deg,#90C050,#4A90D4)' },
+  { top: '75%', left: '57%',  w: 130, h: 100, rotateZ:  3,  rotateY: -7, img: null, bg: 'linear-gradient(135deg,#8090E0,#D44A30)' },
 ];
 
 export function LandingPage() {
@@ -62,23 +63,48 @@ export function LandingPage() {
       {/* ── HERO ── */}
       <section style={{ position: 'relative', height: '100vh', minHeight: '600px', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-        {/* Scattered tiles */}
-        {TILES.map((tile, i) => (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              top: tile.top,
-              left: tile.left,
-              width: tile.w,
-              height: tile.h,
-              background: tile.bg,
-              borderRadius: '6px',
-              transform: `rotate(${tile.rotate}deg)`,
-              boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
-            }}
-          />
-        ))}
+        {/* Scattered 3D tiles */}
+        <div style={{ perspective: '900px', position: 'absolute', inset: 0 }}>
+          {TILES.map((tile, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                top: tile.top,
+                left: tile.left,
+                width: tile.w,
+                height: tile.h,
+                borderRadius: '10px',
+                transform: `rotateY(${tile.rotateY}deg) rotateZ(${tile.rotateZ}deg)`,
+                transformStyle: 'preserve-3d',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10)',
+                overflow: 'hidden',
+                background: tile.img ? undefined : tile.bg,
+              }}
+            >
+              {tile.img && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={tile.img}
+                  alt=""
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              )}
+              {/* Shine overlay for 3D feel */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: tile.rotateY > 0
+                    ? 'linear-gradient(105deg, rgba(255,255,255,0.18) 0%, transparent 60%)'
+                    : 'linear-gradient(255deg, rgba(255,255,255,0.18) 0%, transparent 60%)',
+                  borderRadius: '10px',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
+          ))}
+        </div>
 
         {/* Pills row */}
         <div
