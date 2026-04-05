@@ -28,7 +28,20 @@ export default function RootLayout({
     </html>
   );
 
-  if (!publishableKey) return content;
+  if (!publishableKey) {
+    console.warn('NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is not set');
+    return content;
+  }
 
-  return <ClerkProvider publishableKey={publishableKey}>{content}</ClerkProvider>;
+  return (
+    <ClerkProvider
+      publishableKey={publishableKey}
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
+      afterSignInUrl="/comunidad"
+      afterSignUpUrl="/comunidad"
+    >
+      {content}
+    </ClerkProvider>
+  );
 }

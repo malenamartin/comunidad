@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '@clerk/nextjs';
 
 type Mode = 'invite' | 'request';
 
@@ -8,11 +9,15 @@ interface Props {
   theme?: 'dark' | 'light';
 }
 
+const PENDING_KEY = 'fardo_pending_invite';
+
 export function RequestAccessForm({ theme = 'dark' }: Props) {
+  const { isSignedIn, isLoaded } = useAuth();
   const [mode, setMode] = useState<Mode>('invite');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const autoSubmitted = useRef(false);
 
   const [form, setForm] = useState({
     code: '',
@@ -24,42 +29,108 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
     linkedinUrl: '',
   });
 
+  // When signed in, check for pending invite data and auto-submit
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn || autoSubmitted.current) return;
+    const raw = sessionStorage.getItem(PENDING_KEY);
+    if (!raw) return;
+    try {
+      const pending = JSON.parse(raw);
+      sessionStorage.removeItem(PENDING_KEY);
+      autoSubmitted.current = true;
+      setMode('invite');
+      setForm((prev) => ({ ...prev, ...pending }));
+      // Small delay so state is set before submit
+      setTimeout(() => submitJoin(pending), 100);
+    } catch {
+      sessionStorage.removeItem(PENDING_KEY);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded, isSignedIn]);
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function submitJoin(data: typeof form) {
     setLoading(true);
     setError('');
-
     try {
-      const endpoint = mode === 'invite' ? '/api/community/join' : '/api/community/request-access';
-      const body =
-        mode === 'invite'
-          ? { code: form.code, email: form.email, name: form.name, company: form.company, jobTitle: form.jobTitle, country: form.country }
-          : { email: form.email, name: form.name, company: form.company, jobTitle: form.jobTitle, country: form.country, linkedinUrl: form.linkedinUrl };
-
-      const res = await fetch(endpoint, {
+      const res = await fetch('/api/community/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          code: data.code,
+          email: data.email,
+          name: data.name,
+          company: data.company,
+          jobTitle: data.jobTitle,
+          country: data.country,
+        }),
       });
-      const data = await res.json();
-
+      const json = await res.json();
       if (!res.ok) {
-        setError(data.error ?? 'Ocurrió un error. Intenta de nuevo.');
+        setError(json.error ?? 'Ocurrió un error. Intenta de nuevo.');
       } else {
         setSuccess(true);
-        if (mode === 'invite') {
-          setTimeout(() => { window.location.href = '/comunidad'; }, 1500);
-        }
+        setTimeout(() => { window.location.href = '/comunidad'; }, 1500);
       }
     } catch {
       setError('Error de conexión. Intenta de nuevo.');
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError('');
+
+    if (mode === 'request') {
+      setLoading(true);
+      try {
+        const res = await fetch('/api/community/request-access', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: form.email,
+            name: form.name,
+            company: form.company,
+            jobTitle: form.jobTitle,
+            country: form.country,
+            linkedinUrl: form.linkedinUrl,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setError(data.error ?? 'Ocurrió un error. Intenta de nuevo.');
+        } else {
+          setSuccess(true);
+        }
+      } catch {
+        setError('Error de conexión. Intenta de nuevo.');
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    // Invite code flow: requires authentication
+    if (!isSignedIn) {
+      // Save form data and redirect to sign-in/sign-up
+      sessionStorage.setItem(PENDING_KEY, JSON.stringify({
+        code: form.code,
+        email: form.email,
+        name: form.name,
+        company: form.company,
+        jobTitle: form.jobTitle,
+        country: form.country,
+      }));
+      window.location.href = '/sign-up';
+      return;
+    }
+
+    await submitJoin(form);
   }
 
   const isLight = theme === 'light';
@@ -251,9 +322,18 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
           {loading
             ? 'Procesando...'
             : mode === 'invite'
-            ? 'Acceder a la comunidad'
+            ? (isSignedIn ? 'Acceder a la comunidad' : 'Continuar con el código →')
             : 'Enviar solicitud'}
         </button>
+
+        {mode === 'invite' && !isSignedIn && isLoaded && (
+          <p style={{ fontSize: '12px', color: isLight ? '#999' : 'rgba(255,255,255,0.35)', textAlign: 'center' }}>
+            Te vamos a pedir que crees tu cuenta antes de ingresar.{' '}
+            <a href="/sign-in" style={{ color: '#D44A30', textDecoration: 'none' }}>
+              ¿Ya tenés cuenta?
+            </a>
+          </p>
+        )}
       </form>
     </div>
   );
