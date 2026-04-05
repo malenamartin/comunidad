@@ -31,6 +31,26 @@ a {
   text-decoration: none;
 }
 
+/* Landing tile float animations */
+@keyframes float-a {
+  0%, 100% { transform: var(--tile-base) translateY(0px);   }
+  50%       { transform: var(--tile-base) translateY(-10px); }
+}
+@keyframes float-b {
+  0%, 100% { transform: var(--tile-base) translateY(0px);   }
+  50%       { transform: var(--tile-base) translateY(-14px); }
+}
+@keyframes float-c {
+  0%, 100% { transform: var(--tile-base) translateY(0px);   }
+  50%       { transform: var(--tile-base) translateY(-8px);  }
+}
+
+.tile-float {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;

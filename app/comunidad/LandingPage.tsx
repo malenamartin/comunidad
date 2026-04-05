@@ -59,44 +59,54 @@ export function LandingPage() {
       {/* ── HERO ── */}
       <section style={{ position: 'relative', height: '100vh', minHeight: '600px', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-        {/* Scattered 3D tiles */}
-        <div style={{ perspective: '900px', position: 'absolute', inset: 0 }}>
-          {TILES.map((tile, i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                top: tile.top,
-                left: tile.left,
-                width: tile.w,
-                height: tile.h,
-                borderRadius: '10px',
-                transform: `rotateY(${tile.rotateY}deg) rotateZ(${tile.rotateZ}deg)`,
-                transformStyle: 'preserve-3d',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10)',
-                overflow: 'hidden',
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={tile.img}
-                alt=""
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-              {/* Shine overlay for 3D feel */}
+        {/* Scattered 3D tiles with float animation */}
+        <div style={{ perspective: '1200px', position: 'absolute', inset: 0 }}>
+          {TILES.map((tile, i) => {
+            const baseTransform = `rotateY(${tile.rotateY}deg) rotateZ(${tile.rotateZ}deg)`;
+            const animName = ['float-a', 'float-b', 'float-c'][i % 3];
+            const delay = `${(i * 0.37).toFixed(2)}s`;
+            const duration = `${3.5 + (i % 4) * 0.5}s`;
+            return (
               <div
+                key={i}
+                className="tile-float"
                 style={{
                   position: 'absolute',
-                  inset: 0,
-                  background: tile.rotateY > 0
-                    ? 'linear-gradient(105deg, rgba(255,255,255,0.18) 0%, transparent 60%)'
-                    : 'linear-gradient(255deg, rgba(255,255,255,0.18) 0%, transparent 60%)',
-                  borderRadius: '10px',
-                  pointerEvents: 'none',
-                }}
-              />
-            </div>
-          ))}
+                  top: tile.top,
+                  left: tile.left,
+                  width: tile.w,
+                  height: tile.h,
+                  borderRadius: '12px',
+                  '--tile-base': baseTransform,
+                  transform: baseTransform,
+                  transformStyle: 'preserve-3d',
+                  boxShadow: '0 12px 40px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.10)',
+                  overflow: 'hidden',
+                  animationName: animName,
+                  animationDuration: duration,
+                  animationDelay: delay,
+                } as React.CSSProperties}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={tile.img}
+                  alt=""
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+                {/* Shine overlay */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: tile.rotateY > 0
+                      ? 'linear-gradient(105deg, rgba(255,255,255,0.15) 0%, transparent 55%)'
+                      : 'linear-gradient(255deg, rgba(255,255,255,0.15) 0%, transparent 55%)',
+                    pointerEvents: 'none',
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
 
         {/* Pills row */}
