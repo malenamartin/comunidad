@@ -6,8 +6,12 @@ import { UserButton } from '@clerk/nextjs';
 import { cn } from '@/lib/utils';
 
 const NAV_TABS = [
-  { label: 'Feed', href: '/comunidad' },
-  { label: 'Aprende', href: '/comunidad/aprende' },
+  { label: 'Feed',        href: '/comunidad' },
+  { label: 'Benchmarks', href: '/comunidad/benchmarks' },
+  { label: 'Aprende',    href: '/comunidad/aprende' },
+  { label: 'Betas',      href: '/comunidad/betas' },
+  { label: 'Eventos',    href: '/comunidad/eventos' },
+  { label: 'Miembros',   href: '/comunidad/miembros' },
 ];
 
 export function Navbar() {
