@@ -69,6 +69,12 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
         }),
       });
       const json = await res.json();
+      if (res.status === 401) {
+        // Session not valid — save data and redirect to sign-in
+        sessionStorage.setItem(PENDING_KEY, JSON.stringify(data));
+        window.location.href = '/sign-in';
+        return;
+      }
       if (!res.ok) {
         setError(json.error ?? 'Ocurrió un error. Intenta de nuevo.');
       } else {
