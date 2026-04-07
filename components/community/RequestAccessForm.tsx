@@ -69,9 +69,10 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
       const json = await res.json();
 
       if (res.status === 401) {
-        // Not authenticated — save data and send to sign-up
+        // Not authenticated — save data and redirect to primary app sign-up
         sessionStorage.setItem(PENDING_KEY, JSON.stringify(data));
-        window.location.href = '/sign-up';
+        const signUpUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL ?? 'https://platform-fardo.com/sign-up';
+        window.location.href = signUpUrl;
         return;
       }
       if (!res.ok) {
@@ -231,7 +232,7 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
         {mode === 'invite' && (
           <p style={{ fontSize: '12px', color: isLight ? '#999' : 'rgba(255,255,255,0.35)', textAlign: 'center' }}>
             ¿Ya tenés cuenta?{' '}
-            <a href="/sign-in" style={{ color: '#D44A30', textDecoration: 'none' }}>Iniciá sesión</a>
+            <a href={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL ?? 'https://platform-fardo.com/sign-in'} style={{ color: '#D44A30', textDecoration: 'none' }}>Iniciá sesión</a>
           </p>
         )}
       </form>

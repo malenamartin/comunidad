@@ -1,22 +1,8 @@
-import { SignUp } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
+// This is a satellite app — authentication lives on platform-fardo.com.
+// Redirect any direct access to /sign-up to the primary app.
 export default function SignUpPage() {
-  return (
-    <div
-      style={{
-        background: '#0A0A0A',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: '24px',
-      }}
-    >
-      <SignUp
-        afterSignUpUrl={`${process.env.NEXT_PUBLIC_APP_URL ?? ''}/comunidad`}
-        signInUrl={`${process.env.NEXT_PUBLIC_APP_URL ?? ''}/sign-in`}
-      />
-    </div>
-  );
+  const signUpUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL ?? 'https://platform-fardo.com/sign-up';
+  redirect(signUpUrl);
 }

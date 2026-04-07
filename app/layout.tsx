@@ -33,13 +33,20 @@ export default function RootLayout({
     return content;
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';
+  // Satellite domain: authentication lives on the primary app (platform-fardo.com).
+  // NEVER point signInUrl/signUpUrl to this satellite's own /sign-in.
+  const signInUrl  = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL  ?? 'https://platform-fardo.com/sign-in';
+  const signUpUrl  = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL  ?? 'https://platform-fardo.com/sign-up';
+  const domain     = process.env.NEXT_PUBLIC_CLERK_DOMAIN        ?? 'comunidad.heyfardo.com';
+  const appUrl     = process.env.NEXT_PUBLIC_APP_URL             ?? 'https://comunidad.heyfardo.com';
 
   return (
     <ClerkProvider
       publishableKey={publishableKey}
-      signInUrl={`${appUrl}/sign-in`}
-      signUpUrl={`${appUrl}/sign-up`}
+      domain={domain}
+      isSatellite
+      signInUrl={signInUrl}
+      signUpUrl={signUpUrl}
       afterSignInUrl={`${appUrl}/comunidad`}
       afterSignUpUrl={`${appUrl}/comunidad`}
     >

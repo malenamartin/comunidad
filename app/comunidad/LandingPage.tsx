@@ -180,7 +180,7 @@ export function LandingPage() {
 
         {/* Sign-in link */}
         <a
-          href="/sign-in"
+          href={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL ?? 'https://platform-fardo.com/sign-in'}
           style={{
             position: 'absolute',
             top: '22px',
