@@ -33,13 +33,15 @@ export default function RootLayout({
     return content;
   }
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';
+
   return (
     <ClerkProvider
       publishableKey={publishableKey}
-      signInUrl="/sign-in"
-      signUpUrl="/sign-up"
-      afterSignInUrl="/comunidad"
-      afterSignUpUrl="/comunidad"
+      signInUrl={`${appUrl}/sign-in`}
+      signUpUrl={`${appUrl}/sign-up`}
+      afterSignInUrl={`${appUrl}/comunidad`}
+      afterSignUpUrl={`${appUrl}/comunidad`}
     >
       {content}
     </ClerkProvider>

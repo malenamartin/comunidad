@@ -14,8 +14,8 @@ export default function SignUpPage() {
       }}
     >
       <SignUp
-        afterSignUpUrl="/comunidad"
-        signInUrl="/sign-in"
+        afterSignUpUrl={`${process.env.NEXT_PUBLIC_APP_URL ?? ''}/comunidad`}
+        signInUrl={`${process.env.NEXT_PUBLIC_APP_URL ?? ''}/sign-in`}
       />
     </div>
   );
