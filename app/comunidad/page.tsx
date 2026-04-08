@@ -3,6 +3,12 @@ import { LandingPage } from './LandingPage';
 import { FeedPage } from './FeedPage';
 
 export default async function ComunidadPage() {
+  // BYPASS_AUTH=true lets you preview the community without Clerk configured.
+  // Remove this env var once authentication is working.
+  if (process.env.BYPASS_AUTH === 'true') {
+    return <FeedPage />;
+  }
+
   const { userId, sessionClaims } = await auth();
 
   const roles =

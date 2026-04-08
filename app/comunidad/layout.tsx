@@ -6,6 +6,16 @@ export default async function ComunidadLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // BYPASS_AUTH=true lets you preview the community without Clerk configured.
+  if (process.env.BYPASS_AUTH === 'true') {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
+        <Navbar bypassAuth />
+        <main style={{ paddingTop: '64px' }}>{children}</main>
+      </div>
+    );
+  }
+
   const { userId, sessionClaims } = await auth();
   const roles =
     ((sessionClaims?.metadata as Record<string, unknown>)?.roles as string[]) ?? [];

@@ -16,7 +16,7 @@ const NAV_TABS = [
   { label: 'Ranking',    href: '/comunidad/ranking' },
 ];
 
-export function Navbar() {
+export function Navbar({ bypassAuth = false }: { bypassAuth?: boolean }) {
   const pathname = usePathname();
 
   return (
@@ -104,14 +104,16 @@ export function Navbar() {
           <Link href="/comunidad/admin" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none', padding: '4px 10px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px' }}>
             Admin
           </Link>
-          <UserButton
-            afterSignOutUrl="/comunidad"
-            appearance={{
-              elements: {
-                userButtonAvatarBox: { width: 32, height: 32 },
-              },
-            }}
-          />
+          {!bypassAuth && (
+            <UserButton
+              afterSignOutUrl="/comunidad"
+              appearance={{
+                elements: {
+                  userButtonAvatarBox: { width: 32, height: 32 },
+                },
+              }}
+            />
+          )}
         </div>
       </div>
 
