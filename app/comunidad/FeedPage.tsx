@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import { PostCard } from '@/components/community/PostCard';
+import { NewPostModal } from '@/components/community/NewPostModal';
 import type { Post, PostType } from '@/lib/community/types';
 
 const POST_TYPES: { value: PostType | ''; label: string }[] = [
@@ -19,27 +20,52 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export function FeedPage() {
   const [type, setType] = useState<PostType | ''>('');
+  const [showNewPost, setShowNewPost] = useState(false);
 
   const url = type ? `/api/community/posts?type=${type}` : '/api/community/posts';
   const { data, isLoading } = useSWR<{ posts: Post[]; total: number }>(url, fetcher);
 
   return (
     <div style={{ maxWidth: '780px', margin: '0 auto', padding: '32px 24px' }}>
-      <div style={{ marginBottom: '28px' }}>
-        <h1
+      {showNewPost && <NewPostModal onClose={() => setShowNewPost(false)} />}
+
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '28px' }}>
+        <div>
+          <h1
+            style={{
+              fontSize: '24px',
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              color: '#FFFFFF',
+              marginBottom: '4px',
+            }}
+          >
+            Feed
+          </h1>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
+            Lo último de la comunidad
+          </p>
+        </div>
+        <button
+          onClick={() => setShowNewPost(true)}
           style={{
-            fontSize: '24px',
-            fontWeight: 700,
-            letterSpacing: '-0.02em',
+            padding: '9px 18px',
+            borderRadius: '10px',
+            border: 'none',
+            background: 'linear-gradient(135deg, #D44A30, #C27A28)',
             color: '#FFFFFF',
-            marginBottom: '4px',
+            fontSize: '14px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            flexShrink: 0,
           }}
         >
-          Feed
-        </h1>
-        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
-          Lo último de la comunidad
-        </p>
+          <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span>
+          Nuevo post
+        </button>
       </div>
 
       {/* Type filter tabs */}
