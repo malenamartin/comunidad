@@ -58,7 +58,7 @@ export function BenchmarkCard({ benchmark }: BenchmarkCardProps) {
           <div
             style={{
               width: '32px', height: '32px', borderRadius: '8px',
-              background: 'rgba(212,74,48,0.12)', border: '1px solid rgba(212,74,48,0.2)',
+              background: 'rgba(255,106,0,0.12)', border: '1px solid rgba(255,106,0,0.2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '16px',
             }}
@@ -73,7 +73,7 @@ export function BenchmarkCard({ benchmark }: BenchmarkCardProps) {
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
               <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>Citation Rate</span>
             </div>
-            <MetricBar value={benchmark.citation_rate} color="#D44A30" />
+            <MetricBar value={benchmark.citation_rate} color="#FF6A00" />
           </div>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>

@@ -10,7 +10,7 @@ const POST_TYPES: { value: PostType; label: string; color: string }[] = [
   { value: 'beta',       label: 'Beta',        color: '#90C050' },
   { value: 'educacion',  label: 'Educación',   color: '#C8A040' },
   { value: 'evento',     label: 'Evento',      color: '#8090E0' },
-  { value: 'anuncio',    label: 'Anuncio',     color: '#D44A30' },
+  { value: 'anuncio',    label: 'Anuncio',     color: '#FF6A00' },
 ];
 
 interface Props {
@@ -232,8 +232,8 @@ export function NewPostModal({ onClose }: Props) {
                 borderRadius: '8px',
                 border: 'none',
                 background: submitting || !title.trim() || !body.trim()
-                  ? 'rgba(212,74,48,0.4)'
-                  : 'linear-gradient(135deg, #D44A30, #C27A28)',
+                  ? 'rgba(255,106,0,0.4)'
+                  : 'linear-gradient(135deg, #FF6A00, #E05A00)',
                 color: '#FFFFFF',
                 fontSize: '14px',
                 fontWeight: 600,

@@ -29,7 +29,7 @@ export default function ComunidadError({
           padding: '10px 24px',
           borderRadius: '8px',
           border: 'none',
-          background: 'linear-gradient(135deg, #D44A30, #C27A28)',
+          background: 'linear-gradient(135deg, #FF6A00, #E05A00)',
           color: '#fff',
           fontWeight: 600,
           cursor: 'pointer',

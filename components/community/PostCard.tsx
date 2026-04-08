@@ -12,7 +12,7 @@ const TYPE_STYLES: Record<PostType, { label: string; color: string; bg: string }
   educacion: { label: 'Educación', color: '#C8A040', bg: 'rgba(180,130,40,0.15)' },
   evento:    { label: 'Evento',    color: '#8090E0', bg: 'rgba(80,120,200,0.15)' },
   discusion: { label: 'Discusión', color: 'rgba(255,255,255,0.5)', bg: 'rgba(255,255,255,0.06)' },
-  anuncio:   { label: 'Anuncio',   color: '#D44A30', bg: 'rgba(212,74,48,0.15)' },
+  anuncio:   { label: 'Anuncio',   color: '#FF6A00', bg: 'rgba(255,106,0,0.15)' },
 };
 
 interface PostCardProps {
@@ -53,9 +53,9 @@ export function PostCard({ post }: PostCardProps) {
                   style={{
                     fontSize: '10px',
                     fontWeight: 700,
-                    color: '#D44A30',
-                    background: 'rgba(212,74,48,0.12)',
-                    border: '1px solid rgba(212,74,48,0.25)',
+                    color: '#FF6A00',
+                    background: 'rgba(255,106,0,0.12)',
+                    border: '1px solid rgba(255,106,0,0.25)',
                     borderRadius: '3px',
                     padding: '1px 5px',
                     letterSpacing: '0.05em',
@@ -100,7 +100,7 @@ export function PostCard({ post }: PostCardProps) {
           }}
         >
           {post.is_pinned && (
-            <span style={{ color: '#D44A30', marginRight: '6px', fontSize: '12px' }}>📌</span>
+            <span style={{ color: '#FF6A00', marginRight: '6px', fontSize: '12px' }}>📌</span>
           )}
           {post.title}
         </h3>
@@ -137,10 +137,10 @@ export function PostCard({ post }: PostCardProps) {
               alignItems: 'center',
               gap: '5px',
               fontSize: '13px',
-              color: post.user_liked ? '#D44A30' : 'rgba(255,255,255,0.35)',
+              color: post.user_liked ? '#FF6A00' : 'rgba(255,255,255,0.35)',
             }}
           >
-            <Heart size={14} fill={post.user_liked ? '#D44A30' : 'none'} />
+            <Heart size={14} fill={post.user_liked ? '#FF6A00' : 'none'} />
             {post.likes_count}
           </span>
         </div>

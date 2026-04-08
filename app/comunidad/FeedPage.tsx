@@ -52,7 +52,7 @@ export function FeedPage() {
             padding: '9px 18px',
             borderRadius: '10px',
             border: 'none',
-            background: 'linear-gradient(135deg, #D44A30, #C27A28)',
+            background: 'linear-gradient(135deg, #FF6A00, #E05A00)',
             color: '#FFFFFF',
             fontSize: '14px',
             fontWeight: 600,

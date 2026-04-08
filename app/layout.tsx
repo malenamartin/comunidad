@@ -17,10 +17,10 @@ export default function RootLayout({
   const content = (
     <html lang="es">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Satoshi — Fardo Design System font */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,900&display=swap"
           rel="stylesheet"
         />
       </head>

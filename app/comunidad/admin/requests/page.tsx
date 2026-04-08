@@ -35,7 +35,7 @@ export default function AdminRequestsPage() {
                   <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>{new Date(r.created_at).toLocaleDateString('es-AR')}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
-                  <button onClick={() => resolve(r.id, 'approve')} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: 'linear-gradient(135deg,#D44A30,#C27A28)', color: '#fff', fontWeight: 600, cursor: 'pointer', fontSize: '13px' }}>
+                  <button onClick={() => resolve(r.id, 'approve')} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: 'none', background: 'linear-gradient(135deg,#FF6A00,#E05A00)', color: '#fff', fontWeight: 600, cursor: 'pointer', fontSize: '13px' }}>
                     Aprobar
                   </button>
                   <button onClick={() => resolve(r.id, 'reject')} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '13px' }}>

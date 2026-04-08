@@ -211,13 +211,13 @@ export function LandingPage() {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              background: 'rgba(212,74,48,0.08)',
-              border: '1px solid rgba(212,74,48,0.2)',
+              background: 'rgba(255,106,0,0.08)',
+              border: '1px solid rgba(255,106,0,0.2)',
               borderRadius: '100px',
               padding: '5px 16px',
               fontSize: '12px',
               fontWeight: 700,
-              color: '#D44A30',
+              color: '#FF6A00',
               letterSpacing: '0.06em',
               marginBottom: '16px',
             }}
@@ -265,14 +265,14 @@ export function LandingPage() {
                   <div
                     style={{
                       width: '40px', height: '40px',
-                      background: 'rgba(212,74,48,0.08)',
-                      border: '1px solid rgba(212,74,48,0.15)',
+                      background: 'rgba(255,106,0,0.08)',
+                      border: '1px solid rgba(255,106,0,0.15)',
                       borderRadius: '10px',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       marginBottom: '14px',
                     }}
                   >
-                    <Icon size={18} color="#D44A30" />
+                    <Icon size={18} color="#FF6A00" />
                   </div>
                   <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#0A0A0A', marginBottom: '6px' }}>
                     {b.title}

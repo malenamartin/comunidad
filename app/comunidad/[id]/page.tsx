@@ -201,9 +201,9 @@ export default function PostDetailPage() {
                   style={{
                     fontSize: '10px',
                     fontWeight: 700,
-                    color: '#D44A30',
-                    background: 'rgba(212,74,48,0.12)',
-                    border: '1px solid rgba(212,74,48,0.25)',
+                    color: '#FF6A00',
+                    background: 'rgba(255,106,0,0.12)',
+                    border: '1px solid rgba(255,106,0,0.25)',
                     borderRadius: '3px',
                     padding: '1px 5px',
                   }}
@@ -272,14 +272,14 @@ export default function PostDetailPage() {
               alignItems: 'center',
               gap: '5px',
               fontSize: '13px',
-              color: post.user_liked ? '#D44A30' : 'rgba(255,255,255,0.35)',
+              color: post.user_liked ? '#FF6A00' : 'rgba(255,255,255,0.35)',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
               padding: 0,
             }}
           >
-            <Heart size={14} fill={post.user_liked ? '#D44A30' : 'none'} />
+            <Heart size={14} fill={post.user_liked ? '#FF6A00' : 'none'} />
             {post.likes_count}
           </button>
         </div>
@@ -320,7 +320,7 @@ export default function PostDetailPage() {
                 onClick={() => setReplyTo(undefined)}
                 style={{
                   fontSize: '12px',
-                  color: '#D44A30',
+                  color: '#FF6A00',
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
@@ -362,7 +362,7 @@ export default function PostDetailPage() {
                 background:
                   submitting || !commentBody.trim()
                     ? 'rgba(255,255,255,0.08)'
-                    : 'linear-gradient(135deg, #D44A30, #C27A28)',
+                    : 'linear-gradient(135deg, #FF6A00, #E05A00)',
               }}
             >
               {submitting ? 'Enviando...' : 'Comentar'}

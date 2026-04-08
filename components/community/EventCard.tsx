@@ -39,8 +39,8 @@ export function EventCard({ event }: EventCardProps) {
         <div
           style={{
             flexShrink: 0, width: '52px', height: '60px',
-            background: isPast ? 'rgba(255,255,255,0.05)' : 'rgba(212,74,48,0.12)',
-            border: `1px solid ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(212,74,48,0.25)'}`,
+            background: isPast ? 'rgba(255,255,255,0.05)' : 'rgba(255,106,0,0.12)',
+            border: `1px solid ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(255,106,0,0.25)'}`,
             borderRadius: '10px',
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           }}
@@ -48,7 +48,7 @@ export function EventCard({ event }: EventCardProps) {
           <span style={{ fontSize: '22px', fontWeight: 800, color: isPast ? 'rgba(255,255,255,0.4)' : '#FFFFFF', lineHeight: 1 }}>
             {date.getDate()}
           </span>
-          <span style={{ fontSize: '10px', fontWeight: 600, color: isPast ? 'rgba(255,255,255,0.3)' : '#D44A30', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '10px', fontWeight: 600, color: isPast ? 'rgba(255,255,255,0.3)' : '#FF6A00', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
             {date.toLocaleDateString('es-AR', { month: 'short' })}
           </span>
         </div>

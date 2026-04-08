@@ -11,7 +11,7 @@ const LEVEL_LABELS: Record<string, { label: string; color: string }> = {
   invisible: { label: 'Invisible', color: 'rgba(255,255,255,0.4)' },
   visible:   { label: 'Visible',   color: '#90C050' },
   referente: { label: 'Referente', color: '#C8A040' },
-  embajador: { label: 'Embajador', color: '#D44A30' },
+  embajador: { label: 'Embajador', color: '#FF6A00' },
 };
 
 const inputStyle: React.CSSProperties = {
@@ -133,9 +133,9 @@ export default function PerfilPage() {
                   style={{
                     fontSize: '10px',
                     fontWeight: 700,
-                    color: '#D44A30',
-                    background: 'rgba(212,74,48,0.12)',
-                    border: '1px solid rgba(212,74,48,0.25)',
+                    color: '#FF6A00',
+                    background: 'rgba(255,106,0,0.12)',
+                    border: '1px solid rgba(255,106,0,0.25)',
                     borderRadius: '3px',
                     padding: '1px 5px',
                   }}
@@ -256,7 +256,7 @@ export default function PerfilPage() {
             color: '#FFFFFF',
             background: saving
               ? 'rgba(255,255,255,0.1)'
-              : 'linear-gradient(135deg, #D44A30, #C27A28)',
+              : 'linear-gradient(135deg, #FF6A00, #E05A00)',
           }}
         >
           {saving ? 'Guardando...' : 'Guardar cambios'}

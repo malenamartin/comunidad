@@ -93,7 +93,7 @@ export function BetaCard({ beta, onRequest }: BetaCardProps) {
               padding: '7px 16px', borderRadius: '8px', border: 'none',
               cursor: loading ? 'not-allowed' : 'pointer',
               fontSize: '13px', fontWeight: 600, color: '#FFFFFF',
-              background: loading ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #D44A30, #C27A28)',
+              background: loading ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #FF6A00, #E05A00)',
             }}
           >
             {loading ? '...' : config.btnLabel}

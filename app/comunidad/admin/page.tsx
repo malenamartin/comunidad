@@ -24,10 +24,10 @@ export default async function AdminPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '32px' }}>
         {cards.map((c) => (
           <Link key={c.href} href={c.href} style={{ textDecoration: 'none' }}>
-            <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${c.alert ? 'rgba(212,74,48,0.4)' : 'rgba(255,255,255,0.08)'}`, borderRadius: '12px', padding: '24px', cursor: 'pointer', transition: 'border-color 0.15s' }}>
+            <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${c.alert ? 'rgba(255,106,0,0.4)' : 'rgba(255,255,255,0.08)'}`, borderRadius: '12px', padding: '24px', cursor: 'pointer', transition: 'border-color 0.15s' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <span style={{ fontSize: '24px' }}>{c.icon}</span>
-                {c.alert && <span style={{ fontSize: '11px', background: '#D44A30', color: '#fff', borderRadius: '100px', padding: '2px 8px', fontWeight: 600 }}>Nuevo</span>}
+                {c.alert && <span style={{ fontSize: '11px', background: '#FF6A00', color: '#fff', borderRadius: '100px', padding: '2px 8px', fontWeight: 600 }}>Nuevo</span>}
               </div>
               <p style={{ fontSize: '32px', fontWeight: 700, color: '#fff', margin: '12px 0 4px' }}>{c.value}</p>
               <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>{c.label}</p>

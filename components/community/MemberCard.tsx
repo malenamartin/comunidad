@@ -6,7 +6,7 @@ const LEVEL_LABELS: Record<string, { label: string; color: string }> = {
   invisible: { label: 'Invisible', color: 'rgba(255,255,255,0.3)' },
   visible:   { label: 'Visible',   color: '#90C050' },
   referente: { label: 'Referente', color: '#C8A040' },
-  embajador: { label: 'Embajador', color: '#D44A30' },
+  embajador: { label: 'Embajador', color: '#FF6A00' },
 };
 
 interface MemberCardProps {
@@ -41,7 +41,7 @@ export function MemberCard({ member }: MemberCardProps) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '2px' }}>
             <span style={{ fontSize: '14px', fontWeight: 600, color: '#FFFFFF' }}>{member.name}</span>
             {member.is_founder && (
-              <span style={{ fontSize: '9px', fontWeight: 700, color: '#D44A30', background: 'rgba(212,74,48,0.12)', border: '1px solid rgba(212,74,48,0.25)', borderRadius: '3px', padding: '1px 5px' }}>
+              <span style={{ fontSize: '9px', fontWeight: 700, color: '#FF6A00', background: 'rgba(255,106,0,0.12)', border: '1px solid rgba(255,106,0,0.25)', borderRadius: '3px', padding: '1px 5px' }}>
                 FUNDADOR
               </span>
             )}

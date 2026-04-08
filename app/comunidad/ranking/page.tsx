@@ -82,7 +82,7 @@ export default function RankingPage() {
               return (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)' }}>{meta.emoji} {meta.label}</span>
-                  <span style={{ fontSize: '13px', fontWeight: 600, color: '#D44A30' }}>+{h.points}</span>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: '#FF6A00' }}>+{h.points}</span>
                 </div>
               );
             })}

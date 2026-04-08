@@ -211,7 +211,7 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
         )}
 
         {error && (
-          <p style={{ fontSize: '13px', color: '#D44A30', background: isLight ? 'rgba(212,74,48,0.08)' : 'rgba(220,80,50,0.1)', borderRadius: '6px', padding: '8px 12px' }}>
+          <p style={{ fontSize: '13px', color: '#FF6A00', background: isLight ? 'rgba(255,106,0,0.08)' : 'rgba(220,80,50,0.1)', borderRadius: '6px', padding: '8px 12px' }}>
             {error}
           </p>
         )}
@@ -222,7 +222,7 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
           style={{
             padding: '12px', borderRadius: '8px', border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
             fontSize: '14px', fontWeight: 600, color: '#FFFFFF',
-            background: loading ? (isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.1)') : 'linear-gradient(135deg, #D44A30, #C27A28)',
+            background: loading ? (isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.1)') : 'linear-gradient(135deg, #FF6A00, #E05A00)',
             transition: 'opacity 0.15s',
           }}
         >
@@ -232,7 +232,7 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
         {mode === 'invite' && (
           <p style={{ fontSize: '12px', color: isLight ? '#999' : 'rgba(255,255,255,0.35)', textAlign: 'center' }}>
             ¿Ya tenés cuenta?{' '}
-            <a href={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL ?? 'https://platform-fardo.com/sign-in'} style={{ color: '#D44A30', textDecoration: 'none' }}>Iniciá sesión</a>
+            <a href={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL ?? 'https://platform-fardo.com/sign-in'} style={{ color: '#FF6A00', textDecoration: 'none' }}>Iniciá sesión</a>
           </p>
         )}
       </form>

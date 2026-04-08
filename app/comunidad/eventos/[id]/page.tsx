@@ -40,9 +40,9 @@ export default function EventDetailPage() {
       <div style={{ background: 'rgba(255,255,255,0.03)', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '28px' }}>
         {/* Date + title */}
         <div style={{ display: 'flex', gap: '20px', marginBottom: '20px', alignItems: 'flex-start' }}>
-          <div style={{ flexShrink: 0, width: '64px', height: '72px', background: isPast ? 'rgba(255,255,255,0.05)' : 'rgba(212,74,48,0.12)', border: `1px solid ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(212,74,48,0.25)'}`, borderRadius: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ flexShrink: 0, width: '64px', height: '72px', background: isPast ? 'rgba(255,255,255,0.05)' : 'rgba(255,106,0,0.12)', border: `1px solid ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(255,106,0,0.25)'}`, borderRadius: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <span style={{ fontSize: '26px', fontWeight: 800, color: '#FFFFFF', lineHeight: 1 }}>{date.getDate()}</span>
-            <span style={{ fontSize: '11px', fontWeight: 600, color: '#D44A30', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '11px', fontWeight: 600, color: '#FF6A00', textTransform: 'uppercase' }}>
               {date.toLocaleDateString('es-AR', { month: 'short' })}
             </span>
             <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)' }}>{date.getFullYear()}</span>
@@ -80,7 +80,7 @@ export default function EventDetailPage() {
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {event.speakers.map((s) => (
                 <div key={s.name} style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.04)', borderRadius: '8px', padding: '8px 12px' }}>
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(212,74,48,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 600, color: '#FFFFFF' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(255,106,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 600, color: '#FFFFFF' }}>
                     {s.name[0]}
                   </div>
                   <div>
@@ -105,7 +105,7 @@ export default function EventDetailPage() {
             </div>
           )}
           {!isPast && event.register_url && (
-            <a href={event.register_url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 20px', borderRadius: '8px', background: 'linear-gradient(135deg, #D44A30, #C27A28)', color: '#FFFFFF', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+            <a href={event.register_url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 20px', borderRadius: '8px', background: 'linear-gradient(135deg, #FF6A00, #E05A00)', color: '#FFFFFF', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
               Registrarme <ExternalLink size={13} />
             </a>
           )}

@@ -173,10 +173,10 @@ export function Navbar({ bypassAuth = false }: { bypassAuth?: boolean }) {
                     height: '100%',
                     padding: '0 16px',
                     fontSize: '14px',
-                    fontWeight: isActive ? 600 : 400,
-                    color: isActive || isOpen ? '#FFFFFF' : 'rgba(255,255,255,0.55)',
+                    fontWeight: isActive ? 600 : 500,
+                    color: isActive ? '#FF6A00' : isOpen ? '#FFB878' : 'rgba(255,255,255,0.55)',
                     textDecoration: 'none',
-                    borderBottom: isActive ? '2px solid #FFFFFF' : isOpen ? '2px solid rgba(255,255,255,0.3)' : '2px solid transparent',
+                    borderBottom: isActive ? '2px solid #FF6A00' : isOpen ? '2px solid #FFB878' : '2px solid transparent',
                     transition: 'color 0.15s, border-color 0.15s',
                     whiteSpace: 'nowrap',
                   }}
@@ -214,7 +214,7 @@ export function Navbar({ bypassAuth = false }: { bypassAuth?: boolean }) {
           ) : (
             <div style={{
               width: 34, height: 34, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #D44A30, #C27A28)',
+              background: 'linear-gradient(135deg, #FF6A00, #E05A00)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '13px', fontWeight: 700, color: '#fff',
             }}>M</div>
@@ -261,7 +261,7 @@ export function Navbar({ bypassAuth = false }: { bypassAuth?: boolean }) {
             borderTop: '1px solid rgba(255,255,255,0.07)',
             borderBottom: '1px solid rgba(255,255,255,0.07)',
             padding: '28px 0 32px',
-            boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
           }}
         >
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 32px' }}>
@@ -272,7 +272,8 @@ export function Navbar({ bypassAuth = false }: { bypassAuth?: boolean }) {
                 onClick={() => setHovered(null)}
                 style={{
                   fontSize: '13px',
-                  color: 'rgba(255,255,255,0.5)',
+                  fontWeight: 500,
+                  color: '#FF6A00',
                   textDecoration: 'none',
                   display: 'flex',
                   alignItems: 'center',
@@ -299,10 +300,10 @@ export function Navbar({ bypassAuth = false }: { bypassAuth?: boolean }) {
                       position: 'relative',
                       width: '100%',
                       paddingTop: activeMega.aspectRatio,
-                      borderRadius: '10px',
+                      borderRadius: '12px', /* --r-lg */
                       overflow: 'hidden',
                       marginBottom: '12px',
-                      border: '1px solid rgba(255,255,255,0.07)',
+                      border: '1px solid rgba(255,255,255,0.08)',
                     }}
                   >
                     <div
@@ -383,9 +384,9 @@ export function Navbar({ bypassAuth = false }: { bypassAuth?: boolean }) {
                 whiteSpace: 'nowrap',
                 padding: '10px 16px',
                 fontSize: '13px',
-                fontWeight: isActive ? 600 : 400,
-                color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.45)',
-                borderBottom: isActive ? '2px solid #FFFFFF' : '2px solid transparent',
+                fontWeight: isActive ? 600 : 500,
+                color: isActive ? '#FF6A00' : 'rgba(255,255,255,0.45)',
+                borderBottom: isActive ? '2px solid #FF6A00' : '2px solid transparent',
                 textDecoration: 'none',
                 flexShrink: 0,
                 transition: 'color 0.15s',

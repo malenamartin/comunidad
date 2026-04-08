@@ -63,7 +63,7 @@ export default function BenchmarkDetailPage() {
 
         {/* Metrics */}
         <div style={{ marginBottom: '24px' }}>
-          <MetricRow label="Citation Rate" value={benchmark.citation_rate} color="#D44A30" />
+          <MetricRow label="Citation Rate" value={benchmark.citation_rate} color="#FF6A00" />
           <MetricRow label="SOV promedio" value={benchmark.sov_avg} color="#4A90D4" />
           <MetricRow label="AEO Score top" value={benchmark.aeo_score_top} color="#C8A040" />
           <MetricRow label="GEO Score top" value={benchmark.geo_score_top} color="#8090E0" />
@@ -82,7 +82,7 @@ export default function BenchmarkDetailPage() {
                 <div key={brand.name} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', width: '20px' }}>{i + 1}</span>
                   <span style={{ fontSize: '14px', fontWeight: 500, color: '#FFFFFF', flex: 1 }}>{brand.name}</span>
-                  <span style={{ fontSize: '13px', fontWeight: 700, color: '#D44A30' }}>{brand.score}</span>
+                  <span style={{ fontSize: '13px', fontWeight: 700, color: '#FF6A00' }}>{brand.score}</span>
                   {brand.delta !== 0 && (
                     <span style={{ fontSize: '11px', color: brand.delta > 0 ? '#90C050' : '#E07050' }}>
                       {brand.delta > 0 ? '+' : ''}{brand.delta}
@@ -96,8 +96,8 @@ export default function BenchmarkDetailPage() {
 
         {/* Insights */}
         {benchmark.insights && (
-          <div style={{ background: 'rgba(212,74,48,0.06)', border: '1px solid rgba(212,74,48,0.15)', borderRadius: '10px', padding: '16px' }}>
-            <h2 style={{ fontSize: '13px', fontWeight: 600, color: '#D44A30', marginBottom: '8px', letterSpacing: '0.04em' }}>
+          <div style={{ background: 'rgba(255,106,0,0.06)', border: '1px solid rgba(255,106,0,0.15)', borderRadius: '10px', padding: '16px' }}>
+            <h2 style={{ fontSize: '13px', fontWeight: 600, color: '#FF6A00', marginBottom: '8px', letterSpacing: '0.04em' }}>
               ANÁLISIS FARDO
             </h2>
             <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>

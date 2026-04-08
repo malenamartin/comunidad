@@ -64,7 +64,7 @@ export function VideoCard({ video }: VideoCardProps) {
               style={{
                 width: '100%',
                 height: '100%',
-                background: 'linear-gradient(135deg, rgba(212,74,48,0.2), rgba(10,10,10,0.8))',
+                background: 'linear-gradient(135deg, rgba(255,106,0,0.2), rgba(10,10,10,0.8))',
               }}
             />
           )}
@@ -84,7 +84,7 @@ export function VideoCard({ video }: VideoCardProps) {
                 width: 44,
                 height: 44,
                 borderRadius: '50%',
-                background: 'rgba(212,74,48,0.9)',
+                background: 'rgba(255,106,0,0.9)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
