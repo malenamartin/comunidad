@@ -1,6 +1,8 @@
 export type PostType = 'benchmark' | 'beta' | 'educacion' | 'evento' | 'discusion' | 'anuncio';
 export type MemberLevel = 'invisible' | 'visible' | 'referente' | 'embajador';
 
+export type AvatarSource = 'clerk' | 'preset';
+
 export interface CommunityMember {
   id: string;
   clerk_user_id: string;
@@ -16,6 +18,9 @@ export interface CommunityMember {
   invite_code_used: string | null;
   is_founder: boolean;
   is_active: boolean;
+  avatar_source?: AvatarSource;
+  preset_avatar_id?: string | null;
+  clerk_avatar_url?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -26,6 +31,8 @@ export interface Post {
   author_name: string;
   author_company: string | null;
   author_is_founder: boolean;
+  /** URL para mostrar avatar (Clerk cache o preset) */
+  author_avatar_url: string | null;
   title: string;
   body: string;
   post_type: PostType;
@@ -44,6 +51,7 @@ export interface Comment {
   post_id: string;
   author_id: string;
   author_name: string;
+  author_avatar_url?: string | null;
   parent_id: string | null;
   body: string;
   created_at: string;

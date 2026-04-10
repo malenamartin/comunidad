@@ -35,8 +35,11 @@ const labelStyle: React.CSSProperties = {
   letterSpacing: '0.03em',
 };
 
+type PresetRow = { id: string; image_url: string; label: string | null; sort_order: number };
+
 export default function PerfilPage() {
   const { data: member, mutate } = useSWR<CommunityMember>('/api/community/me', fetcher);
+  const { data: presets } = useSWR<PresetRow[]>('/api/community/preset-avatars', fetcher);
 
   const [form, setForm] = useState({
     name: '',
@@ -49,6 +52,8 @@ export default function PerfilPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [avatarSaving, setAvatarSaving] = useState(false);
+  const [avatarMsg, setAvatarMsg] = useState('');
 
   useEffect(() => {
     if (member) {
@@ -95,6 +100,40 @@ export default function PerfilPage() {
 
   const levelStyle = member ? (LEVEL_LABELS[member.level] ?? LEVEL_LABELS.invisible) : null;
 
+  const displayAvatarUrl =
+    member?.avatar_source === 'preset' && member.preset_avatar_id
+      ? presets?.find((p) => p.id === member.preset_avatar_id)?.image_url ?? null
+      : member?.clerk_avatar_url ?? null;
+
+  async function setAvatarMode(source: 'clerk' | 'preset', presetId?: string) {
+    if (!member) return;
+    setAvatarSaving(true);
+    setAvatarMsg('');
+    try {
+      const body =
+        source === 'clerk'
+          ? { avatar_source: 'clerk' as const }
+          : { avatar_source: 'preset' as const, preset_avatar_id: presetId };
+      const res = await fetch('/api/community/me', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        setAvatarMsg(d.error ?? 'No se pudo actualizar el avatar');
+        return;
+      }
+      const updated = await res.json();
+      mutate(updated, false);
+      setAvatarMsg('Avatar actualizado.');
+    } catch {
+      setAvatarMsg('Error de conexión');
+    } finally {
+      setAvatarSaving(false);
+    }
+  }
+
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '32px 24px' }}>
       <h1
@@ -122,7 +161,7 @@ export default function PerfilPage() {
             marginBottom: '28px',
           }}
         >
-          <MemberAvatar name={member.name} size={52} />
+          <MemberAvatar name={member.name} imageUrl={displayAvatarUrl} size={52} />
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
               <span style={{ fontSize: '16px', fontWeight: 600, color: '#FFFFFF' }}>
@@ -155,6 +194,78 @@ export default function PerfilPage() {
               </span>
             </div>
           </div>
+        </div>
+      )}
+
+      {member && (
+        <div
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '0.5px solid rgba(255,255,255,0.08)',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '28px',
+          }}
+        >
+          <p style={{ ...labelStyle, marginBottom: '12px' }}>Avatar en la comunidad</p>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '16px' }}>
+            Usá tu foto de cuenta o un avatar que el equipo haya cargado en administración.
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: presets?.length ? '16px' : 0 }}>
+            <button
+              type="button"
+              disabled={avatarSaving}
+              onClick={() => setAvatarMode('clerk')}
+              style={{
+                padding: '8px 14px',
+                borderRadius: '8px',
+                border:
+                  (member.avatar_source ?? 'clerk') === 'clerk'
+                    ? '1px solid #FF6A00'
+                    : '1px solid rgba(255,255,255,0.12)',
+                background:
+                  (member.avatar_source ?? 'clerk') === 'clerk'
+                    ? 'rgba(255,106,0,0.12)'
+                    : 'transparent',
+                color: '#fff',
+                fontSize: '13px',
+                cursor: avatarSaving ? 'not-allowed' : 'pointer',
+              }}
+            >
+              Foto de mi cuenta
+            </button>
+          </div>
+          {presets && presets.length > 0 && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(72px, 1fr))', gap: '10px' }}>
+              {presets.map((pr) => {
+                const selected =
+                  member.avatar_source === 'preset' && member.preset_avatar_id === pr.id;
+                return (
+                  <button
+                    key={pr.id}
+                    type="button"
+                    disabled={avatarSaving}
+                    onClick={() => setAvatarMode('preset', pr.id)}
+                    title={pr.label ?? 'Avatar'}
+                    style={{
+                      padding: 0,
+                      borderRadius: '10px',
+                      border: selected ? '2px solid #FF6A00' : '1px solid rgba(255,255,255,0.1)',
+                      overflow: 'hidden',
+                      cursor: avatarSaving ? 'not-allowed' : 'pointer',
+                      background: 'rgba(0,0,0,0.3)',
+                    }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={pr.image_url} alt="" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block' }} />
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {avatarMsg && (
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginTop: '12px' }}>{avatarMsg}</p>
+          )}
         </div>
       )}
 

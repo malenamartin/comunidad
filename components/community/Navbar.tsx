@@ -93,7 +93,10 @@ const STRIP_ITEMS = [
 
 const HEADER_H   = 72;  // px — main nav bar
 const STRIP_H    = 32;  // px — secondary strip
-export const TOTAL_HEADER_H = HEADER_H + STRIP_H; // 104
+/** Fila de tabs solo visible bajo breakpoint md (ver .comunidad-main en globals.css) */
+export const MOBILE_TAB_BAR_H = 48;
+export const TOTAL_HEADER_H = HEADER_H + STRIP_H; // 104 — desktop / sin fila móvil
+export const TOTAL_HEADER_H_MOBILE = HEADER_H + STRIP_H + MOBILE_TAB_BAR_H; // 152
 
 /* ─────────────────────────────────────────────────────── component */
 

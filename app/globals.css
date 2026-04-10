@@ -91,3 +91,13 @@ a {
 ::-webkit-scrollbar-track  { background: rgba(255,255,255,0.03); }
 ::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.15); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+/* Offset para header fijo: en móvil hay fila extra de tabs (md:hidden) en Navbar */
+.comunidad-main {
+  padding-top: 152px;
+}
+@media (min-width: 768px) {
+  .comunidad-main {
+    padding-top: 104px;
+  }
+}

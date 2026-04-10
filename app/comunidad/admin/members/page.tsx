@@ -10,7 +10,7 @@ export default function AdminMembersPage() {
     fetch('/api/admin/members').then(r => r.json()).then(d => { setMembers(d); setLoading(false); });
   }, []);
 
-  async function toggleStatus(id: number, current: string) {
+  async function toggleStatus(id: string, current: string) {
     const status = current === 'active' ? 'suspended' : 'active';
     await fetch('/api/admin/members', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ memberId: id, status }) });
     setMembers(ms => ms.map(m => m.id === id ? { ...m, status } : m));

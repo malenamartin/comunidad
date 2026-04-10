@@ -42,6 +42,7 @@ export default async function AdminPage() {
           { label: 'Solicitudes de acceso',   href: '/comunidad/admin/requests'     },
           { label: 'Códigos de invitación',   href: '/comunidad/admin/invite-codes' },
           { label: 'Moderar posts',           href: '/comunidad/admin/posts'        },
+          { label: 'Avatares de comunidad',   href: '/comunidad/admin/avatars'      },
         ].map((item) => (
           <Link key={item.href} href={item.href} style={{ display: 'block', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '16px 20px', color: '#fff', fontSize: '14px', fontWeight: 500, textDecoration: 'none' }}>
             {item.label} →

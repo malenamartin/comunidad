@@ -1,5 +1,5 @@
 import sql from '@/lib/db';
-import type { CommunityMember, MemberLevel } from './types';
+import type { AvatarSource, CommunityMember, MemberLevel } from './types';
 
 export async function getMemberByClerkId(clerkUserId: string): Promise<CommunityMember | null> {
   const rows = await sql<CommunityMember[]>`
@@ -63,6 +63,27 @@ export async function updateMember(
       linkedin_url = COALESCE(${data.linkedin_url ?? null}, linkedin_url),
       bio          = COALESCE(${data.bio          ?? null}, bio),
       updated_at   = NOW()
+    WHERE clerk_user_id = ${clerkUserId}
+    RETURNING *
+  `;
+  return rows[0] ?? null;
+}
+
+export async function updateMemberAvatar(
+  clerkUserId: string,
+  data: {
+    avatar_source: AvatarSource;
+    preset_avatar_id: string | null;
+    clerk_avatar_url: string | null;
+  },
+): Promise<CommunityMember | null> {
+  const rows = await sql<CommunityMember[]>`
+    UPDATE community_members
+    SET
+      avatar_source = ${data.avatar_source},
+      preset_avatar_id = ${data.preset_avatar_id},
+      clerk_avatar_url = ${data.clerk_avatar_url},
+      updated_at = NOW()
     WHERE clerk_user_id = ${clerkUserId}
     RETURNING *
   `;

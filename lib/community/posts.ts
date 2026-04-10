@@ -1,6 +1,18 @@
 import sql from '@/lib/db';
 import type { Post, Comment, PostType } from './types';
 
+/** Resuelve URL de avatar para mostrar en feed (requiere migración 004). */
+const AUTHOR_AVATAR_SQL = sql`
+  (
+    CASE
+      WHEN m.avatar_source = 'preset' AND m.preset_avatar_id IS NOT NULL THEN
+        (SELECT pa.image_url FROM community_preset_avatars pa
+         WHERE pa.id = m.preset_avatar_id AND pa.is_active = true LIMIT 1)
+      ELSE m.clerk_avatar_url
+    END
+  )
+`;
+
 export async function listPosts(opts: {
   type?: PostType;
   page?: number;
@@ -21,6 +33,7 @@ export async function listPosts(opts: {
       m.name AS author_name,
       m.company AS author_company,
       m.is_founder AS author_is_founder,
+      ${AUTHOR_AVATAR_SQL} AS author_avatar_url,
       COUNT(DISTINCT r.id)::int AS likes_count,
       COUNT(DISTINCT c.id)::int AS comments_count,
       CASE WHEN ${opts.memberId ?? null} IS NOT NULL
@@ -35,7 +48,8 @@ export async function listPosts(opts: {
     LEFT JOIN reactions r ON r.post_id = p.id
     LEFT JOIN comments c ON c.post_id = p.id AND c.is_published = true
     WHERE p.is_published = true ${typeFilter}
-    GROUP BY p.id, m.name, m.company, m.is_founder
+    GROUP BY p.id, m.id, m.name, m.company, m.is_founder,
+      m.avatar_source, m.preset_avatar_id, m.clerk_avatar_url
     ORDER BY p.is_pinned DESC, p.created_at DESC
     LIMIT ${limit} OFFSET ${offset}
   `;
@@ -56,6 +70,7 @@ export async function getPostById(id: string, memberId?: string): Promise<Post |
       m.name AS author_name,
       m.company AS author_company,
       m.is_founder AS author_is_founder,
+      ${AUTHOR_AVATAR_SQL} AS author_avatar_url,
       COUNT(DISTINCT r.id)::int AS likes_count,
       COUNT(DISTINCT c.id)::int AS comments_count,
       CASE WHEN ${memberId ?? null} IS NOT NULL
@@ -70,7 +85,8 @@ export async function getPostById(id: string, memberId?: string): Promise<Post |
     LEFT JOIN reactions r ON r.post_id = p.id
     LEFT JOIN comments c ON c.post_id = p.id AND c.is_published = true
     WHERE p.id = ${id} AND p.is_published = true
-    GROUP BY p.id, m.name, m.company, m.is_founder
+    GROUP BY p.id, m.id, m.name, m.company, m.is_founder,
+      m.avatar_source, m.preset_avatar_id, m.clerk_avatar_url
     LIMIT 1
   `;
   return rows[0] ?? null;
@@ -100,7 +116,15 @@ export async function getComments(postId: string): Promise<Comment[]> {
   const rows = await sql<Comment[]>`
     SELECT
       c.id, c.post_id, c.author_id, c.parent_id, c.body, c.created_at,
-      m.name AS author_name
+      m.name AS author_name,
+      (
+        CASE
+          WHEN m.avatar_source = 'preset' AND m.preset_avatar_id IS NOT NULL THEN
+            (SELECT pa.image_url FROM community_preset_avatars pa
+             WHERE pa.id = m.preset_avatar_id AND pa.is_active = true LIMIT 1)
+          ELSE m.clerk_avatar_url
+        END
+      ) AS author_avatar_url
     FROM comments c
     JOIN community_members m ON c.author_id = m.id
     WHERE c.post_id = ${postId} AND c.is_published = true
@@ -139,7 +163,18 @@ export async function addComment(data: {
     )
     RETURNING
       id, post_id, author_id, parent_id, body, created_at,
-      (SELECT name FROM community_members WHERE id = ${data.author_id}) AS author_name
+      (SELECT name FROM community_members WHERE id = ${data.author_id}) AS author_name,
+      (
+        SELECT (
+          CASE
+            WHEN cm.avatar_source = 'preset' AND cm.preset_avatar_id IS NOT NULL THEN
+              (SELECT pa.image_url FROM community_preset_avatars pa
+               WHERE pa.id = cm.preset_avatar_id AND pa.is_active = true LIMIT 1)
+            ELSE cm.clerk_avatar_url
+          END
+        )
+        FROM community_members cm WHERE cm.id = ${data.author_id}
+      ) AS author_avatar_url
   `;
   return rows[0];
 }
@@ -159,6 +194,17 @@ export async function createPost(data: {
       (SELECT name FROM community_members WHERE id = ${data.author_id}) AS author_name,
       (SELECT company FROM community_members WHERE id = ${data.author_id}) AS author_company,
       (SELECT is_founder FROM community_members WHERE id = ${data.author_id}) AS author_is_founder,
+      (
+        SELECT (
+          CASE
+            WHEN cm.avatar_source = 'preset' AND cm.preset_avatar_id IS NOT NULL THEN
+              (SELECT pa.image_url FROM community_preset_avatars pa
+               WHERE pa.id = cm.preset_avatar_id AND pa.is_active = true LIMIT 1)
+            ELSE cm.clerk_avatar_url
+          END
+        )
+        FROM community_members cm WHERE cm.id = ${data.author_id}
+      ) AS author_avatar_url,
       0 AS likes_count,
       0 AS comments_count,
       false AS user_liked

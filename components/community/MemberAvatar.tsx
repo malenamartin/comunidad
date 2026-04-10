@@ -2,11 +2,30 @@ import { getInitials, stringToColor } from '@/lib/utils';
 
 interface MemberAvatarProps {
   name: string;
+  imageUrl?: string | null;
   size?: number;
   className?: string;
 }
 
-export function MemberAvatar({ name, size = 36 }: MemberAvatarProps) {
+export function MemberAvatar({ name, imageUrl, size = 36 }: MemberAvatarProps) {
+  if (imageUrl) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={imageUrl}
+        alt=""
+        width={size}
+        height={size}
+        style={{
+          borderRadius: '50%',
+          objectFit: 'cover',
+          flexShrink: 0,
+          display: 'block',
+        }}
+      />
+    );
+  }
+
   const bg = stringToColor(name);
   const initials = getInitials(name);
 

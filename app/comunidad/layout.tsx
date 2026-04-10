@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server';
-import { Navbar, TOTAL_HEADER_H } from '@/components/community/Navbar';
+import { Navbar } from '@/components/community/Navbar';
 
 export default async function ComunidadLayout({
   children,
@@ -11,7 +11,7 @@ export default async function ComunidadLayout({
     return (
       <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
         <Navbar bypassAuth />
-        <main style={{ paddingTop: `${TOTAL_HEADER_H}px` }}>{children}</main>
+        <main className="comunidad-main">{children}</main>
       </div>
     );
   }
@@ -25,7 +25,7 @@ export default async function ComunidadLayout({
     return (
       <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
         <Navbar />
-        <main style={{ paddingTop: `${TOTAL_HEADER_H}px` }}>{children}</main>
+        <main className="comunidad-main">{children}</main>
       </div>
     );
   }

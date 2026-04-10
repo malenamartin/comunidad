@@ -7,10 +7,10 @@ export async function isAdmin(sessionClaims: Record<string, unknown> | null) {
 
 export async function getAdminStats() {
   const [members, pending, posts, videos] = await Promise.all([
-    sql`SELECT COUNT(*) AS cnt FROM community_members WHERE status = 'active'`,
-    sql`SELECT COUNT(*) AS cnt FROM access_requests WHERE status = 'pending'`,
-    sql`SELECT COUNT(*) AS cnt FROM posts`,
-    sql`SELECT COUNT(*) AS cnt FROM videos`,
+    sql`SELECT COUNT(*)::int AS cnt FROM community_members WHERE is_active = true`,
+    sql`SELECT COUNT(*)::int AS cnt FROM access_requests WHERE status = 'pending'`,
+    sql`SELECT COUNT(*)::int AS cnt FROM posts`,
+    sql`SELECT COUNT(*)::int AS cnt FROM videos`,
   ]);
   return {
     activeMembers: Number(members[0].cnt),
@@ -23,17 +23,23 @@ export async function getAdminStats() {
 export async function getAllMembers(page = 1, limit = 30) {
   const offset = (page - 1) * limit;
   return sql`
-    SELECT id, name, email, company, job_title, country, status,
-           total_points, level, created_at
+    SELECT id, name, email, company, job_title, country,
+           CASE WHEN is_active THEN 'active' ELSE 'suspended' END AS status,
+           COALESCE(points, 0) AS total_points,
+           level,
+           created_at
     FROM community_members
     ORDER BY created_at DESC
     LIMIT ${limit} OFFSET ${offset}
   `;
 }
 
-export async function updateMemberStatus(memberId: number, status: 'active' | 'suspended') {
+export async function updateMemberStatus(memberId: string, status: 'active' | 'suspended') {
   return sql`
-    UPDATE community_members SET status = ${status} WHERE id = ${memberId} RETURNING id
+    UPDATE community_members
+    SET is_active = ${status === 'active'}
+    WHERE id = ${memberId}::uuid
+    RETURNING id
   `;
 }
 
@@ -46,12 +52,12 @@ export async function getPendingRequests() {
   `;
 }
 
-export async function resolveRequest(requestId: number, action: 'approve' | 'reject') {
+export async function resolveRequest(requestId: string, action: 'approve' | 'reject') {
   return sql`
     UPDATE access_requests
     SET status = ${action === 'approve' ? 'approved' : 'rejected'},
-        resolved_at = NOW()
-    WHERE id = ${requestId}
+        reviewed_at = NOW()
+    WHERE id = ${requestId}::uuid
     RETURNING id
   `;
 }
@@ -75,18 +81,18 @@ export async function createInviteCode(code: string, maxUses: number, expiresAt:
   `;
 }
 
-export async function toggleInviteCode(codeId: number, active: boolean) {
+export async function toggleInviteCode(codeId: string, active: boolean) {
   return sql`
-    UPDATE invite_codes SET is_active = ${active} WHERE id = ${codeId} RETURNING id
+    UPDATE invite_codes SET is_active = ${active} WHERE id = ${codeId}::uuid RETURNING id
   `;
 }
 
 export async function getRecentPosts(limit = 50) {
   return sql`
-    SELECT p.id, p.content, p.created_at, p.is_pinned,
+    SELECT p.id, p.title, p.body, p.post_type, p.created_at, p.is_pinned, p.is_published,
            cm.name AS author_name,
-           (SELECT COUNT(*) FROM comments c WHERE c.post_id = p.id) AS comment_count,
-           (SELECT COUNT(*) FROM reactions r WHERE r.post_id = p.id) AS reaction_count
+           (SELECT COUNT(*)::int FROM comments c WHERE c.post_id = p.id) AS comment_count,
+           (SELECT COUNT(*)::int FROM reactions r WHERE r.post_id = p.id) AS reaction_count
     FROM posts p
     JOIN community_members cm ON cm.id = p.author_id
     ORDER BY p.created_at DESC
@@ -94,12 +100,16 @@ export async function getRecentPosts(limit = 50) {
   `;
 }
 
-export async function deletePost(postId: number) {
-  return sql`DELETE FROM posts WHERE id = ${postId} RETURNING id`;
+export async function deletePost(postId: string) {
+  return sql`DELETE FROM posts WHERE id = ${postId}::uuid RETURNING id`;
 }
 
-export async function togglePinPost(postId: number, pinned: boolean) {
-  return sql`UPDATE posts SET is_pinned = ${pinned} WHERE id = ${postId} RETURNING id`;
+export async function togglePinPost(postId: string, pinned: boolean) {
+  return sql`UPDATE posts SET is_pinned = ${pinned} WHERE id = ${postId}::uuid RETURNING id`;
+}
+
+export async function setPostPublished(postId: string, published: boolean) {
+  return sql`UPDATE posts SET is_published = ${published} WHERE id = ${postId}::uuid RETURNING id`;
 }
 
 export async function logAdminAction(

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Eye, Heart } from 'lucide-react';
+import { ArrowLeft, Eye, Heart, Link2 } from 'lucide-react';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { MemberAvatar } from '@/components/community/MemberAvatar';
@@ -25,7 +25,7 @@ function CommentItem({
   return (
     <div>
       <div style={{ display: 'flex', gap: '10px', marginBottom: '8px' }}>
-        <MemberAvatar name={comment.author_name} size={28} />
+        <MemberAvatar name={comment.author_name} imageUrl={comment.author_avatar_url} size={28} />
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '4px' }}>
             <span style={{ fontSize: '13px', fontWeight: 500, color: '#FFFFFF' }}>
@@ -189,9 +189,9 @@ export default function PostDetailPage() {
           marginBottom: '24px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
-          <MemberAvatar name={post.author_name} size={36} />
-          <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+          <MemberAvatar name={post.author_name} imageUrl={post.author_avatar_url} size={36} />
+          <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '14px', fontWeight: 500, color: '#FFFFFF' }}>
                 {post.author_name}
@@ -217,6 +217,29 @@ export default function PostDetailPage() {
               {timeAgo(post.created_at)}
             </span>
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/comunidad/${id}`;
+              void navigator.clipboard.writeText(url);
+            }}
+            title="Copiar enlace del post"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              marginLeft: 'auto',
+              padding: '8px 12px',
+              borderRadius: '8px',
+              border: '1px solid rgba(255,255,255,0.1)',
+              background: 'rgba(255,255,255,0.04)',
+              color: 'rgba(255,255,255,0.5)',
+              fontSize: '12px',
+              cursor: 'pointer',
+            }}
+          >
+            <Link2 size={14} /> Copiar enlace
+          </button>
         </div>
 
         <h1

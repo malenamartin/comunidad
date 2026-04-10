@@ -56,6 +56,13 @@ CREATE TABLE IF NOT EXISTS events (
   created_at    TIMESTAMP DEFAULT NOW()
 );
 
+-- Si betas existía de un esquema viejo sin order_index, crear la columna antes de los índices
+ALTER TABLE betas ADD COLUMN IF NOT EXISTS order_index INTEGER DEFAULT 0;
+
+-- Si events existía sin columnas esperadas por los índices
+ALTER TABLE events ADD COLUMN IF NOT EXISTS event_date TIMESTAMP NOT NULL DEFAULT NOW();
+ALTER TABLE events ADD COLUMN IF NOT EXISTS is_published BOOLEAN DEFAULT true;
+
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_benchmarks_industry ON benchmarks(industry, is_published);
 CREATE INDEX IF NOT EXISTS idx_benchmarks_period ON benchmarks(period);
