@@ -18,6 +18,8 @@ export interface CommunityMember {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  avatar_url?: string | null;
+  preset_avatar_id?: number | null;
 }
 
 export interface Post {
@@ -35,6 +37,7 @@ export interface Post {
   likes_count: number;
   comments_count: number;
   user_liked: boolean;
+  author_avatar_url?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -46,6 +49,7 @@ export interface Comment {
   author_name: string;
   parent_id: string | null;
   body: string;
+  author_avatar_url?: string | null;
   created_at: string;
   replies?: Comment[];
 }

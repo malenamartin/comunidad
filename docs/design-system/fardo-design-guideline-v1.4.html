@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Fardo Design System — Guideline v1.4</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,900&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<style>
+:root{
+  --o400:#FF6A00;--o500:#E05A00;--o200:#FFB878;
+  --g50:#FAF9F8;--g100:#F2F0EE;--g200:#E6E3E0;--g300:#D5D1CD;
+  --g400:#C2BDB8;--g500:#A9A4A0;--g600:#898480;--g700:#67635F;
+  --g800:#474441;--g900:#2C2A28;
+  --sh-xs:0px 1px 2px rgba(0,0,0,.06);
+  --sh-sm:0px 1px 4px rgba(0,0,0,.08),0px 0px 0px 1px rgba(0,0,0,.05);
+  --sh-md:0px 4px 12px rgba(0,0,0,.10),0px 0px 0px 1px rgba(0,0,0,.06);
+  --sh-lg:0px 8px 24px rgba(0,0,0,.12),0px 0px 0px 1px rgba(0,0,0,.06);
+  --r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:9999px;
+  --font:"Satoshi",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font);background:#FAF9F8;color:#2C2A28;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.shell{display:flex;min-height:100vh;}
+nav{width:224px;flex-shrink:0;background:#fff;border-right:1px solid #F2F0EE;position:sticky;top:0;height:100vh;overflow-y:auto;padding:24px 0;}
+.nl{padding:0 20px 20px;border-bottom:1px solid #F2F0EE;margin-bottom:16px;}
+.nl strong{display:block;font-size:13px;font-weight:600;color:#2C2A28;}
+.nl small{font-size:11px;color:#898480;margin-top:2px;display:block;}
+.ng{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#C2BDB8;padding:12px 20px 4px;}
+nav a{display:block;font-size:13px;padding:5px 20px;color:#67635F;text-decoration:none;transition:all .15s;}
+nav a:hover{background:#F2F0EE;color:#2C2A28;}
+nav a.active{color:#E05A00;font-weight:500;}
+main{flex:1;min-width:0;padding:40px 48px;max-width:1080px;}
+.sec{margin-bottom:72px;}
+.ey{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#898480;margin-bottom:6px;}
+h2{font-size:24px;font-weight:600;letter-spacing:-.01em;margin-bottom:8px;}
+.desc{font-size:14px;color:#67635F;line-height:1.65;max-width:640px;margin-bottom:24px;}
+.div{height:1px;background:#F2F0EE;margin-bottom:24px;}
+.cv{background:#fff;border:1px solid #F2F0EE;border-radius:12px;padding:28px;margin-bottom:12px;}
+.cl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#898480;margin-bottom:18px;}
+.sl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#898480;margin:18px 0 10px;}
+.sl:first-child{margin-top:0;}
+.spec{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;}
+.spec th{text-align:left;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#898480;padding:8px 12px;background:#FAF9F8;border-bottom:1px solid #F2F0EE;}
+.spec td{padding:10px 12px;border-bottom:1px solid #F2F0EE;color:#67635F;vertical-align:middle;}
+.spec td:first-child{font-weight:500;color:#2C2A28;}
+.spec tr:last-child td{border-bottom:none;}
+code{font-family:"SF Mono","Fira Mono",monospace;font-size:11px;background:#FAF9F8;border:1px solid #F2F0EE;padding:1px 5px;border-radius:3px;color:#E05A00;}
+.ratio{font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;white-space:nowrap;}
+.aa{background:#EAF6EF;color:#276A43;}.aaa{background:#EBF4FF;color:#034EAB;}.fail{background:#FDEBEC;color:#B93636;}
+.alert{border-radius:8px;padding:11px 14px;margin-top:12px;font-size:13px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;}
+.ai{background:#EBF4FF;color:#0462D4;border:1px solid #C0DAFB;}
+.aw{background:#FFF6E4;color:#BF7617;border:1px solid #F0DCBB;}
+.aic{flex-shrink:0;font-size:14px;}
+.sr{display:flex;gap:3px;}
+.sw{flex:1;min-width:0;border-radius:6px;overflow:hidden;border:1px solid rgba(0,0,0,.07);}
+.sw-c{height:44px;}
+.sw-i{padding:5px 6px;background:#fff;border-top:1px solid rgba(0,0,0,.06);}
+.sw-s{font-size:9px;font-weight:700;color:#2C2A28;}
+.sw-h{font-size:8.5px;color:#898480;font-family:monospace;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1.5px solid transparent;cursor:pointer;font-family:var(--font);font-weight:500;transition:all .2s cubic-bezier(.4,0,.2,1);white-space:nowrap;line-height:1.25;}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(255,106,0,.25);}
+.btn svg{flex-shrink:0;}
+.btn-sm{font-size:14px;padding:6px 12px;border-radius:4px;}
+.btn-md{font-size:16px;padding:10px 16px;border-radius:8px;}
+.btn-lg{font-size:18px;padding:14px 24px;border-radius:12px;}
+.ico-sm{width:32px;height:32px;padding:0;border-radius:4px;flex-shrink:0;}
+.ico-md{width:40px;height:40px;padding:0;border-radius:8px;flex-shrink:0;}
+.ico-lg{width:48px;height:48px;padding:0;border-radius:12px;flex-shrink:0;}
+.btn-primary{background:#FF6A00;color:#fff;box-shadow:var(--sh-xs);}
+.btn-primary:hover{background:#E05A00;box-shadow:var(--sh-sm);}
+.btn-primary:active{background:#B84A00;}
+.btn-primary:disabled{background:#E6E3E0;color:#A9A4A0;cursor:not-allowed;box-shadow:none;}
+.btn-secondary{background:transparent;color:#E05A00;border-color:#FFB878;}
+.btn-secondary:hover{background:#FFF3EB;border-color:#FF6A00;}
+.btn-secondary:active{background:#FFD6B0;}
+.btn-secondary:disabled{color:#C2BDB8;border-color:#E6E3E0;cursor:not-allowed;}
+.btn-ghost{background:transparent;color:#67635F;border-color:transparent;}
+.btn-ghost:hover{background:#F2F0EE;color:#2C2A28;}
+.btn-gray{background:transparent;color:#67635F;border-color:#D5D1CD;}
+.btn-gray:hover{background:#FAF9F8;border-color:#A9A4A0;color:#2C2A28;}
+.btn-gray:disabled{color:#C2BDB8;border-color:#E6E3E0;cursor:not-allowed;}
+.btn-danger{background:#D64545;color:#fff;box-shadow:var(--sh-xs);}
+.btn-danger:hover{background:#B93636;}
+.btn-danger:disabled{background:#E6E3E0;color:#A9A4A0;cursor:not-allowed;box-shadow:none;}
+.bt{width:100%;border-collapse:collapse;}
+.bt th{text-align:left;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#898480;padding:8px 14px;background:#FAF9F8;border-bottom:1px solid #F2F0EE;}
+.bt td{padding:12px 14px;border-bottom:1px solid #F2F0EE;vertical-align:middle;}
+.bt td:first-child{font-size:12px;font-weight:600;color:#2C2A28;width:80px;}
+.bt tr:last-child td{border-bottom:none;}
+.bc{display:flex;flex-direction:column;gap:8px;}
+.rl{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#898480;margin-bottom:8px;}
+.iw{display:flex;flex-direction:column;gap:4px;}
+.il{font-size:13px;font-weight:500;color:#474441;}
+.fi{width:100%;height:40px;padding:10px 12px;font-family:var(--font);font-size:16px;color:#2C2A28;background:#fff;border:1.5px solid #D5D1CD;border-radius:8px;box-shadow:var(--sh-xs);transition:all .15s ease;outline:none;appearance:none;}
+.fi::placeholder{color:#C2BDB8;}
+.fi:hover{border-color:#A9A4A0;}
+.fi:focus{border-color:#FF6A00;box-shadow:var(--sh-xs),0 0 0 3px rgba(255,106,0,.20);}
+.fi.err{border-color:#D64545;}
+.fi:disabled{background:#FAF9F8;border-color:#E6E3E0;color:#C2BDB8;cursor:not-allowed;}
+.ih{font-size:12px;color:#898480;}
+.ih.err{color:#B93636;}
+.rw{position:relative;}
+.fs{width:100%;height:40px;padding:10px 36px 10px 12px;font-family:var(--font);font-size:16px;color:#2C2A28;background:#fff;border:1.5px solid #D5D1CD;border-radius:8px;box-shadow:var(--sh-xs);outline:none;appearance:none;cursor:pointer;transition:all .15s ease;}
+.fs:hover{border-color:#A9A4A0;}
+.fs:focus{border-color:#FF6A00;box-shadow:var(--sh-xs),0 0 0 3px rgba(255,106,0,.20);}
+.si{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:#A9A4A0;}
+.tag{display:inline-flex;align-items:center;padding:4px 12px;border-radius:9999px;font-size:14px;font-weight:500;line-height:1.4;border:1px solid;}
+.tag svg{width:16px;height:16px;flex-shrink:0;margin-right:6px;}
+.ti{background:#EBF4FF;color:#033F8C;border-color:#85BBF8;}
+.ts{background:#EAF6EF;color:#276A43;border-color:#A3D5C3;}
+.tw{background:#FFF6E4;color:#A6630F;border-color:#FFD282;}
+.te{background:#FDEBEC;color:#9C2727;border-color:#F7BDC0;}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:3px 10px;border-radius:9999px;}
+.bdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.bs{background:#EAF6EF;color:#276A43;}
+.bw{background:#FFF6E4;color:#BF7617;}
+.bd{background:#FDEBEC;color:#B93636;}
+.bi{background:#EBF4FF;color:#034EAB;}
+.bb{background:#FFF3EB;color:#B84A00;}
+.bn{background:#FAF9F8;color:#67635F;border:1px solid #E6E3E0;}
+.cw{background:#F8F8F8;border:1px solid #F2F0EE;border-radius:12px;overflow:hidden;}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#fff;border-bottom:1px solid #F2F0EE;}
+.cf{font-size:12px;font-weight:600;color:#2C2A28;font-family:monospace;}
+.cb{font-size:11px;font-weight:500;color:#898480;background:none;border:1px solid #E6E3E0;border-radius:4px;padding:3px 8px;cursor:pointer;}
+.cb:hover{background:#FAF9F8;}
+.cc{max-height:520px;overflow-y:auto;}
+.cc pre{margin:0!important;border-radius:0!important;font-size:12px!important;line-height:1.6!important;}
+.hljs{background:#F8F8F8!important;padding:20px!important;}
+.cr{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F2F0EE;}
+.cr:last-child{border-bottom:none;}
+.cp{width:130px;height:34px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;border:1px solid rgba(0,0,0,.06);}
+.cm{flex:1;}.cpair{font-size:12px;font-weight:500;color:#2C2A28;}
+.ctk{font-size:11px;color:#898480;margin-top:1px;}
+.vb{display:inline-flex;background:#FFF3EB;color:#B84A00;font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px;margin-bottom:14px;}
+.inl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.nb{background:#EBF4FF;color:#034EAB;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav>
+  <div class="nl"><strong>Fardo DS</strong><small>Guideline v1.4 — Abril 2026</small></div>
+  <div class="ng">Fundamentos</div>
+  <a href="#colors">Colores</a>
+  <a href="#typography">Tipografía</a>
+  <a href="#spacing">Espaciado &amp; Radius</a>
+  <a href="#shadows">Sombras</a>
+  <a href="#icon-scale">Iconografía</a>
+  <div class="ng">Accesibilidad</div>
+  <a href="#contrast">Contraste WCAG</a>
+  <a href="#token-rules">Regla de tokens</a>
+  <div class="ng">Componentes</div>
+  <a href="#buttons">Buttons</a>
+  <a href="#inputs">Inputs</a>
+  <a href="#tags">Tags</a>
+  <a href="#cards">Cards</a>
+  <a href="#badges">Badges</a>
+  <div class="ng">Recursos</div>
+  <a href="#css-source">CSS Source</a>
+</nav>
+<main>
+<div style="margin-bottom:48px;">
+  <div class="vb">v1.4</div>
+  <h1 style="font-size:36px;font-weight:700;letter-spacing:-.025em;margin-bottom:10px;">Fardo Design System</h1>
+  <p style="font-size:16px;color:#67635F;line-height:1.6;max-width:540px;">Referencia completa de tokens, componentes y accesibilidad. Mapea 1:1 con <code>fardo-design-tokens.css</code>.</p>
+</div>
+
+<div class="sec" id="colors">
+<div class="ey">01 — Fundamentos</div><h2>Colores</h2>
+<p class="desc">5 ramps completos (50→950) + 2 absolutos. Green, Amber y Red son ramps completos en v1.4. Los primitivos nunca se usan en componentes — siempre a través de los semánticos.</p>
+<div class="div"></div>
+<div class="cv"><div class="cl">Absolutos</div>
+  <div style="display:flex;gap:8px;">
+    <div style="width:150px;"><div class="sw"><div class="sw-c" style="background:#fff;border:1px solid #E6E3E0;"></div><div class="sw-i"><div class="sw-s">--color-white</div><div class="sw-h">#FFFFFF</div></div></div></div>
+    <div style="width:150px;"><div class="sw"><div class="sw-c" style="background:#000;"></div><div class="sw-i" style="background:#000;border-top-color:#000;"><div class="sw-s" style="color:#fff;">--color-black</div><div class="sw-h" style="color:rgba(255,255,255,.5);">#000000</div></div></div></div>
+  </div>
+</div>
+<div class="cv"><div class="cl">Orange (11 pasos)</div>
+<div class="sr"><div class="sw"><div class="sw-c" style="background:#FFF3EB;"></div><div class="sw-i"><div class="sw-s">50</div><div class="sw-h">#FFF3EB</div></div></div><div class="sw"><div class="sw-c" style="background:#FFD6B0;"></div><div class="sw-i"><div class="sw-s">100</div><div class="sw-h">#FFD6B0</div></div></div><div class="sw"><div class="sw-c" style="background:#FFB878;"></div><div class="sw-i"><div class="sw-s">200</div><div class="sw-h">#FFB878</div></div></div><div class="sw"><div class="sw-c" style="background:#FF9040;"></div><div class="sw-i"><div class="sw-s">300</div><div class="sw-h">#FF9040</div></div></div><div class="sw"><div class="sw-c" style="background:#FF6A00;"></div><div class="sw-i" style="background:#FF6A00;border-top-color:#FF6A00;"><div class="sw-s" style="color:#fff;">400 ★</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#FF6A00</div></div></div><div class="sw"><div class="sw-c" style="background:#E05A00;"></div><div class="sw-i" style="background:#E05A00;border-top-color:#E05A00;"><div class="sw-s" style="color:#fff;">500</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#E05A00</div></div></div><div class="sw"><div class="sw-c" style="background:#B84A00;"></div><div class="sw-i" style="background:#B84A00;border-top-color:#B84A00;"><div class="sw-s" style="color:#fff;">600</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#B84A00</div></div></div><div class="sw"><div class="sw-c" style="background:#8C3600;"></div><div class="sw-i" style="background:#8C3600;border-top-color:#8C3600;"><div class="sw-s" style="color:#fff;">700</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#8C3600</div></div></div><div class="sw"><div class="sw-c" style="background:#602400;"></div><div class="sw-i" style="background:#602400;border-top-color:#602400;"><div class="sw-s" style="color:#fff;">800</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#602400</div></div></div><div class="sw"><div class="sw-c" style="background:#3D1500;"></div><div class="sw-i" style="background:#3D1500;border-top-color:#3D1500;"><div class="sw-s" style="color:#fff;">900</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#3D1500</div></div></div><div class="sw"><div class="sw-c" style="background:#200A00;"></div><div class="sw-i" style="background:#200A00;border-top-color:#200A00;"><div class="sw-s" style="color:#fff;">950</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#200A00</div></div></div></div>
+</div>
+<div class="cv"><div class="cl">Gray warm (11 pasos)</div>
+<div class="sr"><div class="sw"><div class="sw-c" style="background:#FAF9F8;"></div><div class="sw-i"><div class="sw-s">50</div><div class="sw-h">#FAF9F8</div></div></div><div class="sw"><div class="sw-c" style="background:#F2F0EE;"></div><div class="sw-i"><div class="sw-s">100</div><div class="sw-h">#F2F0EE</div></div></div><div class="sw"><div class="sw-c" style="background:#E6E3E0;"></div><div class="sw-i"><div class="sw-s">200</div><div class="sw-h">#E6E3E0</div></div></div><div class="sw"><div class="sw-c" style="background:#D5D1CD;"></div><div class="sw-i"><div class="sw-s">300</div><div class="sw-h">#D5D1CD</div></div></div><div class="sw"><div class="sw-c" style="background:#C2BDB8;"></div><div class="sw-i"><div class="sw-s">400</div><div class="sw-h">#C2BDB8</div></div></div><div class="sw"><div class="sw-c" style="background:#A9A4A0;"></div><div class="sw-i" style="background:#A9A4A0;border-top-color:#A9A4A0;"><div class="sw-s" style="color:#fff;">500</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#A9A4A0</div></div></div><div class="sw"><div class="sw-c" style="background:#898480;"></div><div class="sw-i" style="background:#898480;border-top-color:#898480;"><div class="sw-s" style="color:#fff;">600</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#898480</div></div></div><div class="sw"><div class="sw-c" style="background:#67635F;"></div><div class="sw-i" style="background:#67635F;border-top-color:#67635F;"><div class="sw-s" style="color:#fff;">700</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#67635F</div></div></div><div class="sw"><div class="sw-c" style="background:#474441;"></div><div class="sw-i" style="background:#474441;border-top-color:#474441;"><div class="sw-s" style="color:#fff;">800</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#474441</div></div></div><div class="sw"><div class="sw-c" style="background:#2C2A28;"></div><div class="sw-i" style="background:#2C2A28;border-top-color:#2C2A28;"><div class="sw-s" style="color:#fff;">900</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#2C2A28</div></div></div><div class="sw"><div class="sw-c" style="background:#191817;"></div><div class="sw-i" style="background:#191817;border-top-color:#191817;"><div class="sw-s" style="color:#fff;">950</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#191817</div></div></div></div>
+</div>
+<div class="cv"><div class="cl">Blue (11 pasos, ramp completo)</div>
+<div class="sr"><div class="sw"><div class="sw-c" style="background:#EBF4FF;"></div><div class="sw-i"><div class="sw-s">50</div><div class="sw-h">#EBF4FF</div></div></div><div class="sw"><div class="sw-c" style="background:#C0DAFB;"></div><div class="sw-i"><div class="sw-s">100</div><div class="sw-h">#C0DAFB</div></div></div><div class="sw"><div class="sw-c" style="background:#85BBF8;"></div><div class="sw-i"><div class="sw-s">200</div><div class="sw-h">#85BBF8</div></div></div><div class="sw"><div class="sw-c" style="background:#3D96F5;"></div><div class="sw-i" style="background:#3D96F5;border-top-color:#3D96F5;"><div class="sw-s" style="color:#fff;">300</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#3D96F5</div></div></div><div class="sw"><div class="sw-c" style="background:#0577FD;"></div><div class="sw-i" style="background:#0577FD;border-top-color:#0577FD;"><div class="sw-s" style="color:#fff;">400 ★</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#0577FD</div></div></div><div class="sw"><div class="sw-c" style="background:#0462D4;"></div><div class="sw-i" style="background:#0462D4;border-top-color:#0462D4;"><div class="sw-s" style="color:#fff;">500</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#0462D4</div></div></div><div class="sw"><div class="sw-c" style="background:#034EAB;"></div><div class="sw-i" style="background:#034EAB;border-top-color:#034EAB;"><div class="sw-s" style="color:#fff;">600</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#034EAB</div></div></div><div class="sw"><div class="sw-c" style="background:#033F8C;"></div><div class="sw-i" style="background:#033F8C;border-top-color:#033F8C;"><div class="sw-s" style="color:#fff;">700</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#033F8C</div></div></div><div class="sw"><div class="sw-c" style="background:#022F69;"></div><div class="sw-i" style="background:#022F69;border-top-color:#022F69;"><div class="sw-s" style="color:#fff;">800</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#022F69</div></div></div><div class="sw"><div class="sw-c" style="background:#021F46;"></div><div class="sw-i" style="background:#021F46;border-top-color:#021F46;"><div class="sw-s" style="color:#fff;">900</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#021F46</div></div></div><div class="sw"><div class="sw-c" style="background:#01142E;"></div><div class="sw-i" style="background:#01142E;border-top-color:#01142E;"><div class="sw-s" style="color:#fff;">950</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#01142E</div></div></div></div>
+<div class="alert ai" style="margin-top:12px;"><span class="aic">ℹ</span><span>Tokens de superficie <code>--fardo-blue-deep</code> (#2A4A6A) y <code>--fardo-blue-dark</code> (#15313D) disponibles como tokens independientes para fondos de panel.</span></div>
+</div>
+<div class="cv"><div class="cl">Purple (11 pasos)</div>
+<div class="sr"><div class="sw"><div class="sw-c" style="background:#F5EEFF;"></div><div class="sw-i"><div class="sw-s">50</div><div class="sw-h">#F5EEFF</div></div></div><div class="sw"><div class="sw-c" style="background:#DFC8F5;"></div><div class="sw-i"><div class="sw-s">100</div><div class="sw-h">#DFC8F5</div></div></div><div class="sw"><div class="sw-c" style="background:#B890E8;"></div><div class="sw-i"><div class="sw-s">200</div><div class="sw-h">#B890E8</div></div></div><div class="sw"><div class="sw-c" style="background:#8A56CC;"></div><div class="sw-i" style="background:#8A56CC;border-top-color:#8A56CC;"><div class="sw-s" style="color:#fff;">300</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#8A56CC</div></div></div><div class="sw"><div class="sw-c" style="background:#6B30AA;"></div><div class="sw-i" style="background:#6B30AA;border-top-color:#6B30AA;"><div class="sw-s" style="color:#fff;">400</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#6B30AA</div></div></div><div class="sw"><div class="sw-c" style="background:#562888;"></div><div class="sw-i" style="background:#562888;border-top-color:#562888;"><div class="sw-s" style="color:#fff;">500</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#562888</div></div></div><div class="sw"><div class="sw-c" style="background:#4A2A5A;"></div><div class="sw-i" style="background:#4A2A5A;border-top-color:#4A2A5A;"><div class="sw-s" style="color:#fff;">600 ★</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#4A2A5A</div></div></div><div class="sw"><div class="sw-c" style="background:#351A42;"></div><div class="sw-i" style="background:#351A42;border-top-color:#351A42;"><div class="sw-s" style="color:#fff;">700</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#351A42</div></div></div><div class="sw"><div class="sw-c" style="background:#220E2C;"></div><div class="sw-i" style="background:#220E2C;border-top-color:#220E2C;"><div class="sw-s" style="color:#fff;">800</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#220E2C</div></div></div><div class="sw"><div class="sw-c" style="background:#150820;"></div><div class="sw-i" style="background:#150820;border-top-color:#150820;"><div class="sw-s" style="color:#fff;">900</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#150820</div></div></div><div class="sw"><div class="sw-c" style="background:#0A0414;"></div><div class="sw-i" style="background:#0A0414;border-top-color:#0A0414;"><div class="sw-s" style="color:#fff;">950</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#0A0414</div></div></div></div>
+</div>
+<div class="cv"><div class="cl">Semáforo — ramps completos <span class="nb" style="margin-left:6px;">Nuevo en v1.4</span></div>
+  <div class="sl">Green / Success</div>
+  <div class="sr" style="margin-bottom:16px;"><div class="sw"><div class="sw-c" style="background:#EAF6EF;"></div><div class="sw-i"><div class="sw-s">50</div><div class="sw-h">#EAF6EF</div></div></div><div class="sw"><div class="sw-c" style="background:#C8E6D9;"></div><div class="sw-i"><div class="sw-s">100</div><div class="sw-h">#C8E6D9</div></div></div><div class="sw"><div class="sw-c" style="background:#A3D5C3;"></div><div class="sw-i"><div class="sw-s">200</div><div class="sw-h">#A3D5C3</div></div></div><div class="sw"><div class="sw-c" style="background:#7DC4AD;"></div><div class="sw-i"><div class="sw-s">300</div><div class="sw-h">#7DC4AD</div></div></div><div class="sw"><div class="sw-c" style="background:#57B398;"></div><div class="sw-i" style="background:#57B398;border-top-color:#57B398;"><div class="sw-s" style="color:#fff;">400</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#57B398</div></div></div><div class="sw"><div class="sw-c" style="background:#2E7D4F;"></div><div class="sw-i" style="background:#2E7D4F;border-top-color:#2E7D4F;"><div class="sw-s" style="color:#fff;">500 ★</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#2E7D4F</div></div></div><div class="sw"><div class="sw-c" style="background:#276A43;"></div><div class="sw-i" style="background:#276A43;border-top-color:#276A43;"><div class="sw-s" style="color:#fff;">600</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#276A43</div></div></div><div class="sw"><div class="sw-c" style="background:#215738;"></div><div class="sw-i" style="background:#215738;border-top-color:#215738;"><div class="sw-s" style="color:#fff;">700</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#215738</div></div></div><div class="sw"><div class="sw-c" style="background:#1A442D;"></div><div class="sw-i" style="background:#1A442D;border-top-color:#1A442D;"><div class="sw-s" style="color:#fff;">800</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#1A442D</div></div></div><div class="sw"><div class="sw-c" style="background:#143122;"></div><div class="sw-i" style="background:#143122;border-top-color:#143122;"><div class="sw-s" style="color:#fff;">900</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#143122</div></div></div><div class="sw"><div class="sw-c" style="background:#0D1F17;"></div><div class="sw-i" style="background:#0D1F17;border-top-color:#0D1F17;"><div class="sw-s" style="color:#fff;">950</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#0D1F17</div></div></div></div>
+  <div class="sl">Amber / Warning</div>
+  <div class="sr" style="margin-bottom:16px;"><div class="sw"><div class="sw-c" style="background:#FFF6E4;"></div><div class="sw-i"><div class="sw-s">50</div><div class="sw-h">#FFF6E4</div></div></div><div class="sw"><div class="sw-c" style="background:#FFE4B3;"></div><div class="sw-i"><div class="sw-s">100</div><div class="sw-h">#FFE4B3</div></div></div><div class="sw"><div class="sw-c" style="background:#FFD282;"></div><div class="sw-i"><div class="sw-s">200</div><div class="sw-h">#FFD282</div></div></div><div class="sw"><div class="sw-c" style="background:#FFC051;"></div><div class="sw-i"><div class="sw-s">300</div><div class="sw-h">#FFC051</div></div></div><div class="sw"><div class="sw-c" style="background:#FFAE20;"></div><div class="sw-i"><div class="sw-s">400</div><div class="sw-h">#FFAE20</div></div></div><div class="sw"><div class="sw-c" style="background:#D8891F;"></div><div class="sw-i" style="background:#D8891F;border-top-color:#D8891F;"><div class="sw-s" style="color:#fff;">500 ★</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#D8891F</div></div></div><div class="sw"><div class="sw-c" style="background:#BF7617;"></div><div class="sw-i" style="background:#BF7617;border-top-color:#BF7617;"><div class="sw-s" style="color:#fff;">600</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#BF7617</div></div></div><div class="sw"><div class="sw-c" style="background:#A6630F;"></div><div class="sw-i" style="background:#A6630F;border-top-color:#A6630F;"><div class="sw-s" style="color:#fff;">700</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#A6630F</div></div></div><div class="sw"><div class="sw-c" style="background:#8D5007;"></div><div class="sw-i" style="background:#8D5007;border-top-color:#8D5007;"><div class="sw-s" style="color:#fff;">800</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#8D5007</div></div></div><div class="sw"><div class="sw-c" style="background:#743D00;"></div><div class="sw-i" style="background:#743D00;border-top-color:#743D00;"><div class="sw-s" style="color:#fff;">900</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#743D00</div></div></div><div class="sw"><div class="sw-c" style="background:#5B2F00;"></div><div class="sw-i" style="background:#5B2F00;border-top-color:#5B2F00;"><div class="sw-s" style="color:#fff;">950</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#5B2F00</div></div></div></div>
+  <div class="sl">Red / Danger</div>
+  <div class="sr"><div class="sw"><div class="sw-c" style="background:#FDEBEC;"></div><div class="sw-i"><div class="sw-s">50</div><div class="sw-h">#FDEBEC</div></div></div><div class="sw"><div class="sw-c" style="background:#FAD4D6;"></div><div class="sw-i"><div class="sw-s">100</div><div class="sw-h">#FAD4D6</div></div></div><div class="sw"><div class="sw-c" style="background:#F7BDC0;"></div><div class="sw-i"><div class="sw-s">200</div><div class="sw-h">#F7BDC0</div></div></div><div class="sw"><div class="sw-c" style="background:#F4A6AA;"></div><div class="sw-i"><div class="sw-s">300</div><div class="sw-h">#F4A6AA</div></div></div><div class="sw"><div class="sw-c" style="background:#F18F94;"></div><div class="sw-i"><div class="sw-s">400</div><div class="sw-h">#F18F94</div></div></div><div class="sw"><div class="sw-c" style="background:#D64545;"></div><div class="sw-i" style="background:#D64545;border-top-color:#D64545;"><div class="sw-s" style="color:#fff;">500 ★</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#D64545</div></div></div><div class="sw"><div class="sw-c" style="background:#B93636;"></div><div class="sw-i" style="background:#B93636;border-top-color:#B93636;"><div class="sw-s" style="color:#fff;">600</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#B93636</div></div></div><div class="sw"><div class="sw-c" style="background:#9C2727;"></div><div class="sw-i" style="background:#9C2727;border-top-color:#9C2727;"><div class="sw-s" style="color:#fff;">700</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#9C2727</div></div></div><div class="sw"><div class="sw-c" style="background:#7F1818;"></div><div class="sw-i" style="background:#7F1818;border-top-color:#7F1818;"><div class="sw-s" style="color:#fff;">800</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#7F1818</div></div></div><div class="sw"><div class="sw-c" style="background:#620909;"></div><div class="sw-i" style="background:#620909;border-top-color:#620909;"><div class="sw-s" style="color:#fff;">900</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#620909</div></div></div><div class="sw"><div class="sw-c" style="background:#450404;"></div><div class="sw-i" style="background:#450404;border-top-color:#450404;"><div class="sw-s" style="color:#fff;">950</div><div class="sw-h" style="color:rgba(255,255,255,.6);">#450404</div></div></div></div>
+</div>
+</div>
+
+<div class="sec" id="typography">
+<div class="ey">02 — Fundamentos</div><h2>Tipografía</h2>
+<p class="desc">Satoshi · 11 pasos + aliases. Los estilos (<code>.fardo-body-*</code>, <code>.fardo-heading-*</code>) <strong>no incluyen font-weight</strong> — combinar con utilities de peso o defaults semánticos.</p>
+<div class="div"></div>
+<div class="cv"><div class="cl">Escala</div>
+<table class="spec"><thead><tr><th>Alias</th><th>Paso</th><th>px</th><th>Uso</th></tr></thead><tbody>
+<tr><td>body-xs</td><td>text-1</td><td>12px</td><td>Labels, captions</td></tr>
+<tr><td>body-sm</td><td>text-2</td><td>14px</td><td>Texto de apoyo</td></tr>
+<tr><td>body-md</td><td>text-3</td><td>16px</td><td>Texto principal de interfaz</td></tr>
+<tr><td>body-lg</td><td>text-4</td><td>18px</td><td>Subtítulos, intro</td></tr>
+<tr><td>heading-sm</td><td>text-5</td><td>20px</td><td>Título de card</td></tr>
+<tr><td>heading-md</td><td>text-6</td><td>24px</td><td>Título de sección</td></tr>
+<tr><td>heading-lg</td><td>text-7</td><td>28px</td><td>Título de página</td></tr>
+<tr><td>heading-xl</td><td>text-8</td><td>36px</td><td>Dashboard H1</td></tr>
+<tr><td>display-sm</td><td>text-9</td><td>48px</td><td>Scores, métricas</td></tr>
+<tr><td>display-md</td><td>text-10</td><td>64px</td><td>Landing hero</td></tr>
+<tr><td>display-lg</td><td>text-11</td><td>96px</td><td>Hero máximo</td></tr>
+</tbody></table></div>
+<div class="cv"><div class="cl">Combinación de clases</div>
+<div style="background:#FAF9F8;border-radius:8px;padding:16px;font-size:13px;color:#67635F;line-height:1.8;">
+  Estilo + utility: <code>&lt;p class="fardo-heading-lg fardo-weight-semibold"&gt;</code><br>
+  Estilo + default: <code>&lt;p class="fardo-heading-lg fardo-heading-default"&gt;</code> → aplica weight-medium<br>
+  Body default: <code>.fardo-body-default</code> → weight-regular &nbsp;|&nbsp;
+  Display default: <code>.fardo-display-default</code> → weight-bold
+</div></div>
+<div class="cv"><div class="cl">Muestra visual</div>
+<div style="border-bottom:1px solid #F2F0EE;padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">body-xs · 12px</span><span style="font-size:12px;">Labels y captions</span></div>
+<div style="border-bottom:1px solid #F2F0EE;padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">body-sm · 14px</span><span style="font-size:14px;">Texto de apoyo</span></div>
+<div style="border-bottom:1px solid #F2F0EE;padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">body-md · 16px</span><span style="font-size:16px;">Texto principal de la interfaz</span></div>
+<div style="border-bottom:1px solid #F2F0EE;padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">heading-sm · 20px</span><span style="font-size:20px;font-weight:500;">Título de card</span></div>
+<div style="border-bottom:1px solid #F2F0EE;padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">heading-md · 24px</span><span style="font-size:24px;font-weight:500;">Título de sección</span></div>
+<div style="border-bottom:1px solid #F2F0EE;padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">heading-lg · 28px</span><span style="font-size:28px;font-weight:600;">Título de página</span></div>
+<div style="border-bottom:1px solid #F2F0EE;padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">heading-xl · 36px</span><span style="font-size:36px;font-weight:600;">H1</span></div>
+<div style="padding:8px 0;display:flex;align-items:baseline;gap:12px;"><span style="font-size:10px;font-family:monospace;color:#898480;min-width:120px;">display-sm · 48px</span><span style="font-size:48px;font-weight:700;">73</span></div>
+</div></div>
+
+<div class="sec" id="spacing">
+<div class="ey">03 — Fundamentos</div><h2>Espaciado &amp; Radius</h2>
+<p class="desc">Base 4px. Botones e inputs usan valores directos en tokens de componente para hit-targets WCAG — el spacing global queda limpio.</p>
+<div class="div"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+<div class="cv"><div class="cl">Spacing</div>
+<table class="spec"><thead><tr><th>Token</th><th>px</th><th>Uso</th></tr></thead><tbody>
+<tr><td><code>--fardo-space-xxs</code></td><td>2</td><td>Gap inline mínimo</td></tr>
+<tr><td><code>--fardo-space-xs</code></td><td>4</td><td>Gap ícono/label</td></tr>
+<tr><td><code>--fardo-space-sm</code></td><td>8</td><td>Padding interno</td></tr>
+<tr><td><code>--fardo-space-md</code></td><td>12</td><td>Gap entre campos</td></tr>
+<tr><td><code>--fardo-space-lg</code></td><td>16</td><td>Card padding sm</td></tr>
+<tr><td><code>--fardo-space-xl</code></td><td>20</td><td>Padding inputs</td></tr>
+<tr><td><code>--fardo-space-2xl</code></td><td>24</td><td>Card padding md</td></tr>
+<tr><td><code>--fardo-space-3xl</code></td><td>32</td><td>Card padding lg</td></tr>
+<tr><td><code>--fardo-space-4xl</code></td><td>40</td><td>Gap entre bloques</td></tr>
+<tr><td><code>--fardo-space-5xl</code></td><td>60</td><td>Entre secciones</td></tr>
+<tr><td><code>--fardo-space-6xl</code></td><td>80</td><td>Márgenes layout</td></tr>
+<tr><td><code>--fardo-space-7xl</code></td><td>120</td><td>Secciones landing</td></tr>
+</tbody></table></div>
+<div class="cv"><div class="cl">Radius</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:flex-end;">
+<div style="text-align:center;"><div style="width:52px;height:52px;background:#FAF9F8;border:1.5px solid #D5D1CD;border-radius:4px;margin:0 auto 4px;"></div><div style="font-size:10px;font-weight:600;">sm</div><div style="font-size:9px;color:#898480;font-family:monospace;">4px</div></div>
+<div style="text-align:center;"><div style="width:52px;height:52px;background:#FAF9F8;border:1.5px solid #D5D1CD;border-radius:8px;margin:0 auto 4px;"></div><div style="font-size:10px;font-weight:600;">md</div><div style="font-size:9px;color:#898480;font-family:monospace;">8px</div></div>
+<div style="text-align:center;"><div style="width:52px;height:52px;background:#FAF9F8;border:1.5px solid #D5D1CD;border-radius:12px;margin:0 auto 4px;"></div><div style="font-size:10px;font-weight:600;">lg</div><div style="font-size:9px;color:#898480;font-family:monospace;">12px</div></div>
+<div style="text-align:center;"><div style="width:52px;height:52px;background:#FAF9F8;border:1.5px solid #D5D1CD;border-radius:16px;margin:0 auto 4px;"></div><div style="font-size:10px;font-weight:600;">xl</div><div style="font-size:9px;color:#898480;font-family:monospace;">16px</div></div>
+<div style="text-align:center;"><div style="width:52px;height:52px;background:#FAF9F8;border:1.5px solid #D5D1CD;border-radius:24px;margin:0 auto 4px;"></div><div style="font-size:10px;font-weight:600;">2xl</div><div style="font-size:9px;color:#898480;font-family:monospace;">24px</div></div>
+<div style="text-align:center;"><div style="width:64px;height:26px;background:#FAF9F8;border:1.5px solid #D5D1CD;border-radius:9999px;margin:0 auto 4px;margin-top:14px;"></div><div style="font-size:10px;font-weight:600;">pill</div><div style="font-size:9px;color:#898480;font-family:monospace;">9999px</div></div>
+</div>
+<table class="spec"><thead><tr><th>Token</th><th>Uso</th></tr></thead><tbody>
+<tr><td><code>radius-sm — 4px</code></td><td>Btn sm, badges, code</td></tr>
+<tr><td><code>radius-md — 8px</code></td><td>Btn md, inputs, tooltips</td></tr>
+<tr><td><code>radius-lg — 12px</code></td><td>Btn lg, cards default</td></tr>
+<tr><td><code>radius-xl — 16px</code></td><td>Cards elevated, modales</td></tr>
+<tr><td><code>radius-2xl — 24px</code></td><td>Panels grandes</td></tr>
+<tr><td><code>radius-pill — 9999px</code></td><td>Tags, badges, pills</td></tr>
+</tbody></table></div>
+</div></div>
+
+<div class="sec" id="shadows">
+<div class="ey">04 — Fundamentos</div><h2>Sombras</h2>
+<p class="desc">5 niveles. Doble capa (blur + ring 1px) para definición sin peso visual excesivo.</p>
+<div class="div"></div>
+<div class="cv"><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+<div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0px 1px 2px rgba(0,0,0,.06);"><b style="font-size:12px;display:block;margin-bottom:3px;">xs</b><span style="font-size:10px;color:#898480;">Inputs, badges</span></div>
+<div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0px 1px 4px rgba(0,0,0,.08),0px 0px 0px 1px rgba(0,0,0,.05);"><b style="font-size:12px;display:block;margin-bottom:3px;">sm</b><span style="font-size:10px;color:#898480;">Cards reposo</span></div>
+<div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0px 4px 12px rgba(0,0,0,.10),0px 0px 0px 1px rgba(0,0,0,.06);"><b style="font-size:12px;display:block;margin-bottom:3px;">md</b><span style="font-size:10px;color:#898480;">Cards hover</span></div>
+<div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0px 8px 24px rgba(0,0,0,.12),0px 0px 0px 1px rgba(0,0,0,.06);"><b style="font-size:12px;display:block;margin-bottom:3px;">lg</b><span style="font-size:10px;color:#898480;">Modales</span></div>
+<div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0px 16px 48px rgba(0,0,0,.14),0px 0px 0px 1px rgba(0,0,0,.06);"><b style="font-size:12px;display:block;margin-bottom:3px;">xl</b><span style="font-size:10px;color:#898480;">Sidebars</span></div>
+</div></div></div>
+
+<div class="sec" id="icon-scale">
+<div class="ey">05 — Fundamentos</div><h2>Iconografía — Heroicons outline</h2>
+<p class="desc">Solo variante outline de Heroicons v2. Escala de tamaños como tokens. En botones: sm=12px · md=14px · lg=16px.</p>
+<div class="div"></div>
+<div class="cv">
+<table class="spec"><thead><tr><th>Token</th><th>px</th><th>Uso</th></tr></thead><tbody>
+<tr><td><code>--fardo-icon-xs</code></td><td>16px</td><td>Inline en texto, badges</td></tr>
+<tr><td><code>--fardo-icon-sm</code></td><td>20px</td><td>Tags, íconos secundarios en cards</td></tr>
+<tr><td><code>--fardo-icon-md</code></td><td>24px</td><td>Nav, headers, acciones principales</td></tr>
+<tr><td><code>--fardo-icon-lg</code></td><td>32px</td><td>Empty states</td></tr>
+<tr><td><code>--fardo-icon-xl</code></td><td>40px</td><td>Íconos decorativos grandes</td></tr>
+</tbody></table>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px;">
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;border-radius:8px;background:#FAF9F8;"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg><span style="font-size:10px;color:#898480;">xs — 16px</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;border-radius:8px;background:#FAF9F8;"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg><span style="font-size:10px;color:#898480;">sm — 20px</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;border-radius:8px;background:#FAF9F8;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg><span style="font-size:10px;color:#898480;">md — 24px</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;border-radius:8px;background:#FAF9F8;"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg><span style="font-size:10px;color:#898480;">lg — 32px</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;border-radius:8px;background:#FAF9F8;"><svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg><span style="font-size:10px;color:#898480;">xl — 40px</span></div></div>
+<div class="alert ai" style="margin-top:16px;"><span class="aic">ℹ</span><span>Instalar: <code>npm install @heroicons/react</code> · Import: <code>import &#123; ArrowDownIcon &#125; from '@heroicons/react/24/outline'</code> · Siempre con <code>flex-shrink:0</code> en layouts flex.</span></div>
+</div></div>
+
+<div class="sec" id="contrast">
+<div class="ey">06 — Accesibilidad</div><h2>Contraste WCAG</h2>
+<p class="desc">AA = ≥4.5:1 texto normal · ≥3:1 texto grande. AAA = ≥7:1.</p>
+<div class="div"></div>
+<div class="cv">
+<div class="cr"><div class="cp" style="background:#FAF9F8;color:#2C2A28;">Página</div><div class="cm"><div class="cpair">gray-900 / gray-50</div><div class="ctk"><code>text-primary</code> sobre <code>bg-page</code></div></div><span class="ratio aaa">AAA 14.1:1</span></div>
+<div class="cr"><div class="cp" style="background:#fff;color:#2C2A28;">Base</div><div class="cm"><div class="cpair">gray-900 / white</div><div class="ctk"><code>text-primary</code> sobre <code>bg-base</code></div></div><span class="ratio aaa">AAA 15.3:1</span></div>
+<div class="cr"><div class="cp" style="background:#fff;color:#67635F;">Secundario</div><div class="cm"><div class="cpair">gray-700 / white</div><div class="ctk"><code>text-secondary</code></div></div><span class="ratio aaa">AAA 7.4:1</span></div>
+<div class="cr"><div class="cp" style="background:#fff;color:#898480;">Muted</div><div class="cm"><div class="cpair">gray-600 / white</div><div class="ctk"><code>text-muted</code></div></div><span class="ratio aa">AA 4.7:1</span></div>
+<div class="cr"><div class="cp" style="background:#fff;color:#E05A00;">Brand text</div><div class="cm"><div class="cpair">orange-500 / white</div><div class="ctk"><code>text-brand</code> — usa 500, no 400</div></div><span class="ratio aa">AA 4.8:1</span></div>
+<div class="cr"><div class="cp" style="background:#FF6A00;color:#fff;">Sobre brand</div><div class="cm"><div class="cpair">white / orange-400</div><div class="ctk"><code>text-on-brand</code> — solo body-lg+ (≥18px)</div></div><span class="ratio aa">AA 3.0:1 (lg)</span></div>
+<div class="cr"><div class="cp" style="background:#EAF6EF;color:#276A43;">Success</div><div class="cm"><div class="cpair">green-600 / green-50</div><div class="ctk"><code>text-success</code> sobre <code>bg-success</code></div></div><span class="ratio aa">AA 5.2:1</span></div>
+<div class="cr"><div class="cp" style="background:#FFF6E4;color:#BF7617;">Warning</div><div class="cm"><div class="cpair">amber-600 / amber-50</div><div class="ctk"><code>text-warning</code> sobre <code>bg-warning</code></div></div><span class="ratio aa">AA 4.6:1</span></div>
+<div class="cr"><div class="cp" style="background:#FDEBEC;color:#B93636;">Danger</div><div class="cm"><div class="cpair">red-600 / red-50</div><div class="ctk"><code>text-danger</code> sobre <code>bg-danger</code></div></div><span class="ratio aa">AA 5.5:1</span></div>
+<div class="cr"><div class="cp" style="background:#EBF4FF;color:#033F8C;">Tag info</div><div class="cm"><div class="cpair">blue-700 / blue-50</div><div class="ctk">Tags — blue-700 tiene mejor contraste que blue-500</div></div><span class="ratio aaa">AAA 8.1:1</span></div>
+<div class="cr"><div class="cp" style="background:#fff;color:#C2BDB8;">Disabled</div><div class="cm"><div class="cpair">gray-400 / white — intencional</div><div class="ctk">Solo disabled. Nunca para texto activo.</div></div><span class="ratio fail">2.1:1 — solo disabled</span></div>
+</div>
+<div class="alert aw"><span class="aic">⚠</span><span><strong>#FF6A00 sobre blanco = 3.0:1.</strong> No alcanza AA. <code>text-brand</code> apunta a orange-500 (#E05A00, 4.8:1). Orange-400 solo como fondo, borde o ícono.</span></div>
+</div>
+
+<div class="sec" id="token-rules">
+<div class="ey">07 — Accesibilidad</div><h2>Regla de los tres niveles</h2>
+<p class="desc">Si se respeta, la consistencia y la accesibilidad están garantizadas sin esfuerzo adicional.</p>
+<div class="div"></div>
+<div class="cv">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+<div style="background:#FAF9F8;border-radius:10px;padding:18px;text-align:center;"><div style="font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#898480;margin-bottom:8px;">Nivel 1</div><div style="font-size:14px;font-weight:600;margin-bottom:8px;">Primitivos</div><code>--fardo-orange-400</code><p style="font-size:12px;color:#898480;margin-top:10px;line-height:1.5;">Solo se definen. Nunca en componentes.</p></div>
+<div style="background:#FFF3EB;border-radius:10px;padding:18px;text-align:center;border:1px solid #FFD6B0;"><div style="font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#898480;margin-bottom:8px;">Nivel 2</div><div style="font-size:14px;font-weight:600;margin-bottom:8px;">Semánticos</div><code>--fardo-color-bg-brand</code><p style="font-size:12px;color:#898480;margin-top:10px;line-height:1.5;">Roles con nombre. Referencian primitivos.</p></div>
+<div style="background:#EBF4FF;border-radius:10px;padding:18px;text-align:center;border:1px solid #C0DAFB;"><div style="font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#898480;margin-bottom:8px;">Nivel 3</div><div style="font-size:14px;font-weight:600;margin-bottom:8px;">Componentes</div><code>--fardo-btn-primary-bg</code><p style="font-size:12px;color:#898480;margin-top:10px;line-height:1.5;">Scoped. Referencian semánticos.</p></div>
+</div>
+<div style="background:#FAF9F8;border-radius:8px;padding:12px 16px;font-size:13px;color:#67635F;"><strong style="color:#2C2A28;">Flujo:</strong> <code>--fardo-btn-primary-bg</code> → <code>--fardo-color-bg-brand</code> → <code>--fardo-orange-400</code> → <strong>#FF6A00</strong></div>
+</div></div>
+
+<div class="sec" id="buttons">
+<div class="ey">08 — Componentes</div><h2>Button</h2>
+<p class="desc">5 variantes × 3 tamaños + icon-only. Altos: sm ~32px · md ~40px · lg ~48px (WCAG 2.5.5). Radius escala con tamaño. Secondary y gray con borde claro en reposo → se oscurece en hover.</p>
+<div class="div"></div>
+<div class="cv"><div class="cl">Variantes × tamaños</div>
+<table class="bt">
+  <thead><tr>
+    <th>Variante</th>
+    <th>Small — ~32px<br><span style="font-weight:400;font-size:9px;">py:6 px:12 · r:4px</span></th>
+    <th>Medium — ~40px<br><span style="font-weight:400;font-size:9px;">py:10 px:16 · r:8px</span></th>
+    <th>Large — ~48px<br><span style="font-weight:400;font-size:9px;">py:14 px:24 · r:12px · WCAG ✓</span></th>
+  </tr></thead>
+  <tbody>
+    <tr><td>Primary</td>
+      <td><div class="btn-cell"><button class="btn btn-primary btn-sm"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Descargar</button><button class="btn btn-primary btn-sm">Descargar<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-primary btn-md"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Descargar</button><button class="btn btn-primary btn-md">Descargar<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-primary btn-lg"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Descargar</button><button class="btn btn-primary btn-lg">Descargar<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div></td>
+    </tr>
+    <tr><td>Secondary</td>
+      <td><div class="btn-cell"><button class="btn btn-secondary btn-sm"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Buscar</button><button class="btn btn-secondary btn-sm">Buscar<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-secondary btn-md"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Buscar</button><button class="btn btn-secondary btn-md">Buscar<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-secondary btn-lg"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Buscar</button><button class="btn btn-secondary btn-lg">Buscar<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></button></div></td>
+    </tr>
+    <tr><td>Ghost</td>
+      <td><div class="btn-cell"><button class="btn btn-ghost btn-sm"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg>Editar</button><button class="btn btn-ghost btn-sm">Editar<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-ghost btn-md"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg>Editar</button><button class="btn btn-ghost btn-md">Editar<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-ghost btn-lg"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg>Editar</button><button class="btn btn-ghost btn-lg">Editar<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div></td>
+    </tr>
+    <tr><td>Gray</td>
+      <td><div class="btn-cell"><button class="btn btn-gray btn-sm"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 3L2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>Filtrar</button><button class="btn btn-gray btn-sm">Filtrar<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-gray btn-md"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 3L2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>Filtrar</button><button class="btn btn-gray btn-md">Filtrar<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div></td>
+      <td><div class="btn-cell"><button class="btn btn-gray btn-lg"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 3L2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>Filtrar</button><button class="btn btn-gray btn-lg">Filtrar<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div></td>
+    </tr>
+    <tr><td>Danger</td>
+      <td><div class="bc"><button class="btn btn-danger btn-sm"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Eliminar</button></div></td>
+      <td><div class="bc"><button class="btn btn-danger btn-md"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Eliminar cuenta</button></div></td>
+      <td><div class="bc"><button class="btn btn-danger btn-lg"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Eliminar cuenta</button></div></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="cv"><div class="cl">Icon-only — mismo alto que botón con texto</div>
+<div style="display:flex;flex-direction:column;gap:20px;">
+  <div><div class="row-lbl">sm — 32×32px</div><div style="display:flex;gap:6px;align-items:center;"><button class="btn btn-primary ico-sm"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button class="btn btn-secondary ico-sm"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button><button class="btn btn-ghost ico-sm"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg></button><button class="btn btn-gray ico-sm"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><div style="display:flex;align-items:center;gap:6px;margin-left:12px;padding-left:12px;border-left:1px solid #F2F0EE;"><button class="btn btn-primary btn-sm"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Agregar</button><span style="font-size:11px;color:#898480;">mismo alto ✓</span></div></div></div>
+  <div><div class="row-lbl">md — 40×40px</div><div style="display:flex;gap:6px;align-items:center;"><button class="btn btn-primary ico-md"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button class="btn btn-secondary ico-md"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button><button class="btn btn-ghost ico-md"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg></button><button class="btn btn-gray ico-md"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><div style="display:flex;align-items:center;gap:6px;margin-left:12px;padding-left:12px;border-left:1px solid #F2F0EE;"><button class="btn btn-primary btn-md"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Agregar</button><span style="font-size:11px;color:#898480;">mismo alto ✓</span></div></div></div>
+  <div><div class="row-lbl">lg — 48×48px</div><div style="display:flex;gap:6px;align-items:center;"><button class="btn btn-primary ico-lg"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><button class="btn btn-secondary ico-lg"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button><button class="btn btn-ghost ico-lg"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/></svg></button><button class="btn btn-gray ico-lg"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><div style="display:flex;align-items:center;gap:6px;margin-left:12px;padding-left:12px;border-left:1px solid #F2F0EE;"><button class="btn btn-primary btn-lg"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Agregar</button><span style="font-size:11px;color:#898480;">mismo alto ✓</span></div></div></div>
+</div></div>
+<div class="cv"><div class="cl">Disabled</div>
+<div class="inl">
+  <button class="btn btn-primary btn-md" disabled><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg> Primary</button>
+  <button class="btn btn-secondary btn-md" disabled>Secondary</button>
+  <button class="btn btn-gray btn-md" disabled>Gray</button>
+  <button class="btn btn-danger btn-md" disabled>Danger</button>
+</div></div>
+<table class="spec"><thead><tr><th>Propiedad</th><th>sm</th><th>md</th><th>lg</th></tr></thead><tbody>
+<tr><td>Alto total</td><td>~32px</td><td>~40px</td><td>~48px ✓ WCAG</td></tr>
+<tr><td>Padding Y</td><td>6px</td><td>10px</td><td>14px</td></tr>
+<tr><td>Padding X</td><td>12px</td><td>16px</td><td>24px</td></tr>
+<tr><td>Font size</td><td>14px</td><td>16px</td><td>18px</td></tr>
+<tr><td>Border radius</td><td>4px</td><td>8px</td><td>12px</td></tr>
+<tr><td>Icon-only</td><td>32×32</td><td>40×40</td><td>48×48</td></tr>
+</tbody></table>
+</div>
+
+<div class="sec" id="inputs">
+<div class="ey">09 — Componentes</div><h2>Inputs &amp; Select</h2>
+<p class="desc">Alto 40px = btn-md. Radius md (8px) = btn-md. <code>.fardo-select</code> incluye el chevron vía CSS background-image.</p>
+<div class="div"></div>
+<div class="cv"><div class="cl">Input — estados</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+  <div class="iw"><label class="il">Default</label><input class="fi" type="text" placeholder="Ingresá el nombre de tu marca"></div>
+  <div class="iw"><label class="il">Con valor</label><input class="fi" type="text" value="Heyfardo.com"></div>
+  <div class="iw"><label class="il">Error</label><input class="fi err" type="text" value="heyfardo"><span class="ih err">Dominio inválido. Incluí el .com</span></div>
+  <div class="iw"><label class="il">Disabled</label><input class="fi" type="text" value="No editable" disabled><span class="ih">Se completa automáticamente</span></div>
+  <div class="iw"><label class="il">Con ícono adelante</label>
+    <div class="rw"><svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#A9A4A0;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input class="fi" type="text" placeholder="Buscar marca..." style="padding-left:36px;"></div>
+  </div>
+  <div class="iw"><label class="il">Con ícono atrás</label>
+    <div class="rw"><input class="fi" type="text" placeholder="URL del producto" style="padding-right:40px;">
+    <svg style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#A9A4A0;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div>
+  </div>
+</div></div>
+<div class="cv"><div class="cl">Select</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+  <div class="iw"><label class="il">Vacío</label>
+    <div class="rw"><select class="fs"><option value="" disabled selected>Seleccioná motor de IA</option><option>ChatGPT</option><option>Gemini</option><option>Perplexity</option><option>Claude</option></select>
+    <svg class="si" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+  </div>
+  <div class="iw"><label class="il">Con valor</label>
+    <div class="rw"><select class="fs"><option>ChatGPT</option><option selected>Gemini</option><option>Perplexity</option></select>
+    <svg class="si" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+  </div>
+</div></div>
+<div class="cv"><div class="cl">Alineación en fila — mismo alto 40px</div>
+<div style="display:flex;flex-direction:column;gap:12px;">
+  <div class="inl">
+    <div class="rw" style="width:200px;"><select class="fs"><option>Últimos 7 días</option><option>Últimos 30 días</option></select><svg class="si" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div>
+    <button class="btn btn-primary btn-md"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Analizar</button>
+    <button class="btn btn-gray btn-md">Cancelar</button>
+  </div>
+  <div class="inl">
+    <div class="rw" style="flex:1;position:relative;"><svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#A9A4A0;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input class="fi" type="text" placeholder="Buscá una marca..." style="padding-left:36px;"></div>
+    <button class="btn btn-primary btn-md">Buscar</button>
+    <button class="btn btn-gray ico-md"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 3L2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
+  </div>
+</div></div>
+</div>
+
+<div class="sec" id="tags">
+<div class="ey">10 — Componentes</div>
+<h2>Tags <span class="nb" style="margin-left:6px;">Nuevo en v1.4</span></h2>
+<p class="desc">Componente nuevo. Diferencia con badges: los tags tienen borde visible y usan pasos más oscuros del ramp (700) para texto, con mayor contraste y prominencia visual.</p>
+<div class="div"></div>
+<div class="cv"><div class="cl">4 variantes — con y sin ícono</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+  <span class="tag ti"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg> Info</span>
+  <span class="tag ts"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Success</span>
+  <span class="tag tw"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg> Warning</span>
+  <span class="tag te"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg> Error</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;">
+  <span class="tag ti">Conectado</span>
+  <span class="tag ts">Optimizado</span>
+  <span class="tag tw">Incompleto</span>
+  <span class="tag te">Error crítico</span>
+</div></div>
+<table class="spec"><thead><tr><th>Variante</th><th>Tokens</th><th>Contraste</th><th>Cuándo usar</th></tr></thead><tbody>
+<tr><td>tag-info</td><td>blue-50 / blue-200 / blue-700</td><td><span class="ratio aaa">AAA 8.1:1</span></td><td>Conectado, informativo</td></tr>
+<tr><td>tag-success</td><td>green-50 / green-200 / green-700</td><td><span class="ratio aaa">AAA 7.2:1</span></td><td>Completado, optimizado</td></tr>
+<tr><td>tag-warning</td><td>amber-50 / amber-200 / amber-700</td><td><span class="ratio aa">AA 5.8:1</span></td><td>Requiere atención</td></tr>
+<tr><td>tag-error</td><td>red-50 / red-200 / red-700</td><td><span class="ratio aa">AA 6.3:1</span></td><td>Error, fallido</td></tr>
+</tbody></table>
+<div class="alert ai" style="margin-top:12px;"><span class="aic">ℹ</span><span><strong>Tag vs Badge:</strong> usar tag cuando el estado necesita mayor peso visual con borde. Usar badge para estados secundarios, conteos o labels en tablas densas.</span></div>
+</div>
+
+<div class="sec" id="cards">
+<div class="ey">11 — Componentes</div><h2>Cards</h2>
+<p class="desc">Default, elevated y 4 state cards. Las de estado solo para métricas y alertas.</p>
+<div class="div"></div>
+<div class="cv"><div class="cl">Default — hover · tercera = selected</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+  <div style="background:#fff;border:1px solid #E6E3E0;border-radius:12px;padding:24px;box-shadow:0px 1px 4px rgba(0,0,0,.08),0px 0px 0px 1px rgba(0,0,0,.05);transition:all .2s ease;cursor:pointer;" onmouseover="this.style.boxShadow='0px 4px 12px rgba(0,0,0,.10),0px 0px 0px 1px rgba(0,0,0,.06)';this.style.borderColor='#D5D1CD';" onmouseout="this.style.boxShadow='0px 1px 4px rgba(0,0,0,.08),0px 0px 0px 1px rgba(0,0,0,.05)';this.style.borderColor='#E6E3E0';">
+    <div style="font-size:12px;color:#898480;margin-bottom:4px;">AI Visibility Score</div>
+    <div style="font-size:32px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;">73</div>
+    <span class="badge bs"><span class="bdot" style="background:#2E7D4F;"></span>+12 este mes</span>
+  </div>
+  <div style="background:#fff;border:1px solid #E6E3E0;border-radius:12px;padding:24px;box-shadow:0px 1px 4px rgba(0,0,0,.08),0px 0px 0px 1px rgba(0,0,0,.05);transition:all .2s ease;cursor:pointer;" onmouseover="this.style.boxShadow='0px 4px 12px rgba(0,0,0,.10),0px 0px 0px 1px rgba(0,0,0,.06)';this.style.borderColor='#D5D1CD';" onmouseout="this.style.boxShadow='0px 1px 4px rgba(0,0,0,.08),0px 0px 0px 1px rgba(0,0,0,.05)';this.style.borderColor='#E6E3E0';">
+    <div style="font-size:12px;color:#898480;margin-bottom:4px;">Cuota de citas</div>
+    <div style="font-size:32px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;">34%</div>
+    <span class="badge bw"><span class="bdot" style="background:#D8891F;"></span>Sin cambios</span>
+  </div>
+  <div style="background:#fff;border:2px solid #FF6A00;border-radius:12px;padding:24px;box-shadow:0px 1px 4px rgba(0,0,0,.08),0 0 0 3px rgba(255,106,0,.12);cursor:pointer;">
+    <div style="font-size:12px;color:#898480;margin-bottom:4px;">Menciones perdidas</div>
+    <div style="font-size:32px;font-weight:700;letter-spacing:-.02em;color:#B93636;margin-bottom:8px;">4</div>
+    <span class="badge bd"><span class="bdot" style="background:#D64545;"></span>Acción requerida</span>
+  </div>
+</div></div>
+<div class="cv"><div class="cl">State cards</div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+  <div style="background:#EAF6EF;border:1px solid #2E7D4F;border-radius:12px;padding:20px;"><div style="font-size:14px;font-weight:600;color:#276A43;margin-bottom:4px;">GA4 conectado</div><div style="font-size:13px;color:#2E7D4F;">Tu tráfico desde IA está siendo registrado.</div></div>
+  <div style="background:#FFF6E4;border:1px solid #D8891F;border-radius:12px;padding:20px;"><div style="font-size:14px;font-weight:600;color:#BF7617;margin-bottom:4px;">Faltan datos</div><div style="font-size:13px;color:#D8891F;">No hay datos de Perplexity en los últimos 7 días.</div></div>
+  <div style="background:#FDEBEC;border:1px solid #D64545;border-radius:12px;padding:20px;"><div style="font-size:14px;font-weight:600;color:#B93636;margin-bottom:4px;">Visibilidad cayó</div><div style="font-size:13px;color:#D64545;">Tu score bajó 15 puntos.</div></div>
+  <div style="background:#EBF4FF;border:1px solid #C0DAFB;border-radius:12px;padding:20px;"><div style="font-size:14px;font-weight:600;color:#034EAB;margin-bottom:4px;">Consejo</div><div style="font-size:13px;color:#0462D4;">Conectá Notion para publicar el contenido automáticamente.</div></div>
+</div></div></div>
+
+<div class="sec" id="badges">
+<div class="ey">12 — Componentes</div><h2>Badges</h2>
+<p class="desc">Sin borde visible, más compactos. Para estados secundarios, conteos y labels en tablas densas.</p>
+<div class="div"></div>
+<div class="cv">
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+  <span class="badge bs"><span class="bdot" style="background:#2E7D4F;"></span>Score subió</span>
+  <span class="badge bw"><span class="bdot" style="background:#D8891F;"></span>Sin datos</span>
+  <span class="badge bd"><span class="bdot" style="background:#D64545;"></span>Baja</span>
+  <span class="badge bi"><span class="bdot" style="background:#0577FD;"></span>Conectado</span>
+  <span class="badge bb"><span class="bdot" style="background:#FF6A00;"></span>Pendiente</span>
+  <span class="badge bn"><span class="bdot" style="background:#898480;"></span>Inactivo</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;">
+  <span class="badge bs">Optimizado</span>
+  <span class="badge bw">Incompleto</span>
+  <span class="badge bd">Error</span>
+  <span class="badge bi">Nuevo</span>
+  <span class="badge bb">Acción</span>
+  <span class="badge bn">Archivado</span>
+</div></div></div>
+
+<div class="sec" id="css-source">
+<div class="ey">13 — Recursos</div><h2>CSS Source</h2>
+<p class="desc">El archivo <code>fardo-design-tokens.css</code> completo — único source of truth.</p>
+<div class="div"></div>
+<div class="cw">
+  <div class="ch"><span class="cf">fardo-design-tokens.css — v1.4</span><button class="cb" onclick="copyCSS()">Copiar</button></div>
+  <div class="cc"><pre><code class="language-css" id="css-code">/* ============================================================
+   FARDO DESIGN SYSTEM — Design Tokens v1.3
+   Abril 2026 — heyfardo.com / platform-fardo.com
+
+   ESTRUCTURA:
+   1. Primitivos de color  → valores crudos del ramp (nunca usar directo)
+   2. Semánticos           → bg / fg / border / text
+   3. Sombras
+   4. Componentes          → button / card / input
+   5. Tipografía
+   6. Espaciado
+   7. Radius
+   ============================================================ */
+
+@import url(&#x27;https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,900&amp;display=swap&#x27;);
+@import url(&#x27;https://cdn.jsdelivr.net/npm/<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="137b76617c7a707c7d6053213d233d222b">[email&#160;protected]</a>/24/outline/style.css&#x27;);
+
+
+/* ============================================================
+   1. PRIMITIVOS DE COLOR
+   Prefijo: --fardo-{ramp}-{step}
+   Regla: nunca referenciar estos tokens directamente
+   en componentes. Siempre ir a través de los semánticos.
+   ============================================================ */
+
+:root {
+
+  /* --- Absolutos (fuera de escala) --- */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* --- Orange (marca primaria) --- */
+  --fardo-orange-50:  #FFF3EB;
+  --fardo-orange-100: #FFD6B0;
+  --fardo-orange-200: #FFB878;
+  --fardo-orange-300: #FF9040;
+  --fardo-orange-400: #FF6A00;
+  --fardo-orange-500: #E05A00;
+  --fardo-orange-600: #B84A00;
+  --fardo-orange-700: #8C3600;
+  --fardo-orange-800: #602400;
+  --fardo-orange-900: #3D1500;
+  --fardo-orange-950: #200A00;
+
+  /* --- Gray warm (neutros con tono amarronado — escala sin blanco ni negro puros) --- */
+  --fardo-gray-50:  #FAF9F8;
+  --fardo-gray-100: #F2F0EE;
+  --fardo-gray-200: #E6E3E0;
+  --fardo-gray-300: #D5D1CD;
+  --fardo-gray-400: #C2BDB8;
+  --fardo-gray-500: #A9A4A0;
+  --fardo-gray-600: #898480;
+  --fardo-gray-700: #67635F;
+  --fardo-gray-800: #474441;
+  --fardo-gray-900: #2C2A28;
+  --fardo-gray-950: #191817;
+
+  /* --- Blue (acción secundaria / info — ramp limpio 50→950) --- */
+  --fardo-blue-50:  #EBF4FF;
+  --fardo-blue-100: #C0DAFB;
+  --fardo-blue-200: #85BBF8;
+  --fardo-blue-300: #3D96F5;
+  --fardo-blue-400: #0577FD;
+  --fardo-blue-500: #0462D4;
+  --fardo-blue-600: #034EAB;
+  --fardo-blue-700: #033F8C;
+  --fardo-blue-800: #022F69;
+  --fardo-blue-900: #021F46;
+  --fardo-blue-950: #01142E;
+
+  /* Tokens de superficie oscura azul — fuera del ramp numerado */
+  --fardo-blue-deep: #2A4A6A; /* superficie / panel azul oscuro */
+  --fardo-blue-dark: #15313D; /* card bg muy oscuro, casi navy */
+
+  /* --- Purple (acento) --- */
+  --fardo-purple-50:  #F5EEFF;
+  --fardo-purple-100: #DFC8F5;
+  --fardo-purple-200: #B890E8;
+  --fardo-purple-300: #8A56CC;
+  --fardo-purple-400: #6B30AA;
+  --fardo-purple-500: #562888;
+  --fardo-purple-600: #4A2A5A;
+  --fardo-purple-700: #351A42;
+  --fardo-purple-800: #220E2C;
+  --fardo-purple-900: #150820;
+  --fardo-purple-950: #0A0414;
+
+  /* --- Green (success) --- */
+  --fardo-green-50:  #EAF6EF;
+  --fardo-green-100: #C8E6D9;
+  --fardo-green-200: #A3D5C3;
+  --fardo-green-300: #7DC4AD;
+  --fardo-green-400: #57B398;
+  --fardo-green-500: #2E7D4F;
+  --fardo-green-600: #276A43;
+  --fardo-green-700: #215738;
+  --fardo-green-800: #1A442D;
+  --fardo-green-900: #143122;
+  --fardo-green-950: #0D1F17;
+
+  /* --- Amber (warning) --- */
+  --fardo-amber-50:  #FFF6E4;
+  --fardo-amber-100: #FFE4B3;
+  --fardo-amber-200: #FFD282;
+  --fardo-amber-300: #FFC051;
+  --fardo-amber-400: #FFAE20;
+  --fardo-amber-500: #D8891F;
+  --fardo-amber-600: #BF7617;
+  --fardo-amber-700: #A6630F;
+  --fardo-amber-800: #8D5007;
+  --fardo-amber-900: #743D00;
+  --fardo-amber-950: #5B2F00;
+
+  /* --- Red (danger) --- */
+  --fardo-red-50:  #FDEBEC;
+  --fardo-red-100: #FAD4D6;
+  --fardo-red-200: #F7BDC0;
+  --fardo-red-300: #F4A6AA;
+  --fardo-red-400: #F18F94;
+  --fardo-red-500: #D64545;
+  --fardo-red-600: #B93636;
+  --fardo-red-700: #9C2727;
+  --fardo-red-800: #7F1818;
+  --fardo-red-900: #620909;
+  --fardo-red-950: #450404;
+
+  /* --- Gradientes de marca --- */
+  --fardo-gradient-rainbow: linear-gradient(to right,
+    rgb(253, 12, 31)   0%,  rgb(254, 59, 29)  10%,
+    rgb(254, 128, 15) 20%,  rgb(255, 203, 0)  30%,
+    rgb(168, 209, 91) 40%,  rgb(77, 215, 186) 50%,
+    rgb(13, 219, 253) 60%,  rgb(5, 167, 255)  70%,
+    rgb(0, 67, 233)   80%,  rgb(15, 1, 198)  100%
+  );
+  --fardo-gradient-orange: linear-gradient(90deg, #FF3B1D 0%, #FE800F 100%);
+  --fardo-gradient-purple: linear-gradient(135deg, #1A1A1A 0%, #2A1A3A 100%);
+  --fardo-gradient-blue:   linear-gradient(135deg, #1A1A1A 0%, #1A2A4A 100%);
+}
+
+
+/* ============================================================
+   2. TOKENS SEMÁNTICOS — LIGHT MODE
+   Prefijo: --fardo-color-{role}-{variant}
+   ============================================================ */
+
+:root {
+
+  /* ---- bg ---- */
+  --fardo-color-bg-page:      var(--fardo-gray-50);
+  --fardo-color-bg-base:      var(--color-white);
+  --fardo-color-bg-subtle:    var(--fardo-gray-100);
+  --fardo-color-bg-elevated:  var(--color-white);
+  --fardo-color-bg-overlay:   rgba(0, 0, 0, 0.45);
+  --fardo-color-bg-brand:     var(--fardo-orange-400);
+  --fardo-color-bg-info:      var(--fardo-blue-50);
+  --fardo-color-bg-success:   var(--fardo-green-50);
+  --fardo-color-bg-warning:   var(--fardo-amber-50);
+  --fardo-color-bg-danger:    var(--fardo-red-50);
+
+  /* ---- fg ---- */
+  --fardo-color-fg-default:   var(--fardo-gray-800);
+  --fardo-color-fg-muted:     var(--fardo-gray-600);
+  --fardo-color-fg-subtle:    var(--fardo-gray-400);
+  --fardo-color-fg-brand:     var(--fardo-orange-400);
+  --fardo-color-fg-on-brand:  var(--color-white);
+  --fardo-color-fg-info:      var(--fardo-blue-500);
+  --fardo-color-fg-success:   var(--fardo-green-500);
+  --fardo-color-fg-warning:   var(--fardo-amber-500);
+  --fardo-color-fg-danger:    var(--fardo-red-500);
+
+  /* ---- border ---- */
+  --fardo-color-border-default: var(--fardo-gray-200);
+  --fardo-color-border-subtle:  var(--fardo-gray-100);
+  --fardo-color-border-strong:  var(--fardo-gray-500);
+  --fardo-color-border-brand:   var(--fardo-orange-400);
+  --fardo-color-border-info:    var(--fardo-blue-400);
+  --fardo-color-border-success: var(--fardo-green-500);
+  --fardo-color-border-warning: var(--fardo-amber-500);
+  --fardo-color-border-danger:  var(--fardo-red-500);
+
+  /* ---- text ---- */
+  --fardo-color-text-primary:   var(--fardo-gray-900);
+  --fardo-color-text-secondary: var(--fardo-gray-700);
+  --fardo-color-text-muted:     var(--fardo-gray-600);
+  --fardo-color-text-disabled:  var(--fardo-gray-400);
+  --fardo-color-text-brand:     var(--fardo-orange-500);
+  --fardo-color-text-on-brand:  var(--color-white);
+  --fardo-color-text-info:      var(--fardo-blue-500);
+  --fardo-color-text-success:   var(--fardo-green-600);
+  --fardo-color-text-warning:   var(--fardo-amber-600);
+  --fardo-color-text-danger:    var(--fardo-red-600);
+}
+
+
+/* ============================================================
+   3. SOMBRAS
+   Prefijo: --fardo-shadow-{level}
+   ============================================================ */
+
+:root {
+  --fardo-shadow-none: none;
+  --fardo-shadow-xs:   0px 1px 2px rgba(0, 0, 0, 0.06);
+  --fardo-shadow-sm:   0px 1px 4px rgba(0, 0, 0, 0.08), 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
+  --fardo-shadow-md:   0px 4px 12px rgba(0, 0, 0, 0.10), 0px 0px 0px 1px rgba(0, 0, 0, 0.06);
+  --fardo-shadow-lg:   0px 8px 24px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(0, 0, 0, 0.06);
+  --fardo-shadow-xl:   0px 16px 48px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ============================================================
+   4. COMPONENTES
+   ============================================================ */
+
+:root {
+
+  /* ---- button — colores ---- */
+
+  /* primary */
+  --fardo-btn-primary-bg:            var(--fardo-orange-400);
+  --fardo-btn-primary-bg-hover:      var(--fardo-orange-500);
+  --fardo-btn-primary-bg-active:     var(--fardo-orange-600);
+  --fardo-btn-primary-bg-disabled:   var(--fardo-gray-200);
+  --fardo-btn-primary-text:          var(--color-white);
+  --fardo-btn-primary-text-disabled: var(--fardo-gray-500);
+  --fardo-btn-primary-border:        transparent;
+  --fardo-btn-primary-border-hover: transparent;
+  --fardo-btn-primary-border-active: transparent;
+  --fardo-btn-primary-border-disabled: transparent;
+
+  /* secondary */
+  --fardo-btn-secondary-bg:              transparent;
+  --fardo-btn-secondary-bg-hover:        var(--fardo-orange-50);
+  --fardo-btn-secondary-bg-active:       var(--fardo-orange-100);
+  --fardo-btn-secondary-bg-disabled:     transparent;
+  --fardo-btn-secondary-text:            var(--fardo-orange-500);
+  --fardo-btn-secondary-text-disabled:   var(--fardo-gray-400);
+  --fardo-btn-secondary-border:          var(--fardo-orange-200); /* más claro que orange-400 */
+  --fardo-btn-secondary-border-hover:    var(--fardo-orange-400);
+  --fardo-btn-secondary-border-active: var(--fardo-orange-500);
+  --fardo-btn-secondary-border-disabled: var(--fardo-gray-200);
+
+  /* ghost */
+  --fardo-btn-ghost-bg:         transparent;
+  --fardo-btn-ghost-bg-hover:   var(--fardo-gray-100);
+  --fardo-btn-ghost-bg-active:  var(--fardo-gray-200);
+  --fardo-btn-ghost-text:       var(--fardo-gray-700);
+  --fardo-btn-ghost-text-hover: var(--fardo-gray-900);
+  --fardo-btn-ghost-border:     transparent;
+
+  /* gray */
+  --fardo-btn-gray-bg:              transparent;
+  --fardo-btn-gray-bg-hover:        var(--fardo-gray-50);
+  --fardo-btn-gray-bg-active:       var(--fardo-gray-200);
+  --fardo-btn-gray-bg-disabled:     transparent;
+  --fardo-btn-gray-text:            var(--fardo-gray-700);
+  --fardo-btn-gray-text-hover:      var(--fardo-gray-900);
+  --fardo-btn-gray-text-disabled:   var(--fardo-gray-400);
+  --fardo-btn-gray-border:          var(--fardo-gray-300); /* igual de claro que secondary */
+  --fardo-btn-gray-border-hover:    var(--fardo-gray-600);
+  --fardo-btn-gray-border-disabled: var(--fardo-gray-200);
+
+  /* danger */
+  --fardo-btn-danger-bg:       var(--fardo-red-500);
+  --fardo-btn-danger-bg-hover: var(--fardo-red-600);
+  --fardo-btn-danger-bg-active: var(--fardo-red-700);
+  --fardo-btn-danger-text:     var(--color-white);
+  --fardo-btn-danger-text-disabled: var(--fardo-gray-400);
+  --fardo-btn-danger-border-disabled: transparent;
+  --fardo-btn-danger-border:   transparent;
+  --fardo-btn-danger-border-hover: transparent;
+  --fardo-btn-danger-border-active: transparent;
+
+
+  /* ---- button — dimensiones ----
+     Valores directos (no en escala de spacing) para cumplir
+     targets de accesibilidad WCAG 2.5.5:
+     sm ~32px alto — válido desktop
+     md ~40px alto — aceptable touch
+     lg ~48px alto — cumple WCAG touch target (44px+)
+  ---- */
+  --fardo-btn-radius-sm:    var(--fardo-radius-sm);  /* 4px */
+  --fardo-btn-radius-md:    var(--fardo-radius-md);  /* 8px */
+  --fardo-btn-radius-lg:    var(--fardo-radius-lg);  /* 12px */
+
+  --fardo-btn-padding-y-sm: 6px;   /* alto resultante ~32px */
+  --fardo-btn-padding-x-sm: 12px;
+  --fardo-btn-padding-y-md: 10px;  /* alto resultante ~40px */
+  --fardo-btn-padding-x-md: 16px;
+  --fardo-btn-padding-y-lg: 14px;  /* alto resultante ~48px */
+  --fardo-btn-padding-x-lg: 24px;
+
+  /* icon-only — mismo alto que el botón con texto */
+  --fardo-btn-icon-size-sm: 32px;  /* = 6*2 + 20 (ícono 20px) */
+  --fardo-btn-icon-size-md: 40px;  /* = 10*2 + 20 */
+  --fardo-btn-icon-size-lg: 48px;  /* = 14*2 + 20 */
+
+  --fardo-btn-font-size-sm: var(--fardo-text-2);  /* 14px */
+  --fardo-btn-font-size-md: var(--fardo-text-3);  /* 16px */
+  --fardo-btn-font-size-lg: var(--fardo-text-4);  /* 18px */
+  --fardo-btn-font-weight:  var(--fardo-weight-medium);
+  --fardo-btn-transition:   all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --fardo-btn-focus-ring:   0 0 0 3px rgba(255, 106, 0, 0.25);
+  --fardo-btn-shadow:       var(--fardo-shadow-xs);
+  --fardo-btn-shadow-hover: var(--fardo-shadow-sm);
+
+
+  /* ---- card ---- */
+  --fardo-card-bg:              var(--color-white);
+  --fardo-card-bg-hover:        var(--fardo-gray-50);
+  --fardo-card-border:          var(--fardo-gray-200);
+  --fardo-card-border-hover:    var(--fardo-gray-300);
+  --fardo-card-border-selected: var(--fardo-orange-400);
+  --fardo-card-radius:          var(--fardo-radius-lg);
+  --fardo-card-shadow:          var(--fardo-shadow-sm);
+  --fardo-card-shadow-hover:    var(--fardo-shadow-md);
+  --fardo-card-padding-sm:      var(--fardo-space-lg);
+  --fardo-card-padding-md:      var(--fardo-space-2xl);
+  --fardo-card-padding-lg:      var(--fardo-space-3xl);
+
+  /* elevated */
+  --fardo-card-elevated-bg:     var(--color-white);
+  --fardo-card-elevated-border: var(--fardo-gray-100);
+  --fardo-card-elevated-shadow: var(--fardo-shadow-lg);
+  --fardo-card-elevated-radius: var(--fardo-radius-xl);
+
+  /* state cards */
+  --fardo-card-info-bg:         var(--fardo-blue-50);
+  --fardo-card-info-border:     var(--fardo-blue-100);
+  --fardo-card-success-bg:      var(--fardo-green-50);
+  --fardo-card-success-border:  var(--fardo-green-500);
+  --fardo-card-warning-bg:      var(--fardo-amber-50);
+  --fardo-card-warning-border:  var(--fardo-amber-500);
+  --fardo-card-danger-bg:       var(--fardo-red-50);
+  --fardo-card-danger-border:   var(--fardo-red-500);
+
+  /* ---- input / select ----
+     Mismo alto que btn-md (40px) para alinear en fila.
+     Padding-y calculado: 40px = 2*10px + line-height(16px*1.25=20px)
+  ---- */
+  --fardo-input-bg:                var(--color-white);
+  --fardo-input-bg-hover:          var(--color-white);
+  --fardo-input-bg-focus:          var(--color-white);
+  --fardo-input-bg-error:          var(--color-white);
+  --fardo-input-bg-disabled:       var(--fardo-gray-50);
+  --fardo-input-border:            var(--fardo-gray-300);
+  --fardo-input-border-hover:      var(--fardo-gray-500);
+  --fardo-input-border-focus:      var(--fardo-orange-400);
+  --fardo-input-border-error:      var(--fardo-red-500);
+  --fardo-input-border-disabled:   var(--fardo-gray-200);
+  --fardo-input-text:              var(--fardo-gray-900);
+  --fardo-input-text-hover:        var(--fardo-gray-900);
+  --fardo-input-text-focus:        var(--fardo-gray-900);
+  --fardo-input-text-error:        var(--fardo-gray-900);
+  --fardo-input-text-placeholder:  var(--fardo-gray-400);
+  --fardo-input-text-disabled:     var(--fardo-gray-400);
+  --fardo-input-label:             var(--fardo-gray-800);
+  --fardo-input-helper:            var(--fardo-gray-600);
+  --fardo-input-helper-error:      var(--fardo-red-600);
+  --fardo-input-radius:            var(--fardo-radius-md);  /* 8px — igual que btn-md */
+  --fardo-input-padding-y:         10px;   /* igual que btn-md */
+  --fardo-input-padding-x:         12px;
+  --fardo-input-font-size:         var(--fardo-text-3);  /* 16px */
+  --fardo-input-height:            40px;   /* = btn-icon-size-md */
+  --fardo-input-focus-ring:        0 0 0 3px rgba(255, 106, 0, 0.20);
+  --fardo-input-shadow:            var(--fardo-shadow-xs);
+  --fardo-input-transition:        all 0.15s cubic-bezier(0.4, 0, 0.2, 1); 
+ 
+
+  /* dropdown / select — mismos tokens base + extras */
+  --fardo-select-icon-color:       var(--fardo-gray-500);
+  --fardo-select-bg-open:          var(--color-white);
+  --fardo-option-bg-hover:  var(--fardo-gray-50);
+  --fardo-option-bg-active: var(--fardo-orange-50);
+  --fardo-option-text-active: var(--fardo-orange-600);
+  --fardo-dropdown-shadow:  var(--fardo-shadow-md);
+  --fardo-dropdown-radius:  var(--fardo-radius-md);
+
+  /* ---- Tags ---- */
+  .fardo-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--fardo-radius-pill);
+    font-size: var(--fardo-text-2);
+    font-weight: var(--fardo-weight-medium);
+    line-height: 1.4;
+    border: 1px solid;
+  }
+
+  /* Info tag */
+  .fardo-tag-info {
+    background-color: var(--fardo-blue-50);
+    color: var(--fardo-blue-700);
+    border-color: var(--fardo-blue-200);
+  }
+
+  .fardo-tag-info .fardo-tag-icon {
+    color: var(--fardo-blue-600);
+  }
+
+  /* Success tag */
+  .fardo-tag-success {
+    background-color: var(--fardo-green-50);
+    color: var(--fardo-green-700);
+    border-color: var(--fardo-green-200);
+  }
+
+  .fardo-tag-success .fardo-tag-icon {
+    color: var(--fardo-green-600);
+  }
+
+  /* Warning tag */
+  .fardo-tag-warning {
+    background-color: var(--fardo-amber-50);
+    color: var(--fardo-amber-700);
+    border-color: var(--fardo-amber-200);
+  }
+
+  .fardo-tag-warning .fardo-tag-icon {
+    color: var(--fardo-amber-600);
+  }
+
+  /* Error tag */
+  .fardo-tag-error {
+    background-color: var(--fardo-red-50);
+    color: var(--fardo-red-700);
+    border-color: var(--fardo-red-200);
+  }
+
+  .fardo-tag-error .fardo-tag-icon {
+    color: var(--fardo-red-600);
+  }
+
+  /* Tag icon spacing */
+  .fardo-tag-icon {
+    margin-right: 6px;
+    font-size: var(--fardo-icon-sm);
+  }
+}
+
+
+/* ============================================================
+   5. TIPOGRAFÍA
+   ============================================================ */
+
+:root {
+  --fardo-font-body:             &quot;Satoshi&quot;, sans-serif;
+  --fardo-font-heading:          &quot;Satoshi&quot;, sans-serif;
+  --fardo-font-display:          &quot;Satoshi&quot;, sans-serif;
+
+  /* Weights */
+  --fardo-weight-regular:        400;
+  --fardo-weight-medium:         500;
+  --fardo-weight-semibold:       600;
+  --fardo-weight-bold:           700;
+
+  /* Semantic defaults */
+  --fardo-weight-body:           var(--fardo-weight-regular);
+  --fardo-weight-heading:        var(--fardo-weight-medium);
+  --fardo-weight-heading-strong: var(--fardo-weight-semibold);
+  --fardo-weight-display:        var(--fardo-weight-bold);
+
+  /* Font sizes */
+  --fardo-text-1:  12px;
+  --fardo-text-2:  14px;
+  --fardo-text-3:  16px;
+  --fardo-text-4:  18px;
+  --fardo-text-5:  20px;
+  --fardo-text-6:  24px;
+  --fardo-text-7:  28px;
+  --fardo-text-8:  36px;
+  --fardo-text-9:  48px;
+  --fardo-text-10: 64px;
+  --fardo-text-11: 96px;
+
+  /* Semantic sizes */
+  --fardo-body-xs:    var(--fardo-text-1);
+  --fardo-body-sm:    var(--fardo-text-2);
+  --fardo-body-md:    var(--fardo-text-3); 
+  --fardo-body-lg:    var(--fardo-text-4);
+
+  --fardo-heading-sm: var(--fardo-text-5);
+  --fardo-heading-md: var(--fardo-text-6);
+  --fardo-heading-lg: var(--fardo-text-7);
+  --fardo-heading-xl: var(--fardo-text-8);
+
+  --fardo-display-sm: var(--fardo-text-9);
+  --fardo-display-md: var(--fardo-text-10);
+  --fardo-display-lg: var(--fardo-text-11);
+
+  /* Tracking */
+  --fardo-tracking-tight:  -0.02em;
+  --fardo-tracking-normal: 0;
+}
+
+
+/* ============================================================
+   TIPOGRAFÍA — ESTILOS (SIN weight)
+   ============================================================ */
+
+/* Body */
+.fardo-body-xs   { font-family: var(--fardo-font-body); font-size: var(--fardo-body-xs); line-height: 1.5; letter-spacing: var(--fardo-tracking-normal); }
+.fardo-body-sm   { font-family: var(--fardo-font-body); font-size: var(--fardo-body-sm); line-height: 1.5; letter-spacing: var(--fardo-tracking-normal); }
+.fardo-body-md   { font-family: var(--fardo-font-body); font-size: var(--fardo-body-md); line-height: 1.5; letter-spacing: var(--fardo-tracking-normal); }
+.fardo-body-lg   { font-family: var(--fardo-font-body); font-size: var(--fardo-body-lg); line-height: 1.5; letter-spacing: var(--fardo-tracking-normal); }
+
+/* Heading */
+.fardo-heading-sm { font-family: var(--fardo-font-heading); font-size: var(--fardo-heading-sm); line-height: 1.3;  letter-spacing: -0.01em; }
+.fardo-heading-md { font-family: var(--fardo-font-heading); font-size: var(--fardo-heading-md); line-height: 1.25; letter-spacing: -0.01em; }
+.fardo-heading-lg { font-family: var(--fardo-font-heading); font-size: var(--fardo-heading-lg); line-height: 1.2;  letter-spacing: -0.015em; }
+.fardo-heading-xl { font-family: var(--fardo-font-heading); font-size: var(--fardo-heading-xl); line-height: 1.15; letter-spacing: var(--fardo-tracking-tight); }
+
+/* Display */
+.fardo-display-sm { font-family: var(--fardo-font-display); font-size: var(--fardo-display-sm); line-height: 1.1;  letter-spacing: var(--fardo-tracking-tight); }
+.fardo-display-md { font-family: var(--fardo-font-display); font-size: var(--fardo-display-md); line-height: 1.05; letter-spacing: -0.025em; }
+.fardo-display-lg { font-family: var(--fardo-font-display); font-size: var(--fardo-display-lg); line-height: 1;    letter-spacing: -0.03em; }
+
+
+/* ============================================================
+   TIPOGRAFÍA — UTILITIES
+   ============================================================ */
+
+/* Weights */
+.fardo-weight-regular  { font-weight: var(--fardo-weight-regular); }
+.fardo-weight-medium   { font-weight: var(--fardo-weight-medium); }
+.fardo-weight-semibold { font-weight: var(--fardo-weight-semibold); }
+.fardo-weight-bold     { font-weight: var(--fardo-weight-bold); }
+
+
+/* ============================================================
+   TIPOGRAFÍA — DEFAULTS (OPCIONAL)
+   ============================================================ */
+
+/* Mantienen intención de diseño sin bloquear flexibilidad */
+.fardo-body-default    { font-weight: var(--fardo-weight-body); }
+.fardo-heading-default { font-weight: var(--fardo-weight-heading); }
+.fardo-display-default { font-weight: var(--fardo-weight-display); }
+
+/* ============================================================
+   USO
+
+   Ejemplo base:
+   &lt;p class=&quot;fardo-body-md fardo-body-default&quot;&gt;Texto&lt;/p&gt;
+
+   Heading:
+   &lt;h2 class=&quot;fardo-heading-lg fardo-heading-default&quot;&gt;Título&lt;/h2&gt;
+
+   Override de weight:
+   &lt;h2 class=&quot;fardo-heading-lg fardo-weight-bold&quot;&gt;Título&lt;/h2&gt;
+
+   Display:
+   &lt;h1 class=&quot;fardo-display-md fardo-weight-medium&quot;&gt;Hero&lt;/h1&gt;
+
+   Notas:
+   - Los estilos NO incluyen font-weight
+   - Siempre combinar con utilities o defaults
+   ============================================================ */
+
+/* ============================================================
+   6. ESPACIADO
+   ============================================================ */
+
+:root {
+  --fardo-space-none: 0;
+  --fardo-space-xxs:  2px;
+  --fardo-space-xs:   4px;
+  --fardo-space-sm:   8px;
+  --fardo-space-md:   12px;
+  --fardo-space-lg:   16px;
+  --fardo-space-xl:   20px;
+  --fardo-space-2xl:  24px;
+  --fardo-space-3xl:  32px;
+  --fardo-space-4xl:  40px;
+  --fardo-space-5xl:  60px;
+  --fardo-space-6xl:  80px;
+  --fardo-space-7xl:  120px;
+}
+
+
+/* ============================================================
+   7. RADIUS
+   ============================================================ */
+
+:root {
+  --fardo-radius-sm:   4px;
+  --fardo-radius-md:   8px;
+  --fardo-radius-lg:   12px;
+  --fardo-radius-xl:   16px;
+  --fardo-radius-2xl:  24px;
+  --fardo-radius-pill: 9999px;
+
+  /* ============================================================
+   7. ICONOS
+   ============================================================ */
+  /* NOTA: Solo se usarán iconos outline de Heroicons */
+
+  --fardo-icon-xs: 16px;  /* para mini icons */
+  --fardo-icon-sm: 20px;  /* para mini icons */
+  --fardo-icon-md: 24px;  /* para outline icons */
+  --fardo-icon-lg: 32px;  /* escalado de outline */
+  --fardo-icon-xl: 40px;  /* escalado de outline */
+}
+
+
+/* ============================================================
+   8. COMPONENT CLASSES
+   ============================================================ */
+
+/* ---- Select con chevron ---- */
+.fardo-select {
+  appearance: none;
+  background-image: url(&quot;data:image/svg+xml,%3csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; viewBox=&#x27;0 0 24 24&#x27; stroke=&#x27;%236B7280&#x27;%3e%3cpath stroke-linecap=&#x27;round&#x27; stroke-linejoin=&#x27;round&#x27; stroke-width=&#x27;2&#x27; d=&#x27;M19 9l-7 7-7-7&#x27;%3e%3c/path%3e%3c/svg%3e&quot;);
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+.fardo-select:focus {
+  outline: none;
+  box-shadow: var(--fardo-input-focus-ring);
+}
+
+/* ---- Dropdown chevron ---- */
+.fardo-dropdown-chevron {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--fardo-select-icon-color);
+  transition: transform 0.2s ease;
+}
+
+.fardo-dropdown.open .fardo-dropdown-chevron {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+
+/* ============================================================
+   RESET BASE
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: var(--fardo-font-body);
+  background-color: var(--fardo-color-bg-page);
+  color: var(--fardo-color-text-primary);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+</code></pre></div>
+</div></div>
+
+</main></div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+hljs.highlightAll();
+function copyCSS(){
+  const t=document.getElementById('css-code').textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.querySelector('.cb');
+    b.textContent='¡Copiado!';
+    setTimeout(()=>b.textContent='Copiar',2000);
+  });
+}
+const secs=document.querySelectorAll('.sec');
+const links=document.querySelectorAll('nav a');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('

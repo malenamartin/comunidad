@@ -4,7 +4,7 @@ import { isAdmin, getInviteCodes, createInviteCode, toggleInviteCode, logAdminAc
 
 export async function GET() {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   return NextResponse.json(await getInviteCodes());
@@ -12,7 +12,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const { code, maxUses = 1, expiresAt = null } = await req.json();
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const { codeId, active } = await req.json();

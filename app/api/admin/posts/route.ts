@@ -4,7 +4,7 @@ import { isAdmin, getRecentPosts, deletePost, togglePinPost, logAdminAction } fr
 
 export async function GET() {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   return NextResponse.json(await getRecentPosts());
@@ -12,7 +12,7 @@ export async function GET() {
 
 export async function DELETE(req: NextRequest) {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const { postId } = await req.json();
@@ -23,7 +23,7 @@ export async function DELETE(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const { postId, pinned } = await req.json();

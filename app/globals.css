@@ -1,51 +1,5 @@
 @import "tailwindcss";
 
-/* ─── Fardo Design System tokens (v1.4) — dark-theme adaptation ──── */
-:root {
-  /* Brand / Orange */
-  --o400: #FF6A00;
-  --o500: #E05A00;
-  --o200: #FFB878;
-
-  /* Gray ramp (DS primitives) */
-  --g50:  #FAF9F8;
-  --g100: #F2F0EE;
-  --g200: #E6E3E0;
-  --g300: #D5D1CD;
-  --g400: #C2BDB8;
-  --g500: #A9A4A0;
-  --g600: #898480;
-  --g700: #67635F;
-  --g800: #474441;
-  --g900: #2C2A28;
-
-  /* Shadows (DS) */
-  --sh-xs: 0px 1px 2px rgba(0,0,0,.06);
-  --sh-sm: 0px 1px 4px rgba(0,0,0,.08), 0px 0px 0px 1px rgba(0,0,0,.05);
-  --sh-md: 0px 4px 12px rgba(0,0,0,.10), 0px 0px 0px 1px rgba(0,0,0,.06);
-  --sh-lg: 0px 8px 24px rgba(0,0,0,.12), 0px 0px 0px 1px rgba(0,0,0,.06);
-
-  /* Border radius (DS) */
-  --r-sm:   4px;
-  --r-md:   8px;
-  --r-lg:   12px;
-  --r-xl:   16px;
-  --r-pill: 9999px;
-
-  /* Community dark-theme semantic tokens */
-  --bg-primary:       #0A0A0A;
-  --brand:            #FF6A00;   /* was #D44A30 */
-  --brand-hover:      #E05A00;
-  --brand-light:      #FFB878;
-  --text-primary:     #FFFFFF;
-  --text-secondary:   rgba(255,255,255,0.5);
-  --text-tertiary:    rgba(255,255,255,0.3);
-  --card-bg:          rgba(255,255,255,0.03);
-  --card-border:      rgba(255,255,255,0.08);
-  --card-border-hover:rgba(255,255,255,0.15);
-  --btn-gradient:     linear-gradient(135deg, #FF6A00, #E05A00);
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -55,8 +9,8 @@
 html, body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: #0A0A0A;
-  color: #FFFFFF;
+  background-color: var(--fardo-color-bg-page);
+  color: var(--fardo-color-text-primary);
   font-family: "Satoshi", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -88,6 +42,6 @@ a {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track  { background: rgba(255,255,255,0.03); }
-::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.15); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+::-webkit-scrollbar-track  { background: var(--fardo-gray-100); }
+::-webkit-scrollbar-thumb  { background: var(--fardo-gray-300); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--fardo-gray-400); }

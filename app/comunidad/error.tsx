@@ -20,6 +20,9 @@ export default function ComunidadError({
         textAlign: 'center',
       }}
     >
+      <p style={{ fontSize: '18px', fontWeight: 700, color: '#fff' }}>
+        Se nos cruzaron los cables.
+      </p>
       <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', maxWidth: '600px', wordBreak: 'break-word' }}>
         {error.message}
       </p>
@@ -36,10 +39,10 @@ export default function ComunidadError({
           fontSize: '14px',
         }}
       >
-        Reintentar
+        Reintentar ahora
       </button>
       <a href="/comunidad" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.3)' }}>
-        Volver al inicio
+        Volver al feed
       </a>
     </div>
   );

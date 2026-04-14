@@ -25,7 +25,7 @@ function CommentItem({
   return (
     <div>
       <div style={{ display: 'flex', gap: '10px', marginBottom: '8px' }}>
-        <MemberAvatar name={comment.author_name} size={28} />
+        <MemberAvatar name={comment.author_name} size={28} avatarUrl={comment.author_avatar_url} />
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '4px' }}>
             <span style={{ fontSize: '13px', fontWeight: 500, color: '#FFFFFF' }}>
@@ -190,7 +190,7 @@ export default function PostDetailPage() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
-          <MemberAvatar name={post.author_name} size={36} />
+          <MemberAvatar name={post.author_name} size={36} avatarUrl={post.author_avatar_url} />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '14px', fontWeight: 500, color: '#FFFFFF' }}>

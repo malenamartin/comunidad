@@ -33,7 +33,7 @@ export default function AdminInviteCodesPage() {
 
   const inputStyle: React.CSSProperties = { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', padding: '8px 12px', color: '#fff', fontSize: '13px', width: '100%' };
 
-  if (loading) return <div style={{ padding: '48px', textAlign: 'center', color: '#fff', opacity: 0.4 }}>Cargando...</div>;
+  if (loading) return <div style={{ padding: '48px', textAlign: 'center', color: '#fff', opacity: 0.4 }}>Cargando códigos...</div>;
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '32px 24px' }}>
@@ -53,7 +53,7 @@ export default function AdminInviteCodesPage() {
           <input style={inputStyle} type="date" value={form.expiresAt} onChange={e => setForm(f => ({ ...f, expiresAt: e.target.value }))} />
         </div>
         <button disabled={creating} type="submit" style={{ padding: '9px 20px', borderRadius: '8px', border: 'none', background: 'linear-gradient(135deg,#FF6A00,#E05A00)', color: '#fff', fontWeight: 600, cursor: 'pointer', fontSize: '13px', whiteSpace: 'nowrap' }}>
-          {creating ? '...' : 'Crear código'}
+          {creating ? 'Creando...' : 'Crear código'}
         </button>
       </form>
 

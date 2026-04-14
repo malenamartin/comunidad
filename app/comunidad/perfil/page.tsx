@@ -37,6 +37,10 @@ const labelStyle: React.CSSProperties = {
 
 export default function PerfilPage() {
   const { data: member, mutate } = useSWR<CommunityMember>('/api/community/me', fetcher);
+  const { data: avatarData } = useSWR<{
+    presets: { id: number; name: string; image_url: string; order_index: number }[];
+    selected: { preset_id: number | null; custom_avatar_url: string | null };
+  }>('/api/community/avatars', fetcher);
 
   const [form, setForm] = useState({
     name: '',
@@ -49,6 +53,8 @@ export default function PerfilPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
+  const [presetAvatarId, setPresetAvatarId] = useState<number | null>(null);
+  const [customAvatarUrl, setCustomAvatarUrl] = useState('');
 
   useEffect(() => {
     if (member) {
@@ -62,6 +68,13 @@ export default function PerfilPage() {
       });
     }
   }, [member]);
+
+  useEffect(() => {
+    if (avatarData) {
+      setPresetAvatarId(avatarData.selected.preset_id ?? null);
+      setCustomAvatarUrl(avatarData.selected.custom_avatar_url ?? '');
+    }
+  }, [avatarData]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -93,6 +106,34 @@ export default function PerfilPage() {
     }
   }
 
+  async function saveAvatar() {
+    setSaving(true);
+    setError('');
+    setSaved(false);
+    try {
+      const res = await fetch('/api/community/me', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          preset_avatar_id: presetAvatarId,
+          custom_avatar_url: customAvatarUrl.trim() || null,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error ?? 'Error al guardar avatar');
+      } else {
+        const updated = await res.json();
+        mutate(updated, false);
+        setSaved(true);
+      }
+    } catch {
+      setError('Error de conexión');
+    } finally {
+      setSaving(false);
+    }
+  }
+
   const levelStyle = member ? (LEVEL_LABELS[member.level] ?? LEVEL_LABELS.invisible) : null;
 
   return (
@@ -106,7 +147,7 @@ export default function PerfilPage() {
           marginBottom: '28px',
         }}
       >
-        Mi perfil
+        Mi perfil FARDO
       </h1>
 
       {member && (
@@ -122,7 +163,7 @@ export default function PerfilPage() {
             marginBottom: '28px',
           }}
         >
-          <MemberAvatar name={member.name} size={52} />
+          <MemberAvatar name={member.name} size={52} avatarUrl={member.avatar_url} />
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
               <span style={{ fontSize: '16px', fontWeight: 600, color: '#FFFFFF' }}>
@@ -209,7 +250,7 @@ export default function PerfilPage() {
             name="bio"
             value={form.bio}
             onChange={handleChange}
-            placeholder="Contá algo sobre vos y tu marca..."
+            placeholder="Contá quién sos, qué estás construyendo y en qué te gustaría conectar..."
             rows={4}
             style={{ ...inputStyle, resize: 'vertical' }}
           />
@@ -239,7 +280,7 @@ export default function PerfilPage() {
               padding: '8px 12px',
             }}
           >
-            Perfil actualizado correctamente.
+            Perfil actualizado. Ahora sí: más señal, menos fricción.
           </p>
         )}
 
@@ -262,6 +303,72 @@ export default function PerfilPage() {
           {saving ? 'Guardando...' : 'Guardar cambios'}
         </button>
       </form>
+
+      <div
+        style={{
+          marginTop: '20px',
+          background: 'rgba(255,255,255,0.03)',
+          border: '0.5px solid rgba(255,255,255,0.08)',
+          borderRadius: '12px',
+          padding: '16px',
+        }}
+      >
+        <h2 style={{ fontSize: '15px', color: '#fff', marginBottom: '12px' }}>Avatar de perfil</h2>
+        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginBottom: '12px' }}>
+          Elegí un avatar oficial o pegá uno propio. Tu perfil también comunica marca.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(64px, 1fr))', gap: '8px', marginBottom: '14px' }}>
+          {avatarData?.presets?.map((preset) => (
+            <button
+              key={preset.id}
+              type="button"
+              onClick={() => setPresetAvatarId(preset.id)}
+              style={{
+                borderRadius: '10px',
+                border: presetAvatarId === preset.id ? '1px solid #FF6A00' : '1px solid rgba(255,255,255,0.12)',
+                background: 'rgba(255,255,255,0.03)',
+                padding: '8px',
+                cursor: 'pointer',
+              }}
+              title={preset.name}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={preset.image_url} alt={preset.name} style={{ width: '100%', aspectRatio: '1 / 1', borderRadius: '999px', objectFit: 'cover' }} />
+            </button>
+          ))}
+        </div>
+
+        <div style={{ marginBottom: '12px' }}>
+          <label style={labelStyle}>URL de avatar personalizado</label>
+          <input
+            value={customAvatarUrl}
+            onChange={(e) => setCustomAvatarUrl(e.target.value)}
+            placeholder="https://..."
+            style={inputStyle}
+          />
+        </div>
+
+        <button
+          type="button"
+          onClick={saveAvatar}
+          disabled={saving}
+          style={{
+            padding: '10px 14px',
+            borderRadius: '8px',
+            border: 'none',
+            cursor: saving ? 'not-allowed' : 'pointer',
+            fontSize: '13px',
+            fontWeight: 600,
+            color: '#FFFFFF',
+            background: saving
+              ? 'rgba(255,255,255,0.1)'
+              : 'linear-gradient(135deg, #FF6A00, #E05A00)',
+          }}
+        >
+          {saving ? 'Guardando avatar...' : 'Guardar avatar'}
+        </button>
+      </div>
     </div>
   );
 }

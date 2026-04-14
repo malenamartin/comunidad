@@ -4,6 +4,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { VideoCard } from '@/components/community/VideoCard';
 import type { Video } from '@/lib/community/types';
+import { mockVideos } from '@/lib/community/mockData';
 
 const CATEGORIES = [
   { value: '', label: 'Todo' },
@@ -34,16 +35,21 @@ export default function AprendePage() {
   const url = `/api/community/videos${params.toString() ? `?${params}` : ''}`;
 
   const { data: videos, isLoading } = useSWR<Video[]>(url, fetcher);
+  const displayVideos = videos?.length ? videos : mockVideos.filter((video) => {
+    if (category && video.category !== category) return false;
+    if (level && video.level !== level) return false;
+    return true;
+  });
 
   const tabStyle = (active: boolean): React.CSSProperties => ({
-    padding: '6px 14px',
-    borderRadius: '8px',
-    border: 'none',
+    padding: '7px 14px',
+    borderRadius: '999px',
+    border: active ? '1px solid var(--fardo-orange-200)' : '1px solid var(--fardo-color-border-default)',
     cursor: 'pointer',
     fontSize: '13px',
-    fontWeight: active ? 600 : 400,
-    color: active ? '#FFFFFF' : 'rgba(255,255,255,0.4)',
-    background: active ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.04)',
+    fontWeight: active ? 600 : 500,
+    color: active ? 'var(--fardo-orange-500)' : 'var(--fardo-color-text-secondary)',
+    background: active ? 'var(--fardo-orange-50)' : 'var(--fardo-color-bg-subtle)',
     whiteSpace: 'nowrap' as const,
     flexShrink: 0,
     transition: 'all 0.15s',
@@ -51,39 +57,67 @@ export default function AprendePage() {
 
   return (
     <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '32px 24px' }}>
-      <div style={{ marginBottom: '28px' }}>
+      <section
+        style={{
+          background: 'var(--fardo-color-bg-base)',
+          border: '1px solid var(--fardo-color-border-default)',
+          borderRadius: '20px',
+          padding: '18px',
+          marginBottom: '14px',
+        }}
+      >
+        <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--fardo-orange-500)', marginBottom: '8px' }}>
+          APRENDE
+        </p>
         <h1
           style={{
             fontSize: '24px',
             fontWeight: 700,
             letterSpacing: '-0.02em',
-            color: '#FFFFFF',
+            color: 'var(--fardo-color-text-primary)',
             marginBottom: '4px',
           }}
         >
-          Aprende
+          Academia FARDO para equipos de marketing
         </h1>
-        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
-          Formación exclusiva para líderes de marketing
+        <p style={{ fontSize: '14px', color: 'var(--fardo-color-text-secondary)', lineHeight: 1.6 }}>
+          Clases cortas para ejecutar hoy: AEO, GEO, LLMO y visibilidad de marca sin palabrerío.
         </p>
-      </div>
+      </section>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
-        <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-          {CATEGORIES.map((c) => (
-            <button key={c.value} onClick={() => setCategory(c.value)} style={tabStyle(category === c.value)}>
-              {c.label}
-            </button>
-          ))}
+      <section
+        style={{
+          background: 'var(--fardo-color-bg-base)',
+          border: '1px solid var(--fardo-color-border-default)',
+          borderRadius: '20px',
+          padding: '14px',
+          marginBottom: '14px',
+        }}
+      >
+        <p style={{ fontSize: '12px', color: 'var(--fardo-color-text-muted)', marginBottom: '8px' }}>Filtrar clases</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+            {CATEGORIES.map((c) => (
+              <button key={c.value} onClick={() => setCategory(c.value)} style={tabStyle(category === c.value)}>
+                {c.label}
+              </button>
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+            {LEVELS.map((l) => (
+              <button key={l.value} onClick={() => setLevel(l.value)} style={tabStyle(level === l.value)}>
+                {l.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-          {LEVELS.map((l) => (
-            <button key={l.value} onClick={() => setLevel(l.value)} style={tabStyle(level === l.value)}>
-              {l.label}
-            </button>
-          ))}
+      </section>
+
+      {!videos?.length && !isLoading && (
+        <div style={{ fontSize: '12px', color: 'var(--fardo-orange-500)', marginBottom: '10px', fontWeight: 600 }}>
+          Mostrando clases demo para que veas la experiencia completa.
         </div>
-      </div>
+      )}
 
       {isLoading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
@@ -91,24 +125,24 @@ export default function AprendePage() {
             <div
               key={i}
               style={{
-                borderRadius: '12px',
+                borderRadius: '18px',
                 overflow: 'hidden',
-                background: 'rgba(255,255,255,0.03)',
-                border: '0.5px solid rgba(255,255,255,0.06)',
+                background: 'var(--fardo-color-bg-base)',
+                border: '1px solid var(--fardo-color-border-default)',
               }}
             >
-              <div style={{ aspectRatio: '16/9', background: 'rgba(255,255,255,0.05)' }} />
+              <div style={{ aspectRatio: '16/9', background: 'var(--fardo-color-bg-subtle)' }} />
               <div style={{ padding: '14px 16px', height: '60px' }} />
             </div>
           ))}
         </div>
-      ) : !videos?.length ? (
-        <div style={{ textAlign: 'center', padding: '60px 24px', color: 'rgba(255,255,255,0.3)' }}>
-          <p style={{ fontSize: '15px' }}>No hay videos disponibles con estos filtros.</p>
+      ) : !displayVideos?.length ? (
+        <div style={{ textAlign: 'center', padding: '60px 24px', color: 'var(--fardo-color-text-muted)' }}>
+          <p style={{ fontSize: '15px' }}>No hay clases para estos filtros. Probá otra combinación.</p>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
-          {videos.map((video) => (
+          {displayVideos.map((video) => (
             <VideoCard key={video.id} video={video} />
           ))}
         </div>

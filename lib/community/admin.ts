@@ -1,8 +1,56 @@
 import sql from '@/lib/db';
+import { clerkClient } from '@clerk/nextjs/server';
 
-export async function isAdmin(sessionClaims: Record<string, unknown> | null) {
+export async function isAdmin(
+  sessionClaims: Record<string, unknown> | null,
+  clerkUserId?: string | null,
+) {
+  if (process.env.BYPASS_AUTH === 'true') return true;
+
   const roles = ((sessionClaims?.metadata as Record<string, unknown>)?.roles as string[]) ?? [];
-  return roles.includes('admin');
+  if (roles.includes('admin')) return true;
+
+  const temporaryAllowlist = ['male@heyfardo.com'];
+  const envAllowlist = (process.env.COMMUNITY_ADMIN_EMAILS ?? '')
+    .split(',')
+    .map((v) => v.trim().toLowerCase())
+    .filter(Boolean);
+  const allowlist = [...temporaryAllowlist, ...envAllowlist];
+
+  const claimsAsRecord = (sessionClaims ?? {}) as Record<string, unknown>;
+  const claimsEmailRaw =
+    claimsAsRecord.email ??
+    claimsAsRecord.primary_email_address ??
+    claimsAsRecord.email_address ??
+    null;
+  const claimsEmail =
+    typeof claimsEmailRaw === 'string' ? claimsEmailRaw.toLowerCase() : null;
+
+  if (claimsEmail && allowlist.includes(claimsEmail)) return true;
+  if (!clerkUserId) return false;
+
+  try {
+    const client = await clerkClient();
+    const user = await client.users.getUser(clerkUserId);
+    const primary = user.emailAddresses.find((email) => email.id === user.primaryEmailAddressId);
+    const clerkEmail = (primary?.emailAddress ?? user.emailAddresses[0]?.emailAddress ?? '').toLowerCase();
+    if (clerkEmail && allowlist.includes(clerkEmail)) return true;
+  } catch {
+    // ignore Clerk lookup issues and continue with DB fallback
+  }
+
+  const rows = await sql<{ is_founder: boolean; email: string | null }[]>`
+    SELECT is_founder, email
+    FROM community_members
+    WHERE clerk_user_id = ${clerkUserId} AND is_active = true
+    LIMIT 1
+  `;
+
+  const member = rows[0];
+  if (!member) return false;
+  if (member.is_founder) return true;
+
+  return Boolean(member.email && allowlist.includes(member.email.toLowerCase()));
 }
 
 export async function getAdminStats() {

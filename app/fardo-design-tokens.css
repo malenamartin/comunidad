@@ -1,0 +1,105 @@
+:root {
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --fardo-orange-50: #fff3eb;
+  --fardo-orange-100: #ffd6b0;
+  --fardo-orange-200: #ffb878;
+  --fardo-orange-400: #ff6a00;
+  --fardo-orange-500: #e05a00;
+  --fardo-orange-600: #b84a00;
+
+  --fardo-gray-50: #faf9f8;
+  --fardo-gray-100: #f2f0ee;
+  --fardo-gray-200: #e6e3e0;
+  --fardo-gray-300: #d5d1cd;
+  --fardo-gray-400: #c2bdb8;
+  --fardo-gray-500: #a9a4a0;
+  --fardo-gray-600: #898480;
+  --fardo-gray-700: #67635f;
+  --fardo-gray-800: #474441;
+  --fardo-gray-900: #2c2a28;
+
+  --fardo-green-50: #eaf6ef;
+  --fardo-green-600: #276a43;
+  --fardo-amber-50: #fff6e4;
+  --fardo-amber-600: #bf7617;
+  --fardo-red-50: #fdebec;
+  --fardo-red-600: #b93636;
+  --fardo-blue-50: #ebf4ff;
+  --fardo-blue-500: #0462d4;
+
+  --fardo-color-bg-page: var(--fardo-gray-50);
+  --fardo-color-bg-base: var(--color-white);
+  --fardo-color-bg-subtle: var(--fardo-gray-100);
+  --fardo-color-text-primary: var(--fardo-gray-900);
+  --fardo-color-text-secondary: var(--fardo-gray-700);
+  --fardo-color-text-muted: var(--fardo-gray-600);
+  --fardo-color-text-brand: var(--fardo-orange-500);
+  --fardo-color-border-default: var(--fardo-gray-200);
+  --fardo-color-border-subtle: var(--fardo-gray-100);
+  --fardo-color-border-brand: var(--fardo-orange-200);
+
+  --fardo-shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.06);
+  --fardo-shadow-sm: 0px 1px 4px rgba(0, 0, 0, 0.08), 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
+  --fardo-shadow-md: 0px 4px 12px rgba(0, 0, 0, 0.1), 0px 0px 0px 1px rgba(0, 0, 0, 0.06);
+
+  --fardo-radius-sm: 4px;
+  --fardo-radius-md: 10px;
+  --fardo-radius-lg: 14px;
+  --fardo-radius-xl: 18px;
+  --fardo-radius-2xl: 24px;
+  --fardo-radius-pill: 9999px;
+
+  --fardo-font-body: "Satoshi", sans-serif;
+}
+
+.fardo-card {
+  background: var(--fardo-color-bg-base);
+  border: 1px solid var(--fardo-color-border-default);
+  border-radius: var(--fardo-radius-lg);
+  box-shadow: var(--fardo-shadow-xs);
+}
+
+.fardo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1.5px solid transparent;
+  border-radius: var(--fardo-radius-md);
+  cursor: pointer;
+  font-family: var(--fardo-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.fardo-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.25);
+}
+
+.fardo-btn-primary {
+  background: var(--fardo-orange-400);
+  color: var(--color-white);
+  border-color: var(--fardo-orange-400);
+}
+
+.fardo-btn-primary:hover {
+  background: var(--fardo-orange-500);
+  border-color: var(--fardo-orange-500);
+}
+
+.fardo-btn-secondary {
+  background: transparent;
+  color: var(--fardo-color-text-brand);
+  border-color: var(--fardo-color-border-brand);
+}
+
+.fardo-btn-secondary:hover {
+  background: var(--fardo-orange-50);
+  border-color: var(--fardo-orange-400);
+}

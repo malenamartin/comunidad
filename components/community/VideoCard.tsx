@@ -13,9 +13,9 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const LEVEL_LABELS: Record<string, { label: string; color: string }> = {
-  intro:      { label: 'Intro',       color: '#90C050' },
-  intermedio: { label: 'Intermedio',  color: '#C8A040' },
-  avanzado:   { label: 'Avanzado',    color: '#E07050' },
+  intro: { label: 'Nivel Intro', color: '#90C050' },
+  intermedio: { label: 'Nivel Intermedio', color: '#C8A040' },
+  avanzado: { label: 'Nivel Avanzado', color: '#E07050' },
 };
 
 interface VideoCardProps {
@@ -29,18 +29,20 @@ export function VideoCard({ video }: VideoCardProps) {
     <Link href={`/comunidad/aprende/${video.id}`} style={{ textDecoration: 'none', display: 'block' }}>
       <article
         style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '0.5px solid rgba(255,255,255,0.08)',
-          borderRadius: '12px',
+          background: 'var(--fardo-color-bg-base)',
+          border: '1px solid var(--fardo-color-border-default)',
+          borderRadius: '18px',
           overflow: 'hidden',
           cursor: 'pointer',
-          transition: 'border-color 0.15s ease',
+          transition: 'border-color 0.15s ease, transform 0.15s ease',
         }}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.15)';
+          (e.currentTarget as HTMLElement).style.borderColor = 'var(--fardo-color-border-brand)';
+          (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)';
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)';
+          (e.currentTarget as HTMLElement).style.borderColor = 'var(--fardo-color-border-default)';
+          (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
         }}
       >
         {/* Thumbnail */}
@@ -48,7 +50,7 @@ export function VideoCard({ video }: VideoCardProps) {
           style={{
             position: 'relative',
             aspectRatio: '16/9',
-            background: 'rgba(255,255,255,0.05)',
+            background: 'var(--fardo-color-bg-subtle)',
             overflow: 'hidden',
           }}
         >
@@ -64,7 +66,7 @@ export function VideoCard({ video }: VideoCardProps) {
               style={{
                 width: '100%',
                 height: '100%',
-                background: 'linear-gradient(135deg, rgba(255,106,0,0.2), rgba(10,10,10,0.8))',
+                background: 'linear-gradient(135deg, rgba(255,106,0,0.18), rgba(224,90,0,0.42))',
               }}
             />
           )}
@@ -76,7 +78,7 @@ export function VideoCard({ video }: VideoCardProps) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'rgba(0,0,0,0.3)',
+              background: 'rgba(44,42,40,0.18)',
             }}
           >
             <div
@@ -100,8 +102,8 @@ export function VideoCard({ video }: VideoCardProps) {
                 position: 'absolute',
                 bottom: 8,
                 right: 8,
-                background: 'rgba(0,0,0,0.75)',
-                borderRadius: '4px',
+                background: 'rgba(44,42,40,0.8)',
+                borderRadius: '999px',
                 padding: '2px 6px',
                 fontSize: '11px',
                 color: '#FFFFFF',
@@ -135,8 +137,8 @@ export function VideoCard({ video }: VideoCardProps) {
                 fontWeight: 600,
                 color: levelStyle.color,
                 background: `${levelStyle.color}22`,
-                borderRadius: '3px',
-                padding: '1px 5px',
+                borderRadius: '999px',
+                padding: '2px 8px',
               }}
             >
               {levelStyle.label}
@@ -146,7 +148,7 @@ export function VideoCard({ video }: VideoCardProps) {
             style={{
               fontSize: '14px',
               fontWeight: 600,
-              color: '#FFFFFF',
+              color: 'var(--fardo-color-text-primary)',
               lineHeight: 1.4,
             }}
           >

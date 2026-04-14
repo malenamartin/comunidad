@@ -5,12 +5,12 @@ import { useSWRConfig } from 'swr';
 import type { PostType } from '@/lib/community/types';
 
 const POST_TYPES: { value: PostType; label: string; color: string }[] = [
-  { value: 'discusion',  label: 'Discusión',  color: 'rgba(255,255,255,0.5)' },
+  { value: 'discusion',  label: 'Discusión',  color: 'var(--fardo-color-text-secondary)' },
   { value: 'benchmark',  label: 'Benchmark',  color: '#E07050' },
   { value: 'beta',       label: 'Beta',        color: '#90C050' },
   { value: 'educacion',  label: 'Educación',   color: '#C8A040' },
   { value: 'evento',     label: 'Evento',      color: '#8090E0' },
-  { value: 'anuncio',    label: 'Anuncio',     color: '#FF6A00' },
+  { value: 'anuncio',    label: 'Anuncio',     color: 'var(--fardo-orange-400)' },
 ];
 
 interface Props {
@@ -43,7 +43,7 @@ export function NewPostModal({ onClose }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!title.trim() || !body.trim()) {
-      setError('El título y el contenido son obligatorios.');
+      setError('Necesitamos título y contenido para publicar.');
       return;
     }
     setSubmitting(true);
@@ -56,14 +56,14 @@ export function NewPostModal({ onClose }: Props) {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data.error ?? 'Error al publicar. Intenta de nuevo.');
+        setError(data.error ?? 'No pudimos publicar. Probá de nuevo.');
         return;
       }
       // Invalidate all post caches
       await mutate((key: unknown) => typeof key === 'string' && key.startsWith('/api/community/posts'));
       onClose();
     } catch {
-      setError('Error de red. Intenta de nuevo.');
+      setError('Se cayó la conexión. Probá de nuevo.');
     } finally {
       setSubmitting(false);
     }
@@ -90,24 +90,24 @@ export function NewPostModal({ onClose }: Props) {
       {/* Modal */}
       <div
         style={{
-          background: '#111111',
-          border: '1px solid rgba(255,255,255,0.1)',
+          background: 'var(--fardo-color-bg-base)',
+          border: '1px solid var(--fardo-color-border-default)',
           borderRadius: '16px',
           width: '100%',
           maxWidth: '600px',
           padding: '28px',
-          boxShadow: '0 24px 64px rgba(0,0,0,0.6)',
+          boxShadow: 'var(--fardo-shadow-md)',
         }}
       >
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#FFFFFF', margin: 0 }}>Nuevo post</h2>
+          <h2 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--fardo-color-text-primary)', margin: 0 }}>Crear post</h2>
           <button
             onClick={onClose}
             style={{
               background: 'none',
               border: 'none',
-              color: 'rgba(255,255,255,0.4)',
+              color: 'var(--fardo-color-text-muted)',
               cursor: 'pointer',
               fontSize: '22px',
               lineHeight: 1,
@@ -122,7 +122,7 @@ export function NewPostModal({ onClose }: Props) {
         <form onSubmit={handleSubmit}>
           {/* Post type */}
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--fardo-color-text-muted)', letterSpacing: '0.08em', marginBottom: '8px' }}>
               TIPO
             </label>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
@@ -134,9 +134,9 @@ export function NewPostModal({ onClose }: Props) {
                   style={{
                     padding: '5px 12px',
                     borderRadius: '20px',
-                    border: postType === t.value ? `1.5px solid ${t.color}` : '1.5px solid rgba(255,255,255,0.1)',
-                    background: postType === t.value ? `${t.color}22` : 'transparent',
-                    color: postType === t.value ? t.color : 'rgba(255,255,255,0.4)',
+                    border: postType === t.value ? `1.5px solid ${t.color}` : '1.5px solid var(--fardo-color-border-default)',
+                    background: postType === t.value ? `${t.color}22` : 'var(--fardo-color-bg-subtle)',
+                    color: postType === t.value ? t.color : 'var(--fardo-color-text-secondary)',
                     fontSize: '13px',
                     fontWeight: postType === t.value ? 600 : 400,
                     cursor: 'pointer',
@@ -151,7 +151,7 @@ export function NewPostModal({ onClose }: Props) {
 
           {/* Title */}
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--fardo-color-text-muted)', letterSpacing: '0.08em', marginBottom: '8px' }}>
               TÍTULO
             </label>
             <input
@@ -159,16 +159,16 @@ export function NewPostModal({ onClose }: Props) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="¿Sobre qué querés hablar?"
+              placeholder="¿Qué señal querés compartir?"
               maxLength={200}
               style={{
                 width: '100%',
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'var(--fardo-color-bg-subtle)',
+                border: '1px solid var(--fardo-color-border-default)',
                 borderRadius: '10px',
                 padding: '12px 14px',
                 fontSize: '15px',
-                color: '#FFFFFF',
+                color: 'var(--fardo-color-text-primary)',
                 outline: 'none',
                 boxSizing: 'border-box',
               }}
@@ -177,22 +177,22 @@ export function NewPostModal({ onClose }: Props) {
 
           {/* Body */}
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--fardo-color-text-muted)', letterSpacing: '0.08em', marginBottom: '8px' }}>
               CONTENIDO
             </label>
             <textarea
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Compartí datos, contexto, tu experiencia..."
+              placeholder="Sumá contexto, dato, insight y próxima acción..."
               rows={6}
               style={{
                 width: '100%',
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'var(--fardo-color-bg-subtle)',
+                border: '1px solid var(--fardo-color-border-default)',
                 borderRadius: '10px',
                 padding: '12px 14px',
                 fontSize: '14px',
-                color: '#FFFFFF',
+                color: 'var(--fardo-color-text-primary)',
                 outline: 'none',
                 resize: 'vertical',
                 fontFamily: 'inherit',
@@ -216,8 +216,8 @@ export function NewPostModal({ onClose }: Props) {
                 padding: '10px 20px',
                 borderRadius: '8px',
                 border: '1px solid rgba(255,255,255,0.12)',
-                background: 'transparent',
-                color: 'rgba(255,255,255,0.5)',
+                background: 'var(--fardo-color-bg-base)',
+                color: 'var(--fardo-color-text-secondary)',
                 fontSize: '14px',
                 cursor: 'pointer',
               }}
@@ -233,8 +233,8 @@ export function NewPostModal({ onClose }: Props) {
                 border: 'none',
                 background: submitting || !title.trim() || !body.trim()
                   ? 'rgba(255,106,0,0.4)'
-                  : 'linear-gradient(135deg, #FF6A00, #E05A00)',
-                color: '#FFFFFF',
+                  : 'linear-gradient(135deg, var(--fardo-orange-400), var(--fardo-orange-500))',
+                color: 'var(--color-white)',
                 fontSize: '14px',
                 fontWeight: 600,
                 cursor: submitting || !title.trim() || !body.trim() ? 'not-allowed' : 'pointer',
@@ -247,7 +247,7 @@ export function NewPostModal({ onClose }: Props) {
               {submitting ? 'Publicando...' : (
                 <>
                   <span style={{ fontSize: '16px', lineHeight: 1 }}>+</span>
-                  Publicar
+                  Publicar ahora
                   <span style={{
                     fontSize: '11px',
                     fontWeight: 600,

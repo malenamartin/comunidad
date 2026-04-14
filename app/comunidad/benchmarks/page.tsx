@@ -43,7 +43,7 @@ export default function BenchmarksPage() {
           Benchmarks
         </h1>
         <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
-          Datos exclusivos de Citation Rate, SOV y LLMO Score por industria
+          Datos de visibilidad para decidir con evidencia, no con humo.
         </p>
       </div>
 
@@ -65,8 +65,8 @@ export default function BenchmarksPage() {
       ) : !benchmarks?.length ? (
         <div style={{ textAlign: 'center', padding: '60px 24px', color: 'rgba(255,255,255,0.3)' }}>
           <p style={{ fontSize: '32px', marginBottom: '12px' }}>📊</p>
-          <p style={{ fontSize: '15px' }}>Los benchmarks estarán disponibles pronto.</p>
-          <p style={{ fontSize: '13px', marginTop: '8px', color: 'rgba(255,255,255,0.2)' }}>El equipo Fardo los publica periódicamente.</p>
+          <p style={{ fontSize: '15px' }}>Todavía no hay benchmarks cargados para este filtro.</p>
+          <p style={{ fontSize: '13px', marginTop: '8px', color: 'rgba(255,255,255,0.2)' }}>Volvé en breve: los actualizamos de forma periódica.</p>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>

@@ -76,13 +76,13 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
         return;
       }
       if (!res.ok) {
-        setError(json.error ?? 'Ocurrió un error. Intenta de nuevo.');
+        setError(json.error ?? 'Algo falló. Probá de nuevo en un minuto.');
       } else {
         setSuccess(true);
         setTimeout(() => { window.location.href = '/comunidad'; }, 1500);
       }
     } catch {
-      setError('Error de conexión. Intenta de nuevo.');
+      setError('Se cortó la conexión. Probá de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -109,12 +109,12 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
         });
         const data = await res.json();
         if (!res.ok) {
-          setError(data.error ?? 'Ocurrió un error. Intenta de nuevo.');
+          setError(data.error ?? 'Algo falló. Probá de nuevo en un minuto.');
         } else {
           setSuccess(true);
         }
       } catch {
-        setError('Error de conexión. Intenta de nuevo.');
+        setError('Se cortó la conexión. Probá de nuevo.');
       } finally {
         setLoading(false);
       }
@@ -139,10 +139,10 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
       <div style={{ textAlign: 'center', padding: '32px', background: isLight ? '#F5F5F5' : 'rgba(255,255,255,0.03)', border: isLight ? '1px solid rgba(0,0,0,0.08)' : '1px solid rgba(255,255,255,0.08)', borderRadius: '16px' }}>
         <div style={{ fontSize: '32px', marginBottom: '12px' }}>✓</div>
         <p style={{ fontSize: '16px', fontWeight: 600, color: isLight ? '#0A0A0A' : '#FFFFFF', marginBottom: '8px' }}>
-          {mode === 'invite' ? '¡Bienvenido a la comunidad!' : '¡Solicitud recibida!'}
+          {mode === 'invite' ? 'Bienvenido a FARDO Comunidad' : 'Solicitud enviada'}
         </p>
         <p style={{ fontSize: '14px', color: isLight ? '#666' : 'rgba(255,255,255,0.5)' }}>
-          {mode === 'invite' ? 'Redirigiendo al feed...' : 'El equipo Fardo revisará tu solicitud y te contactará pronto.'}
+          {mode === 'invite' ? 'Te estamos llevando al feed...' : 'El equipo FARDO la revisa y te responde sin vueltas.'}
         </p>
       </div>
     );
@@ -164,7 +164,7 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
               transition: 'all 0.15s',
             }}
           >
-            {m === 'invite' ? 'Tengo un código' : 'Solicitar acceso'}
+            {m === 'invite' ? 'Tengo código' : 'Pedir acceso'}
           </button>
         ))}
       </div>
@@ -226,7 +226,7 @@ export function RequestAccessForm({ theme = 'dark' }: Props) {
             transition: 'opacity 0.15s',
           }}
         >
-          {loading ? 'Procesando...' : mode === 'invite' ? 'Acceder a la comunidad' : 'Enviar solicitud'}
+          {loading ? 'Procesando...' : mode === 'invite' ? 'Entrar a la comunidad' : 'Enviar solicitud'}
         </button>
 
         {mode === 'invite' && (

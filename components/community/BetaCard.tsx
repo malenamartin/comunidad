@@ -4,10 +4,10 @@ import { useState } from 'react';
 import type { Beta } from '@/lib/community/betas';
 
 const STATUS_CONFIG = {
-  open:     { label: 'ABIERTO',        color: '#90C050', bg: 'rgba(120,180,60,0.15)',  btnLabel: 'Solicitar acceso' },
-  waitlist: { label: 'LISTA DE ESPERA', color: '#C8A040', bg: 'rgba(180,130,40,0.15)', btnLabel: 'Anotarme en lista' },
-  soon:     { label: 'PRÓXIMAMENTE',   color: 'rgba(255,255,255,0.35)', bg: 'rgba(255,255,255,0.06)', btnLabel: null },
-  closed:   { label: 'CERRADO',        color: 'rgba(255,255,255,0.25)', bg: 'rgba(255,255,255,0.04)', btnLabel: null },
+  open: { label: 'ABIERTA', color: 'var(--fardo-green-600)', bg: 'var(--fardo-green-50)', btnLabel: 'Quiero entrar' },
+  waitlist: { label: 'WAITLIST', color: 'var(--fardo-amber-600)', bg: 'var(--fardo-amber-50)', btnLabel: 'Sumarme a waitlist' },
+  soon: { label: 'PRÓXIMAMENTE', color: 'var(--fardo-color-text-muted)', bg: 'var(--fardo-color-bg-subtle)', btnLabel: null },
+  closed: { label: 'CERRADO', color: 'var(--fardo-color-text-muted)', bg: 'var(--fardo-color-bg-subtle)', btnLabel: null },
 };
 
 interface BetaCardProps {
@@ -35,9 +35,9 @@ export function BetaCard({ beta, onRequest }: BetaCardProps) {
   return (
     <article
       style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '0.5px solid rgba(255,255,255,0.08)',
-        borderRadius: '12px',
+        background: 'var(--fardo-color-bg-base)',
+        border: '1px solid var(--fardo-color-border-default)',
+        borderRadius: '18px',
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
@@ -47,11 +47,11 @@ export function BetaCard({ beta, onRequest }: BetaCardProps) {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
         <div style={{ flex: 1 }}>
-          <h3 style={{ fontSize: '15px', fontWeight: 600, color: '#FFFFFF', marginBottom: '4px' }}>
+          <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--fardo-color-text-primary)', marginBottom: '4px' }}>
             {beta.name}
           </h3>
           {beta.description && (
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '13px', color: 'var(--fardo-color-text-secondary)', lineHeight: 1.5 }}>
               {beta.description}
             </p>
           )}
@@ -60,7 +60,8 @@ export function BetaCard({ beta, onRequest }: BetaCardProps) {
           style={{
             fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em',
             color: config.color, background: config.bg,
-            borderRadius: '4px', padding: '3px 8px', flexShrink: 0,
+            border: '1px solid var(--fardo-color-border-default)',
+            borderRadius: '999px', padding: '3px 9px', flexShrink: 0,
           }}
         >
           {config.label}
@@ -70,7 +71,7 @@ export function BetaCard({ beta, onRequest }: BetaCardProps) {
       {/* Footer */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto' }}>
         {beta.max_testers && (
-          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
+          <span style={{ fontSize: '12px', color: 'var(--fardo-color-text-muted)' }}>
             {beta.current_count}/{beta.max_testers} testers
           </span>
         )}
@@ -82,7 +83,7 @@ export function BetaCard({ beta, onRequest }: BetaCardProps) {
               marginLeft: 'auto',
             }}
           >
-            {accessStatus === 'approved' ? '✓ Acceso aprobado' : '⏳ En lista de espera'}
+            {accessStatus === 'approved' ? 'Listo, ya tenés acceso' : 'Quedaste en waitlist'}
           </span>
         ) : config.btnLabel ? (
           <button
@@ -90,17 +91,17 @@ export function BetaCard({ beta, onRequest }: BetaCardProps) {
             disabled={loading}
             style={{
               marginLeft: 'auto',
-              padding: '7px 16px', borderRadius: '8px', border: 'none',
+              padding: '8px 16px', borderRadius: '12px', border: '1px solid var(--fardo-orange-400)',
               cursor: loading ? 'not-allowed' : 'pointer',
               fontSize: '13px', fontWeight: 600, color: '#FFFFFF',
-              background: loading ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #FF6A00, #E05A00)',
+              background: loading ? 'var(--fardo-color-bg-subtle)' : 'var(--fardo-orange-400)',
             }}
           >
             {loading ? '...' : config.btnLabel}
           </button>
         ) : (
-          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.2)', marginLeft: 'auto' }}>
-            No disponible
+          <span style={{ fontSize: '12px', color: 'var(--fardo-color-text-muted)', marginLeft: 'auto' }}>
+            No disponible por ahora
           </span>
         )}
       </div>

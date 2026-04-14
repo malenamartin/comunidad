@@ -1,117 +1,408 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
+import useSWR from 'swr';
 
-const LEVEL_COLORS: Record<string, { bg: string; text: string; label: string }> = {
-  platinum: { bg: '#E8E0FF', text: '#5B21B6', label: 'Platinum' },
-  gold:     { bg: '#FEF3C7', text: '#92400E', label: 'Gold'     },
-  silver:   { bg: '#F1F5F9', text: '#475569', label: 'Silver'   },
-  bronze:   { bg: '#FEF0E7', text: '#92400E', label: 'Bronze'   },
-};
+interface RankingRow {
+  rank: number;
+  brand: string;
+  industry: string;
+  visibilityScore: number;
+  change: number;
+}
 
-const POINT_ACTIONS: Record<string, { label: string; emoji: string }> = {
-  post_created:      { label: 'Post publicado',      emoji: '✍️'  },
-  comment_created:   { label: 'Comentario',          emoji: '💬'  },
-  reaction_received: { label: 'Reacción recibida',   emoji: '❤️'  },
-  video_completed:   { label: 'Video completado',    emoji: '🎬'  },
-  profile_completed: { label: 'Perfil completado',   emoji: '👤'  },
-  invite_accepted:   { label: 'Invitación aceptada', emoji: '🤝'  },
-  daily_login:       { label: 'Login diario',        emoji: '📅'  },
-  benchmark_viewed:  { label: 'Benchmark visto',     emoji: '📊'  },
-  event_attended:    { label: 'Evento asistido',     emoji: '🎟️' },
-};
+interface IndustryOption {
+  key: string;
+  label: string;
+}
+
+interface RankingResponse {
+  rows: RankingRow[];
+  source: 'api' | 'fallback';
+  industries: IndustryOption[];
+  updatedAt: string;
+}
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json() as Promise<RankingResponse>);
+
+function formatChange(value: number): string {
+  const abs = Math.abs(value).toFixed(2);
+  return value > 0 ? `+${abs}` : value < 0 ? `-${abs}` : '0.00';
+}
 
 export default function RankingPage() {
-  const [leaderboard, setLeaderboard] = useState<any[]>([]);
-  const [myPoints, setMyPoints] = useState<any>(null);
-  const [myBadges, setMyBadges] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [industry, setIndustry] = useState('all');
+  const { data, isLoading } = useSWR<RankingResponse>(
+    `/api/community/ranking/visibility?industry=${industry}&limit=15`,
+    fetcher
+  );
 
-  useEffect(() => {
-    Promise.all([
-      fetch('/api/community/gamification/leaderboard').then(r => r.json()),
-      fetch('/api/community/gamification/points').then(r => r.json()),
-      fetch('/api/community/gamification/badges').then(r => r.json()),
-    ]).then(([lb, pts, bdg]) => {
-      setLeaderboard(lb);
-      setMyPoints(pts);
-      setMyBadges(bdg);
-      setLoading(false);
-    });
-  }, []);
+  const rows = data?.rows ?? [];
+  const top3 = rows.slice(0, 3);
+  const list = rows.slice(3);
+  const winner = rows[0];
 
-  if (loading) return <div style={{ padding: '48px', textAlign: 'center', color: '#fff', opacity: 0.4 }}>Cargando...</div>;
+  const avgScore = useMemo(() => {
+    if (rows.length === 0) return 0;
+    const sum = rows.reduce((acc, row) => acc + row.visibilityScore, 0);
+    return Math.round((sum / rows.length) * 100) / 100;
+  }, [rows]);
 
-  const myLevel = LEVEL_COLORS[myPoints?.level ?? 'bronze'];
+  const avgChange = useMemo(() => {
+    if (rows.length === 0) return 0;
+    const sum = rows.reduce((acc, row) => acc + row.change, 0);
+    return Math.round((sum / rows.length) * 100) / 100;
+  }, [rows]);
 
   return (
-    <div style={{ maxWidth: '900px', margin: '0 auto', padding: '32px 24px' }}>
+    <div className="ranking-page">
+      <header className="ranking-header">
+        <p className="eyebrow">AI VISIBILITY PULSE</p>
+        <h1>Ranking de marcas por industria</h1>
+        <p>
+          Top 15 para ver quién lidera en IA, quién escala y dónde te están ganando sin que te enteres.
+        </p>
+      </header>
 
-      {/* My stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '32px' }}>
-        <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '20px' }}>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Mis puntos</p>
-          <p style={{ fontSize: '28px', fontWeight: 700, color: '#fff' }}>{(myPoints?.total_points ?? 0).toLocaleString()}</p>
-        </div>
-        <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '20px' }}>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Nivel</p>
-          <span style={{ display: 'inline-block', background: myLevel.bg, color: myLevel.text, borderRadius: '100px', padding: '4px 14px', fontSize: '14px', fontWeight: 600 }}>
-            {myLevel.label}
-          </span>
-        </div>
-        <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '20px' }}>
-          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Badges</p>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {myBadges.length === 0
-              ? <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.3)' }}>Ninguno aún</span>
-              : myBadges.map((b: any) => (
-                  <span key={b.slug} title={b.name} style={{ fontSize: '20px' }}>{b.icon}</span>
-                ))
-            }
-          </div>
-        </div>
-      </div>
+      <section className="industry-tabs" aria-label="Filtrar por industria">
+        {(data?.industries ?? []).map((option) => (
+          <button
+            key={option.key}
+            type="button"
+            className={industry === option.key ? 'tab active' : 'tab'}
+            onClick={() => setIndustry(option.key)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </section>
 
-      {/* Points history */}
-      {myPoints?.history?.length > 0 && (
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '20px', marginBottom: '32px' }}>
-          <p style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: '12px', letterSpacing: '0.06em' }}>ÚLTIMOS PUNTOS</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {myPoints.history.slice(0, 5).map((h: any, i: number) => {
-              const meta = POINT_ACTIONS[h.action] ?? { label: h.action, emoji: '⚡' };
-              return (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)' }}>{meta.emoji} {meta.label}</span>
-                  <span style={{ fontSize: '13px', fontWeight: 600, color: '#FF6A00' }}>+{h.points}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      <section className="stats-grid">
+        <article className="stat-card">
+          <p className="stat-label">Marca que manda</p>
+          <p className="stat-value">{winner?.brand ?? '-'}</p>
+          <p className="stat-sub">{winner ? `${winner.visibilityScore.toFixed(2)} pts` : 'Sin datos'}</p>
+        </article>
+        <article className="stat-card">
+          <p className="stat-label">Promedio Top 15</p>
+          <p className="stat-value">{avgScore.toFixed(2)}</p>
+          <p className="stat-sub">Indice de visibilidad</p>
+        </article>
+        <article className="stat-card">
+          <p className="stat-label">Tendencia semanal</p>
+          <p className="stat-value">{formatChange(avgChange)}</p>
+          <p className="stat-sub">Cambio promedio vs semana anterior</p>
+        </article>
+      </section>
 
-      {/* Leaderboard */}
-      <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', marginBottom: '16px' }}>Ranking global</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {leaderboard.map((m: any, i: number) => {
-          const lvl = LEVEL_COLORS[m.level] ?? LEVEL_COLORS.bronze;
-          const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
-          return (
-            <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '10px', padding: '14px 18px' }}>
-              <span style={{ width: '32px', textAlign: 'center', fontSize: i < 3 ? '20px' : '14px', fontWeight: 700, color: i < 3 ? undefined : 'rgba(255,255,255,0.3)' }}>{medal}</span>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '14px', fontWeight: 600, color: '#fff' }}>{m.name}</p>
-                <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>{m.company ?? m.country}</p>
-              </div>
-              <span style={{ background: lvl.bg, color: lvl.text, borderRadius: '100px', padding: '2px 10px', fontSize: '11px', fontWeight: 600 }}>{lvl.label}</span>
-              <span style={{ fontSize: '15px', fontWeight: 700, color: '#fff', minWidth: '60px', textAlign: 'right' }}>{Number(m.total_points).toLocaleString()}</span>
+      <section className="podium" aria-label="Top 3">
+        {top3.map((row) => (
+          <article key={row.brand} className="podium-card">
+            <p className="podium-rank">#{row.rank}</p>
+            <h3>{row.brand}</h3>
+            <p className="podium-industry">{row.industry}</p>
+            <div className="podium-metrics">
+              <span>{row.visibilityScore.toFixed(2)} pts</span>
+              <span className={row.change > 0 ? 'up' : row.change < 0 ? 'down' : ''}>{formatChange(row.change)}</span>
             </div>
-          );
-        })}
-        {leaderboard.length === 0 && (
-          <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.3)', padding: '32px' }}>Todavía no hay puntos registrados.</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="table-card">
+        <div className="table-head">
+          <h2>Top 15 marcas</h2>
+          <p>
+            Fuente: {data?.source === 'api' ? 'API en vivo' : 'Demo (fallback)'}
+            {data?.updatedAt ? ` · ${new Date(data.updatedAt).toLocaleString('es-AR')}` : ''}
+          </p>
+        </div>
+
+        {isLoading ? (
+          <div className="loading-block">Cargando ranking...</div>
+        ) : rows.length === 0 ? (
+          <div className="loading-block">No hay datos para esta industria. Probá otra y volvemos a pelearla.</div>
+        ) : (
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Posicion</th>
+                  <th>Marca</th>
+                  <th>Industria</th>
+                  <th>Visibilidad</th>
+                  <th>Tendencia</th>
+                </tr>
+              </thead>
+              <tbody>
+                {top3.map((row) => (
+                  <tr key={`top-${row.brand}`}>
+                    <td>#{row.rank}</td>
+                    <td className="brand-cell">{row.brand}</td>
+                    <td>{row.industry}</td>
+                    <td>{row.visibilityScore.toFixed(2)}</td>
+                    <td className={row.change > 0 ? 'up' : row.change < 0 ? 'down' : ''}>{formatChange(row.change)}</td>
+                  </tr>
+                ))}
+                {list.map((row) => (
+                  <tr key={row.brand}>
+                    <td>#{row.rank}</td>
+                    <td className="brand-cell">{row.brand}</td>
+                    <td>{row.industry}</td>
+                    <td>{row.visibilityScore.toFixed(2)}</td>
+                    <td className={row.change > 0 ? 'up' : row.change < 0 ? 'down' : ''}>{formatChange(row.change)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
-      </div>
+      </section>
+
+      <style jsx>{`
+        .ranking-page {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 28px 24px 44px;
+        }
+
+        .ranking-header {
+          margin-bottom: 18px;
+        }
+
+        .eyebrow {
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--fardo-orange-400);
+          margin-bottom: 8px;
+        }
+
+        .ranking-header h1 {
+          font-size: 34px;
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+          color: var(--fardo-color-text-primary);
+          margin-bottom: 10px;
+        }
+
+        .ranking-header p {
+          color: var(--fardo-color-text-secondary);
+          max-width: 760px;
+          line-height: 1.55;
+          font-size: 15px;
+        }
+
+        .industry-tabs {
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding-bottom: 6px;
+          margin-bottom: 18px;
+          scrollbar-width: none;
+        }
+
+        .tab {
+          border: 1px solid var(--fardo-color-border-default);
+          border-radius: 999px;
+          background: var(--fardo-color-bg-base);
+          color: var(--fardo-color-text-secondary);
+          font-size: 13px;
+          font-weight: 600;
+          white-space: nowrap;
+          padding: 9px 14px;
+          cursor: pointer;
+          transition: all 0.18s ease;
+        }
+
+        .tab.active {
+          border-color: var(--fardo-orange-200);
+          background: var(--fardo-orange-50);
+          color: var(--fardo-orange-500);
+        }
+
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+          margin-bottom: 14px;
+        }
+
+        .stat-card {
+          background: var(--fardo-color-bg-base);
+          border: 1px solid var(--fardo-color-border-default);
+          border-radius: 18px;
+          padding: 16px;
+          box-shadow: var(--fardo-shadow-xs);
+        }
+
+        .stat-label {
+          font-size: 12px;
+          color: var(--fardo-color-text-muted);
+          margin-bottom: 8px;
+        }
+
+        .stat-value {
+          font-size: 24px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          color: var(--fardo-color-text-primary);
+          margin-bottom: 2px;
+        }
+
+        .stat-sub {
+          font-size: 12px;
+          color: var(--fardo-color-text-secondary);
+        }
+
+        .podium {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+
+        .podium-card {
+          background: linear-gradient(160deg, #ffffff 0%, #fff6ee 100%);
+          border: 1px solid var(--fardo-color-border-default);
+          border-radius: 22px;
+          padding: 16px;
+          box-shadow: var(--fardo-shadow-xs);
+        }
+
+        .podium-rank {
+          display: inline-block;
+          font-size: 12px;
+          font-weight: 700;
+          background: var(--fardo-orange-50);
+          color: var(--fardo-orange-500);
+          border: 1px solid var(--fardo-orange-200);
+          border-radius: 999px;
+          padding: 4px 10px;
+          margin-bottom: 10px;
+        }
+
+        .podium-card h3 {
+          font-size: 20px;
+          letter-spacing: -0.02em;
+          margin-bottom: 6px;
+          color: var(--fardo-color-text-primary);
+        }
+
+        .podium-industry {
+          font-size: 13px;
+          color: var(--fardo-color-text-secondary);
+          margin-bottom: 12px;
+        }
+
+        .podium-metrics {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--fardo-color-text-primary);
+        }
+
+        .table-card {
+          background: var(--fardo-color-bg-base);
+          border: 1px solid var(--fardo-color-border-default);
+          border-radius: 22px;
+          padding: 18px;
+        }
+
+        .table-head {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 14px;
+          margin-bottom: 14px;
+        }
+
+        .table-head h2 {
+          font-size: 20px;
+          letter-spacing: -0.02em;
+          color: var(--fardo-color-text-primary);
+        }
+
+        .table-head p {
+          font-size: 12px;
+          color: var(--fardo-color-text-muted);
+        }
+
+        .table-wrap {
+          overflow-x: auto;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          min-width: 700px;
+        }
+
+        th {
+          text-align: left;
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: var(--fardo-color-text-muted);
+          font-weight: 700;
+          padding: 10px 12px;
+          border-bottom: 1px solid var(--fardo-color-border-default);
+        }
+
+        td {
+          font-size: 14px;
+          color: var(--fardo-color-text-secondary);
+          padding: 13px 12px;
+          border-bottom: 1px solid var(--fardo-color-border-subtle);
+        }
+
+        tbody tr:last-child td {
+          border-bottom: none;
+        }
+
+        .brand-cell {
+          font-weight: 700;
+          color: var(--fardo-color-text-primary);
+        }
+
+        .up {
+          color: var(--fardo-green-600);
+          font-weight: 700;
+        }
+
+        .down {
+          color: var(--fardo-red-600);
+          font-weight: 700;
+        }
+
+        .loading-block {
+          text-align: center;
+          padding: 30px;
+          color: var(--fardo-color-text-muted);
+        }
+
+        @media (max-width: 920px) {
+          .ranking-page {
+            padding: 24px 14px 40px;
+          }
+
+          .ranking-header h1 {
+            font-size: 28px;
+          }
+
+          .stats-grid,
+          .podium {
+            grid-template-columns: 1fr;
+          }
+
+          .table-card {
+            padding: 14px;
+            border-radius: 18px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

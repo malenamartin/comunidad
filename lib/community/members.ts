@@ -1,13 +1,38 @@
 import sql from '@/lib/db';
 import type { CommunityMember, MemberLevel } from './types';
 
+async function enrichMemberAvatar(member: CommunityMember | null): Promise<CommunityMember | null> {
+  if (!member) return null;
+  try {
+    const rows = await sql<{ preset_id: number | null; custom_avatar_url: string | null; preset_avatar_url: string | null }[]>`
+      SELECT
+        mas.preset_id,
+        mas.custom_avatar_url,
+        cap.image_url AS preset_avatar_url
+      FROM member_avatar_selection mas
+      LEFT JOIN community_avatar_presets cap ON cap.id = mas.preset_id
+      WHERE mas.member_id = ${member.id}
+      LIMIT 1
+    `;
+    const row = rows[0];
+    return {
+      ...member,
+      preset_avatar_id: row?.preset_id ?? null,
+      avatar_url: row?.custom_avatar_url ?? row?.preset_avatar_url ?? null,
+    };
+  } catch {
+    // Backward compatible when avatar tables are not migrated yet.
+    return { ...member, preset_avatar_id: null, avatar_url: null };
+  }
+}
+
 export async function getMemberByClerkId(clerkUserId: string): Promise<CommunityMember | null> {
   const rows = await sql<CommunityMember[]>`
     SELECT * FROM community_members
     WHERE clerk_user_id = ${clerkUserId} AND is_active = true
     LIMIT 1
   `;
-  return rows[0] ?? null;
+  return enrichMemberAvatar(rows[0] ?? null);
 }
 
 export async function getMemberById(id: string): Promise<CommunityMember | null> {
@@ -16,7 +41,7 @@ export async function getMemberById(id: string): Promise<CommunityMember | null>
     WHERE id = ${id} AND is_active = true
     LIMIT 1
   `;
-  return rows[0] ?? null;
+  return enrichMemberAvatar(rows[0] ?? null);
 }
 
 export async function countMembers(): Promise<number> {
@@ -66,7 +91,23 @@ export async function updateMember(
     WHERE clerk_user_id = ${clerkUserId}
     RETURNING *
   `;
-  return rows[0] ?? null;
+  return enrichMemberAvatar(rows[0] ?? null);
+}
+
+export async function upsertMemberAvatarSelection(data: {
+  memberId: string;
+  presetId?: number | null;
+  customAvatarUrl?: string | null;
+}): Promise<void> {
+  await sql`
+    INSERT INTO member_avatar_selection (member_id, preset_id, custom_avatar_url)
+    VALUES (${data.memberId}, ${data.presetId ?? null}, ${data.customAvatarUrl ?? null})
+    ON CONFLICT (member_id)
+    DO UPDATE SET
+      preset_id = ${data.presetId ?? null},
+      custom_avatar_url = ${data.customAvatarUrl ?? null},
+      updated_at = NOW()
+  `;
 }
 
 export function recalculateLevel(points: number): MemberLevel {

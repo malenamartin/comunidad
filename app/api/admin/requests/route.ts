@@ -4,7 +4,7 @@ import { isAdmin, getPendingRequests, resolveRequest, logAdminAction } from '@/l
 
 export async function GET() {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const requests = await getPendingRequests();
@@ -13,7 +13,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const { userId, sessionClaims } = await auth();
-  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>))
+  if (!userId || !await isAdmin(sessionClaims as Record<string, unknown>, userId))
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
   const { requestId, action } = await req.json();

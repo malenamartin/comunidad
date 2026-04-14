@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
+import './fardo-design-tokens.css';
 
 export const metadata: Metadata = {
   title: 'Comunidad Fardo',

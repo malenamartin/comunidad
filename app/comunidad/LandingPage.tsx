@@ -9,28 +9,46 @@ const PILLS = ['AEO', 'GEO', 'LLMO', 'Benchmarks', 'Estrategia', 'AI', 'Marcas',
 const BENEFITS = [
   {
     icon: BarChart2,
-    title: 'Benchmarks exclusivos',
-    description: 'Citation Rate, SOV y LLMO Score por industria. Comparate con las mejores marcas de LatAm.',
+    title: 'Benchmarks con dientes',
+    description: 'Citation Rate, SOV y LLMO Score por industria. Si estás abajo, lo ves. Si subís, también.',
   },
   {
     icon: BookOpen,
-    title: 'Academia privada',
-    description: 'Videos de AEO, GEO y LLMO para CMOs y Brand Directors. Sin teoría vacía, puro impacto.',
+    title: 'Academia sin verso',
+    description: 'AEO, GEO y LLMO explicados como corresponde: claro, accionable y pensado para ejecutar en la semana.',
   },
   {
     icon: Zap,
-    title: 'Acceso a betas',
-    description: 'Probá antes que nadie las nuevas features de Fardo y ayudá a moldear el producto.',
+    title: 'Betas antes que el resto',
+    description: 'Probás features primero, das feedback real y empujás el roadmap con nosotros.',
   },
   {
     icon: Calendar,
-    title: 'Eventos exclusivos',
-    description: 'Masterclasses, meetups y precios especiales para miembros en toda LatAm.',
+    title: 'Eventos que suman',
+    description: 'Masterclasses y meetups con gente que ejecuta, no paneles eternos de buzzwords.',
   },
   {
     icon: Users,
-    title: 'Directorio de pares',
-    description: 'Conectate con CMOs y Marketing Managers que construyen marcas visibles en la IA.',
+    title: 'Red de cómplices',
+    description: 'CMOs y líderes de marketing que comparten aprendizajes reales para ganar visibilidad en IA.',
+  },
+];
+
+const CMO_FLOW = [
+  {
+    step: 'Semana 1',
+    title: 'Mapeás tu visibilidad sin autoengaño',
+    description: 'Detectás brechas de presencia en IA y priorizás por impacto, no por intuición.',
+  },
+  {
+    step: 'Semana 2',
+    title: 'Corrés experimentos que mueven aguja',
+    description: 'Tomás una táctica, la adaptás a tu marca y la testeás en ciclos cortos con criterio.',
+  },
+  {
+    step: 'Semana 3+',
+    title: 'Escalás con señal de pares',
+    description: 'Validás decisiones con otros líderes y acelerás resultados con betas, feedback y ejecución.',
   },
 ];
 
@@ -174,7 +192,7 @@ export function LandingPage() {
               boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
             }}
           >
-            La comunidad donde las marcas dejan de ser invisibles en la IA
+            Si la IA ya está eligiendo ganadores, mejor que te elija a vos.
           </div>
         </div>
 
@@ -191,7 +209,7 @@ export function LandingPage() {
             zIndex: 10,
           }}
         >
-          Ya soy miembro →
+          Ya soy miembro, quiero entrar →
         </a>
       </section>
 
@@ -233,20 +251,84 @@ export function LandingPage() {
               lineHeight: 1.15,
             }}
           >
-            Pedí tu acceso o usá tu código
+            Entrá con código o pedí acceso
           </h2>
         </div>
         <RequestAccessFormLight />
+      </section>
+
+      <section style={{ background: '#F8F7F5', padding: '72px 24px' }}>
+        <div style={{ maxWidth: '1040px', margin: '0 auto' }}>
+          <p
+            style={{
+              fontSize: '11px',
+              fontWeight: 700,
+              letterSpacing: '0.08em',
+              color: '#E05A00',
+              marginBottom: '8px',
+              textAlign: 'center',
+            }}
+          >
+            RUTA CMO
+          </p>
+          <h2
+            style={{
+              fontSize: 'clamp(24px, 3.4vw, 36px)',
+              fontWeight: 800,
+              letterSpacing: '-0.03em',
+              color: '#0A0A0A',
+              marginBottom: '10px',
+              textAlign: 'center',
+            }}
+          >
+            Qué cambia cuando entrás a la comunidad
+          </h2>
+          <p style={{ fontSize: '14px', color: '#666', textAlign: 'center', marginBottom: '34px' }}>
+            No es networking de cartón: es un sistema para decidir mejor y ejecutar más rápido.
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px' }}>
+            {CMO_FLOW.map((item) => (
+              <article
+                key={item.step}
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(0,0,0,0.08)',
+                  borderRadius: '14px',
+                  padding: '18px',
+                }}
+              >
+                <p
+                  style={{
+                    display: 'inline-flex',
+                    padding: '2px 10px',
+                    borderRadius: '999px',
+                    background: 'rgba(255,106,0,0.08)',
+                    border: '1px solid rgba(255,106,0,0.22)',
+                    color: '#E05A00',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    marginBottom: '10px',
+                  }}
+                >
+                  {item.step}
+                </p>
+                <h3 style={{ fontSize: '16px', color: '#0A0A0A', marginBottom: '6px' }}>{item.title}</h3>
+                <p style={{ fontSize: '13px', lineHeight: 1.6, color: '#666' }}>{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── BENEFITS ── */}
       <section style={{ background: '#F5F5F5', padding: '80px 24px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <h2 style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 800, letterSpacing: '-0.03em', color: '#0A0A0A', textAlign: 'center', marginBottom: '8px' }}>
-            Lo que encontrás adentro
+            Lo que desbloqueás adentro
           </h2>
           <p style={{ fontSize: '15px', color: '#888', textAlign: 'center', marginBottom: '48px' }}>
-            Solo para CMOs, Marketing Managers y Brand Directors de LatAm.
+            Para CMOs y líderes de marketing que no se bancan lo tibio.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
             {BENEFITS.map((b) => {
@@ -291,7 +373,7 @@ export function LandingPage() {
       <footer style={{ background: '#FFFFFF', borderTop: '1px solid rgba(0,0,0,0.06)', padding: '24px 24px 28px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
         <FardoLogo variant="gray" height={24} />
         <p style={{ color: '#AAA', fontSize: '13px', margin: 0 }}>
-          Comunidad exclusiva para líderes de marketing en LatAm.
+          FARDO: claridad, velocidad y cero humo para marketing en IA.
         </p>
       </footer>
     </div>

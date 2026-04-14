@@ -9,9 +9,9 @@ export default async function ComunidadLayout({
   // BYPASS_AUTH=true lets you preview the community without Clerk configured.
   if (process.env.BYPASS_AUTH === 'true') {
     return (
-      <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
+      <div style={{ minHeight: '100vh', background: 'var(--fardo-color-bg-page)' }}>
         <Navbar bypassAuth />
-        <main style={{ paddingTop: `${TOTAL_HEADER_H}px` }}>{children}</main>
+        <main style={{ paddingTop: `${TOTAL_HEADER_H + 32}px` }}>{children}</main>
       </div>
     );
   }
@@ -23,16 +23,16 @@ export default async function ComunidadLayout({
 
   if (isMember) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
+      <div style={{ minHeight: '100vh', background: 'var(--fardo-color-bg-page)' }}>
         <Navbar />
-        <main style={{ paddingTop: `${TOTAL_HEADER_H}px` }}>{children}</main>
+        <main style={{ paddingTop: `${TOTAL_HEADER_H + 32}px` }}>{children}</main>
       </div>
     );
   }
 
   // Public layout — no navbar
   return (
-    <div style={{ minHeight: '100vh', background: '#0A0A0A' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--fardo-color-bg-page)' }}>
       {children}
     </div>
   );

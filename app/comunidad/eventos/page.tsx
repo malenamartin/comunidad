@@ -31,7 +31,7 @@ export default function EventosPage() {
           Eventos
         </h1>
         <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.4)' }}>
-          Masterclasses, meetups y eventos exclusivos para miembros
+          Sesiones para aprender, debatir y salir con ideas aplicables.
         </p>
       </div>
 
@@ -50,7 +50,7 @@ export default function EventosPage() {
         <div style={{ textAlign: 'center', padding: '60px 24px', color: 'rgba(255,255,255,0.3)' }}>
           <p style={{ fontSize: '32px', marginBottom: '12px' }}>📅</p>
           <p style={{ fontSize: '15px' }}>
-            {filter === 'upcoming' ? 'No hay eventos próximos por ahora.' : 'No hay eventos pasados.'}
+            {filter === 'upcoming' ? 'No hay eventos próximos por ahora.' : 'Todavía no hay eventos pasados cargados.'}
           </p>
         </div>
       ) : (
